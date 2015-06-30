@@ -1,18 +1,32 @@
-img {
-  width:100%;
+@font-face {
+  font-family: 'Fairview';
+  src: url("../fonts/Fairview_Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
 }
 
-header
+img {
+  width:100%;
+  max-height: 8em;
+}
+
+a {
+  text-decoration: none;
+}
+
+header h1{
+  font-family: 'Fairview', 'Arial', sans-serif;
+  font-size: 8em;
+}
 
 #logo {
-  background-color: red;
 }
 
 #app-name {
-  background-color: blue;
 }
 
 #login-container {
+
   background-color: yellow;
 }
 
