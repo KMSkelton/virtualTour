@@ -39,7 +39,6 @@ header h1{
 }
 
 .photo-container {
-  max-width: 15em;
   background-color: gray;
   margin: 0.25em;
 }
