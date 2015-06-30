@@ -15,7 +15,10 @@ var search = function(){
     }
     viewer = viewer + '</ul>';
     $("#viewer-container").append(viewer);
-    $('.bxslider').bxSlider();
+    $('.bxslider').bxSlider({
+      pager:true,
+      pagerType:'short'
+    });
   }
   $.getJSON(flickrAPI, options, loadPhotos);
 }
