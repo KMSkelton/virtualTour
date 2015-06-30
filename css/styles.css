@@ -12,38 +12,26 @@ a {
   padding: 1em;
   height: 8em;
 }
-
 header h1{
   font-family: 'Fairview', 'Arial', sans-serif;
   font-size: 8em;
+  float:left;
 }
-.flex-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: center;
-  align-items: center;
-}
-
-#logo {
-}
-
-#app-name {
-}
-
 #login-container {
-  background-color: yellow;
+  background-color: gray;
+  padding: 1em;
 }
-
 
 /* Media Query */
 
 @media only screen and (min-width: 15em) { /*phones */
-
-
+  #login-container {
+    text-align: center;
+  }
 }
-@media only screen and (min-width: 55em) { /* phablet or bigger */
-]
-
+@media only screen and (min-width: 35em) { /*skeleton pops*/
+  #login-container {
+    text-align: right;
+    float: right;
+  }
 }
