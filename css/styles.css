@@ -30,7 +30,7 @@ header h1{
     font-size: 7em;
   }
   #branding img {
-    height: 7em;
+    height:7em;
   }
 }
 @media only screen and (min-width: 45em) { /*skeleton pops*/
