@@ -1,7 +1,7 @@
 ###Image Sizes
-*Mobile: 400x400
-*Desktop: 
-*tablet: (add-on)
+* Mobile: 400x400
+* Desktop: 
+* tablet: (add-on)
 
 ###Flickr Rules we should be aware of
 
