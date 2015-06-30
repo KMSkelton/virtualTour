@@ -23,28 +23,34 @@ header h1{
 /* Flexbox */
 
 .flex-container {
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    align-content: center;
-    align-items: center;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
 }
 
 .horiz-bar {
   border: thin solid black;
 }
+.horiz-bar--header {
+  margin-bottom: 0;
+}
 
 .photo-container {
-  background-color: red;
-  margin: .25em;
+  max-width: 15em;
+  background-color: gray;
+  margin: 0.25em;
 }
-
 .photo-container img {
-  width:100%;
-display:block;
+  width: 100%;
+  display: block;
 }
-
+.photo-container--searchterm{
+  padding: 1em;
+  margin-bottom: 0;
+}
 
 /* Media Query */
 
