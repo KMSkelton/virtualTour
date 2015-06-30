@@ -20,7 +20,7 @@ var search = function(){
     $("#viewer-container").append(viewer);
     $('.bxslider').bxSlider({
       pager: true,
-      pagerType:'short',
+      pagerType:'short', //use numbers instead of dots
       captions: true
     });
   }
@@ -33,6 +33,6 @@ $('#search-form').submit(function(event) {
 });
 
 
-$(document).ready(function(){
+$(document).ready(function(){ //run on load with stock photos
   $('.bxslider').bxSlider();
 });
