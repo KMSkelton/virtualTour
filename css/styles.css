@@ -10,11 +10,9 @@ a {
 #branding img {
   float: left;
   padding: 1em;
-  height: 8em;
 }
 header h1{
   font-family: 'Fairview', 'Arial', sans-serif;
-  font-size: 8em;
   float:left;
 }
 #login-container {
@@ -28,10 +26,22 @@ header h1{
   #login-container {
     text-align: center;
   }
+  header h1 {
+    font-size: 7em;
+  }
+  #branding img {
+    height: 7em;
+  }
 }
-@media only screen and (min-width: 35em) { /*skeleton pops*/
+@media only screen and (min-width: 45em) { /*skeleton pops*/
   #login-container {
     text-align: right;
     float: right;
+  }
+  header h1 {
+    font-size: 8em;
+  }
+  #branding img {
+    height:8em;
   }
 }
