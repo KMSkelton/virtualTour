@@ -40,3 +40,10 @@ If you just want the raw wikitext without any other information whatsoever, it's
 To get more information about the page and its latest version, use the API: https://en.wikipedia.org/w/api.php?action=query&prop=revisions&titles=Main_Page. See also the documentation for the prop=revisions module.
 
 You can retrieve 50 pages per API request: https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=Main_Page%7CArticles. This also works with generators.
+
+
+Geo Template:
+https://en.wikivoyage.org/wiki/Template:Geo
+
+Using geo coords:
+https://www.mediawiki.org/wiki/Extension:GeoData#API
