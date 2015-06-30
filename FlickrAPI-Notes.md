@@ -1,6 +1,6 @@
 ###Image Sizes
 * Mobile: 400x400
-* Desktop: 
+* Desktop: 500x375
 * tablet: (add-on)
 
 ###Flickr Rules we should be aware of
