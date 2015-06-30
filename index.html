@@ -10,23 +10,36 @@
  -->  </head>
   <body>
     <main role="main">
-      <ul class="bxslider">
-        <li><img src="images/watch.jpg" /></li>
+      <form id="search-form">
+        <fieldset>
+          <legend class="search-form__title">Search Flickr</legend>
+          <label class="search-form__name-label" for="search-input">New Search:</label>
+          <input type="text" class="search-form__input" id="flickr-search" name="search-input" role="textbox">
+          <input type="submit" value="Go">
+        </fieldset>
+      </form>
+
+
+    <div id="viewer-container">
+      <!-- <ul class="bxslider"> -->
+
+        <!-- <li><img src="images/watch.jpg" /></li>
         <li><img src="images/bowl.jpg" /></li>
         <li><img src="images/suitcases.jpg" /></li>
-        <li><img src="images/bottles.jpg" /></li>
-      </ul>
+        <li><img src="images/bottles.jpg" /></li>-->
+<!--       </ul>
+ -->    </div>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <!-- bxSlider Javascript file -->
     <script src="js/jquery.bxslider.min.js"></script>
     <!-- bxSlider CSS file -->
     <link href="css/jquery.bxslider.css" rel="stylesheet" />
-    <!--  <script type="text/javascript" src="js/script.js"></script>-->
+    <script type="text/javascript" src="js/flickrTest.js"></script>
     <script>
-    $(document).ready(function(){
-      $('.bxslider').bxSlider();
-    });
+  //  $(document).ready(function(){
+  //    $('.bxslider').bxSlider();
+  //  });
     </script>
   </body>
 </html>
