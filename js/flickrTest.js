@@ -1,3 +1,7 @@
+var clear = function(){
+  $("#viewer-container").html("");
+
+}
 var search = function(){
   var $flickrSearch = $("#flickr-search").val();
   var flickrAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
@@ -16,9 +20,9 @@ var search = function(){
   }
   $.getJSON(flickrAPI, options, loadPhotos);
 }
-
 $('#search-form').submit(function(event) {
   event.preventDefault();
+  clear();
   search();
 });
 
