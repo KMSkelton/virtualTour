@@ -22,18 +22,17 @@ header h1{
 
 /* Flexbox */
 
-.flex-container {
+.flex-container__horiz {
   display:flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-around;
   align-content: center;
   align-items: center;
-}
-
-.horiz-bar {
   border: thin solid black;
 }
+
+
 .horiz-bar--header {
   margin-bottom: 0;
 }
