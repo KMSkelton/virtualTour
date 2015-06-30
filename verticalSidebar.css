@@ -5,8 +5,13 @@
     justify-content: space-around;
     align-content: flex-start;
     align-items: flex-start;
+    border: 0.1em solid;
+    padding: 0.1em;
+    max-width: 15em;
 }
 img {
   width: 15em;
-  margin: 1em 0;
+}
+h3 {
+  margin: 0;
 }
