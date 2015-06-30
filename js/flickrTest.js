@@ -1,6 +1,5 @@
 var clear = function(){
   $("#viewer-container").html("");
-
 }
 var search = function(){
   var $flickrSearch = $("#flickr-search").val();
