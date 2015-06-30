@@ -11,7 +11,7 @@ var search = function(){
   function loadPhotos(data) {
     var viewer = '<ul class="bxslider">';
     for (var i=0; i < data.items.length; i++){
-      viewer = viewer +  '<li><img src="http://www.fillmurray.com/240/180"></li>'
+      viewer = viewer +  '<li><img src="http://www.fillmurray.com/480/360"></li>'
       // viewer = viewer + '<li><img src="' + data.items[i].media.m +
       // '" title="by ' + data.items[i].author + '"></li>';
       // console.log(data.items[i]);
@@ -33,3 +33,6 @@ $('#search-form').submit(function(event) {
 });
 
 
+$(document).ready(function(){
+  $('.bxslider').bxSlider();
+});

@@ -1,0 +1,21 @@
+/*.bx-wrapper ul li {
+  height: 500px;
+}*/
+
+/*img {
+  width:100%;
+  height:auto;
+}
+*/
+/*.bx-wrapper ul li { height: 500px; }
+*/
+.bx-wrapper {
+  width: 75%;
+}
+
+#wikiScrollBox {
+  max-height: 7em;
+  overflow: auto;
+  border: thin solid black;
+  padding:0 0.5em;
+}
