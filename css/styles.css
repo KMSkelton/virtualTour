@@ -20,6 +20,32 @@ header h1{
   padding: 1em;
 }
 
+/* Flexbox */
+
+.flex-container {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+}
+
+.horiz-bar {
+  border: thin solid black;
+}
+
+.photo-container {
+  background-color: red;
+  margin: .25em;
+}
+
+.photo-container img {
+  width:100%;
+display:block;
+}
+
+
 /* Media Query */
 
 @media only screen and (min-width: 15em) { /*phones */
@@ -30,7 +56,7 @@ header h1{
     font-size: 7em;
   }
   #branding img {
-    height:7em;
+    height: 7em;
   }
 }
 @media only screen and (min-width: 45em) { /*skeleton pops*/
@@ -42,6 +68,6 @@ header h1{
     font-size: 8em;
   }
   #branding img {
-    height:8em;
+    height: 8em;
   }
 }
