@@ -11,13 +11,17 @@ var search = function(){
   function loadPhotos(data) {
     var viewer = '<ul class="bxslider">';
     for (var i=0; i < data.items.length; i++){
-      viewer = viewer + '<li><img src="' + data.items[i].media.m + '</li>';
+      viewer = viewer +  '<li><img src="http://www.fillmurray.com/240/180"></li>'
+      // viewer = viewer + '<li><img src="' + data.items[i].media.m +
+      // '" title="by ' + data.items[i].author + '"></li>';
+      // console.log(data.items[i]);
     }
     viewer = viewer + '</ul>';
     $("#viewer-container").append(viewer);
     $('.bxslider').bxSlider({
-      pager:true,
-      pagerType:'short'
+      pager: true,
+      pagerType:'short',
+      captions: true
     });
   }
   $.getJSON(flickrAPI, options, loadPhotos);

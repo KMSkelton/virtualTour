@@ -11,6 +11,9 @@
  */
 
 
+
+
+
 /** RESET AND LAYOUT
 ===================================*/
 
@@ -36,7 +39,7 @@
 	border:  5px solid #fff;
 	left: -5px;
 	background: #fff;
-	
+
 	/*fix other elements on the page moving (on Chrome)*/
 	-webkit-transform: translatez(0);
 	-moz-transform: translatez(0);
@@ -188,8 +191,8 @@
 
 .bx-wrapper .bx-caption {
 	position: absolute;
-	bottom: 0;
-	left: 0;
+	bottom: 15px;
+	left: 0px;
 	background: #666\9;
 	background: rgba(80, 80, 80, 0.75);
 	width: 100%;
