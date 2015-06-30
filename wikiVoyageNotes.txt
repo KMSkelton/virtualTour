@@ -1,0 +1,42 @@
+https://en.wikivoyage.org/w/api.php
+Most often we will use action="query", format="json",
+
+Origin: When accessing the API using a cross-domain AJAX request (CORS), set this to the originating domain. This must be included in any pre-flight request, and therefore must be part of the request URI (not the POST body). This must match one of the origins in the Origin header exactly, so it has to be set to something like https://en.wikipedia.org or https://meta.wikimedia.org. If this parameter does not match the Origin header, a 403 response will be returned. If this parameter matches the Origin header and the origin is whitelisted, an Access-Control-Allow-Origin header will be set.
+
+-----------------------------
+
+https://www.mediawiki.org/wiki/API:Main_page
+
+The endpoint
+https://en.wikipedia.org/w/api.php
+The format
+format=json
+The action
+action=query
+
+-----------------------------
+
+FAQ:
+https://www.mediawiki.org/wiki/API:FAQ
+
+https://www.mediawiki.org/wiki/API:Data_formats
+
+JSON parameters
+format=json and jsonfm accept the following additional parameters:
+
+callback: If specified, wraps the output into a given function call. For safety, all user-specific data will be restricted.
+utf8: If specified, encodes most (but not all) non-ASCII characters as UTF-8 instead of replacing them with hexadecimal escape sequences.
+formatversion Specify formatversion=2 for to get json (and php) format responses in a cleaner format
+
+-----------------------------
+
+https://www.mediawiki.org/wiki/API:Errors_and_warnings
+
+-----------------------------
+WIKITEXT - UNFORMATTED
+get the content of a page (wikitext)?
+If you just want the raw wikitext without any other information whatsoever, it's best to use index.php's action=raw mode instead of the API: https://en.wikipedia.org/w/index.php?action=raw&title=Main_Page. Note that this will output plain wikitext without any formatting. See also the action=raw documentation
+
+To get more information about the page and its latest version, use the API: https://en.wikipedia.org/w/api.php?action=query&prop=revisions&titles=Main_Page. See also the documentation for the prop=revisions module.
+
+You can retrieve 50 pages per API request: https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=Main_Page%7CArticles. This also works with generators.

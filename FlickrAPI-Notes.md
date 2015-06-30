@@ -1,3 +1,8 @@
+###Image Sizes
+* Mobile: 400x400
+* Desktop: 500x375
+* tablet: (add-on)
+
 ###Flickr Rules we should be aware of
 
 * You shall place the following notice prominently on your application: "This product uses the Flickr API but is not endorsed or certified by Flickr."
