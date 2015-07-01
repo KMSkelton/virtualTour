@@ -16,14 +16,12 @@ a {
   border: thin solid black;
 }
 .flex-container__main {
-  display:flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-content: center;
   align-items: center;
 }
-
 .horiz-bar--header {
   margin-bottom: 0;
 }
@@ -40,17 +38,6 @@ a {
   margin-bottom: 0;
 }
 
-.flex-container__vertical {
-    display:flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    align-content: flex-start;
-    align-items: flex-start;
-    border: 0.1em solid;
-    padding: 0.1em;
-    max-width: 15em;
-}
 
 
 .flex-container__login {
@@ -93,6 +80,18 @@ a {
   #branding img {
     height: 7em;
   }
+  .flex-container__favorites {
+     display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+    border: thin solid black;
+  }
+.three.columns {
+  width:100%
+}
 }
 @media only screen and (min-width: 45em) { /*skeleton pops*/
   #login-container {
@@ -105,7 +104,22 @@ a {
   #branding img {
     height: 8em;
   }
+  .flex-container__favorites {
+    display:flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+    border: 0.1em solid;
+    padding: 0.1em;
+  }
+.three.columns {
+  width:22%
 }
+}
+
+
 
 /** MODULES **/
 
