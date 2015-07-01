@@ -42,6 +42,21 @@ a {
   padding: 1em;
   margin-top: 3em;
 }
+#search-form {
+  background-color: blue;
+  margin-top: .25em;
+}
+#search-form fieldset {
+  padding-top: 1em;
+  text-align: center;
+}
+#search-form label {
+  display: inline-block;
+}
+#search-form input[type="text"] {
+  width: 50%;
+  display: inline-block;
+}
 
 /* LAYOUT - Media Query */
 
@@ -82,7 +97,7 @@ header h1{
 }
 #login-container {
   background-color: gray;
-  padding: 1em;
+  padding: 3em;
 }
 
 /** -- Viewer Pane Module **/
