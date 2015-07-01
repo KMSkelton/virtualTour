@@ -20,6 +20,36 @@ header h1{
   padding: 1em;
 }
 
+/* Flexbox */
+
+.flex-container__horiz {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  border: thin solid black;
+}
+
+
+.horiz-bar--header {
+  margin-bottom: 0;
+}
+
+.photo-container {
+  background-color: gray;
+  margin: 0.25em;
+}
+.photo-container img {
+  width: 100%;
+  display: block;
+}
+.photo-container--searchterm{
+  padding: 1em;
+  margin-bottom: 0;
+}
+
 /* Media Query */
 
 @media only screen and (min-width: 15em) { /*phones */
@@ -30,7 +60,7 @@ header h1{
     font-size: 7em;
   }
   #branding img {
-    height:7em;
+    height: 7em;
   }
 }
 @media only screen and (min-width: 45em) { /*skeleton pops*/
@@ -42,6 +72,6 @@ header h1{
     font-size: 8em;
   }
   #branding img {
-    height:8em;
+    height: 8em;
   }
 }
