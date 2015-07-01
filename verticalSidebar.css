@@ -1,0 +1,17 @@
+.flex-container__vertical {
+    display:flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: flex-start;
+    align-items: flex-start;
+    border: 0.1em solid;
+    padding: 0.1em;
+    max-width: 15em;
+}
+img {
+  width: 15em;
+}
+h3 {
+  margin: 0;
+}
