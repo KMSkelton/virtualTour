@@ -1,39 +1,10 @@
-.bx-wrapper {
-  width: 75%;
-}
+/** BASE **/
 
-#wikiScrollBox {
-  max-height: 7em;
-  overflow: auto;
-  border: thin solid black;
-  border-radius: 0.5em;
-  padding:0 0.5em;
-}
-
-
-@font-face {
-  font-family: 'Fairview';
-  src: url("../fonts/Fairview_Regular.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-}
 a {
   text-decoration: none;
 }
-#branding img {
-  float: left;
-  padding: 1em;
-}
-header h1{
-  font-family: 'Fairview', 'Arial', sans-serif;
-  float:left;
-}
-#login-container {
-  background-color: gray;
-  padding: 1em;
-}
 
-/* Flexbox */
+/** LAYOUT **/
 
 .flex-container__horiz {
   display:flex;
@@ -44,12 +15,9 @@ header h1{
   align-items: center;
   border: thin solid black;
 }
-
-
 .horiz-bar--header {
   margin-bottom: 0;
 }
-
 .photo-container {
   background-color: gray;
   margin: 0.25em;
@@ -63,7 +31,7 @@ header h1{
   margin-bottom: 0;
 }
 
-/* Media Query */
+/* LAYOUT - Media Query */
 
 @media only screen and (min-width: 15em) { /*phones */
   #login-container {
@@ -88,3 +56,55 @@ header h1{
     height: 8em;
   }
 }
+
+
+
+
+/** MODULES **/
+
+/** -- Banner Module **/
+#branding img {
+  float: left;
+  padding: 1em;
+}
+header h1{
+  font-family: 'Fairview', 'Arial', sans-serif;
+  float: left;
+}
+#login-container {
+  background-color: gray;
+  padding: 1em;
+}
+
+/** -- Viewer Pane Module **/
+
+.bx-wrapper {
+  width: 75%;
+}
+#wikiScrollBox {
+  max-height: 7em;
+  overflow: auto;
+  border: thin solid black;
+  border-radius: 0.5em;
+  padding: 0 0.5em;
+}
+
+/** THEME **/
+
+@font-face {
+  font-family: 'Fairview';
+  src: url("../fonts/Fairview_Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+
+
+
+
+
+
+
+
