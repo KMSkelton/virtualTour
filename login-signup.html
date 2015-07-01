@@ -15,17 +15,17 @@
       <form class="four columns account-form" id="signup-form">
         <h4>Sign Up</h4>
 
-        <label>First Name</label>
-        <input type="text" required autocomplete="off" />
+        <label for="firstname-input">First Name</label>
+        <input type="text" name="firstname-input" required autocomplete="off" />
 
-        <label>Last Name</label>
-        <input type="text"required autocomplete="off"/>
+        <label for="lastname-input">Last Name</label>
+        <input type="text" name="lastname-input" required autocomplete="off"/>
 
-        <label>Email Address</label>
-        <input type="email"required autocomplete="off"/>
+        <label for="signup-email-input">Email Address</label>
+        <input type="email" name="signup-email-input" required autocomplete="off"/>
 
-        <label>Set Password</label>
-        <input type="password"required autocomplete="off"/><br>
+        <label for="setpassword">Set Password</label>
+        <input type="password" name="setpassword" required autocomplete="off"/><br>
 
         <button type="submit">Join SLüVT!</button>
       </form>
@@ -33,15 +33,15 @@
       <form class="four columns account-form" id="login-form">
         <h4>Welcome Back!</h4>
 
-        <label>Email Address</label>
-        <input type="email"required autocomplete="off"/>
+        <label for="login-email-input">Email Address</label>
+        <input type="email" name="login-email-input" required autocomplete="off"/>
 
-        <label>Password</label>
-        <input type="password" required autocomplete="off"/>
+        <label for="password-input">Password</label>
+        <input type="password" name="password-input" required autocomplete="off"/>
 
         <p class="forgot"><a href="#">Forgot Password?</a></p>
 
-        <button/>Log In</button>
+        <button>Log In</button>
       </form>
 </div>
 
