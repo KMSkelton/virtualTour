@@ -29,24 +29,29 @@
     <main role="main">
 
 <!--search box module-->
-        <form id="search-form">
+
+  <!--Viewer Pane / bxSlider module -->
+      <div class="row flex-container__main">
+<div class="eight columns">
+          <form id="search-form">
           <fieldset>
             <label class="search-form__name-label" for="search-input">Search: </label>
             <input type="text" class="search-form__input" id="flickr-search" name="search-input" role="textbox">
             <input type="submit" value="Go">
           </fieldset>
         </form>
-  <!--Viewer Pane / bxSlider module -->
-      <div class="row flex-container__main">
-
-        <div id="viewer-container" class="eight columns" >
+        <div id="viewer-container"  >
           <ul class="bxslider">
             <li><img src="images/watch.jpg" /></li> <!--stock photos to preload-->
             <li><img src="images/bowl.jpg" /></li>
             <li><img src="images/suitcases.jpg" /></li>
             <li><img src="images/bottles.jpg" /></li>
           </ul>
-        </div>
+        </div><!--Scrollbox Module -->
+      <div id="wikiScrollBox"> <!--placeholder text -->
+        <p>TEST TEXT - Shibuya garage market alcohol sunglasses sentient modem military-grade augmented reality BASE jump artisanal numinous. Disposable tiger-team lights A.I. neon smart-modem. Vehicle 8-bit digital sign wonton soup human singularity marketing free-market physical DIY voodoo god realism RAF vinyl sub-orbital Tokyo. Tank-traps crypto-bicycle skyscraper assault rain corporation network. Advert claymore mine savant shoes market bicycle pre-face forwards. Concrete nano-denim rebar katana fetishism skyscraper disposable systema cartel shrine refrigerator. Engine post-systema math-crypto-assassin Kowloon sentient military-grade cartel render-farm vehicle BASE jump marketing rebar chrome. Corrupted vinyl dolphin garage towards San Francisco Chiba gang</p>
+      </div>
+    </div>
       <div class="three columns">
         <h4>Recent Favorites</h4>
         <div class="flex-container__favorites ">
@@ -72,10 +77,7 @@
       </div>
 
   </div>
-<!--Scrollbox Module -->
-      <div id="wikiScrollBox"> <!--placeholder text -->
-        <p>TEST TEXT - Shibuya garage market alcohol sunglasses sentient modem military-grade augmented reality BASE jump artisanal numinous. Disposable tiger-team lights A.I. neon smart-modem. Vehicle 8-bit digital sign wonton soup human singularity marketing free-market physical DIY voodoo god realism RAF vinyl sub-orbital Tokyo. Tank-traps crypto-bicycle skyscraper assault rain corporation network. Advert claymore mine savant shoes market bicycle pre-face forwards. Concrete nano-denim rebar katana fetishism skyscraper disposable systema cartel shrine refrigerator. Engine post-systema math-crypto-assassin Kowloon sentient military-grade cartel render-farm vehicle BASE jump marketing rebar chrome. Corrupted vinyl dolphin garage towards San Francisco Chiba gang</p>
-      </div>
+
 <!--Horizontal Bar Module -->
       <h4 class="horiz-bar--header">Other SLuVTrs are searching for:</h4>
       <div class="flex-container__horiz">
@@ -93,6 +95,11 @@
         </div>
       </div>
     </main>
+<!--Footer module -->
+    <footer>
+    South Lake Union Virtual Tours (SLuVT) thanks Flickr for use of the images on this site. SLuVT receives no sponsorhsip or endorsement, nor is connected with, the licensors of images used on this site. Every effort is made to ensure all images are obtained via Creative Commons license 3.0. SLuVT appreciates the contributors at WikiVoyge. Where reasonably possible, attribution is given to creators of copyrighted works. SLuVT is not responsible for the content of images or text derived from outside sources.
+    <p>&#169 SLuVT 2015</p>
+    </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="js/jquery.bxslider.min.js"></script>

@@ -3,7 +3,9 @@
 a {
   text-decoration: none;
 }
-
+footer {
+  font-size: .7em;
+}
 /** LAYOUT **/
 
 .flex-container__horiz {
