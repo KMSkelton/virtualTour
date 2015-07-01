@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'Fairview';
+  src: url("../fonts/Fairview_Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+a {
+  text-decoration: none;
+}
+#branding img {
+  float: left;
+  padding: 1em;
+}
+header h1{
+  font-family: 'Fairview', 'Arial', sans-serif;
+  float:left;
+}
+#login-container {
+  background-color: gray;
+  padding: 1em;
+}
+
+/* Media Query */
+
+@media only screen and (min-width: 15em) { /*phones */
+  #login-container {
+    text-align: center;
+  }
+  header h1 {
+    font-size: 7em;
+  }
+  #branding img {
+    height:7em;
+  }
+}
+@media only screen and (min-width: 45em) { /*skeleton pops*/
+  #login-container {
+    text-align: right;
+    float: right;
+  }
+  header h1 {
+    font-size: 8em;
+  }
+  #branding img {
+    height:8em;
+  }
+}
