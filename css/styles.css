@@ -30,6 +30,18 @@ a {
   padding: 1em;
   margin-bottom: 0;
 }
+.flex-container__login {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: stretch;
+}
+.account-form {
+  padding: 1em;
+  margin-top: 3em;
+}
 
 /* LAYOUT - Media Query */
 
@@ -56,9 +68,6 @@ a {
     height: 8em;
   }
 }
-
-
-
 
 /** MODULES **/
 
@@ -97,10 +106,24 @@ header h1{
   font-weight: normal;
   font-style: normal;
 }
+.account-form{
+  border: thin solid #75CED9;
+  border-radius: .5em;
+}
+.account-form button {
+  background-color: #518F96;
+  color: white;
+}
 
+/** STATE **/
 
-
-
+#login-form:hover,
+#signup-form:hover {
+  background:#75CED9;
+}
+.account-form button:hover {
+  background-color: #A3BEC2;
+}
 
 
 

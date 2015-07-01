@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Sarah's modules</title>
+    <title>Login /Signup</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/skeleton.css" media="screen" />
@@ -11,7 +11,8 @@
   </head>
   <body>
     <main>
-      <form id="signup-form">
+      <div class="flex-container__login">
+      <form class="four columns account-form" id="signup-form">
         <h4>Sign Up</h4>
 
         <label>First Name</label>
@@ -24,12 +25,12 @@
         <input type="email"required autocomplete="off"/>
 
         <label>Set Password</label>
-        <input type="password"required autocomplete="off"/>
+        <input type="password"required autocomplete="off"/><br>
 
-        <button type="submit">Get Started</button>
+        <button type="submit">Join SLüVT!</button>
       </form>
 
-      <form id="login-form">
+      <form class="four columns account-form" id="login-form">
         <h4>Welcome Back!</h4>
 
         <label>Email Address</label>
@@ -42,7 +43,7 @@
 
         <button/>Log In</button>
       </form>
-
+</div>
 
 
     </main>
