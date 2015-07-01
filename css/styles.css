@@ -141,9 +141,9 @@ header h1{
 
 /** -- Viewer Pane Module **/
 
-/*#viewer-container {
+#viewer-container {
   position:relative;
-}*/
+}
 
 #wikiScrollBox {
   max-height: 7em;
@@ -181,6 +181,7 @@ header h1{
   position:absolute;
   z-index: 500;
   margin-top:-7em;
+  right:0;
 }
 /** THEME **/
 
