@@ -28,37 +28,47 @@
 
     <main role="main">
 
-<!--Testing search box-->
-      <form id="search-form">
-        <fieldset>
-          <label class="search-form__name-label" for="search-input">Search: </label>
-          <input type="text" class="search-form__input" id="flickr-search" name="search-input" role="textbox">
-          <input type="submit" value="Go">
-        </fieldset>
-      </form>
-<!--Viewer Pane / bxSlider module -->
-      <div id="viewer-container">
-        <ul class="bxslider">
-          <li><img src="images/watch.jpg" /></li> <!--stock photos to preload-->
-          <li><img src="images/bowl.jpg" /></li>
-          <li><img src="images/suitcases.jpg" /></li>
-          <li><img src="images/bottles.jpg" /></li>
-        </ul>
-      </div>
-      <h3>Recent Favorites</h3>
-  <div class="flex-container__vertical">
-    <img id="vertical--top" src="images/vertical-top.jpg" />
-    <p id="vertical--top__location">
-      Mars <!-- this will be search term of favorited item -->
-    </p>
-    <img id="vertical--center" src="images/vertical-center.jpg" />
-    <p id="vertical--center__location">
-      Mars landscape <!-- this will be search term of favorited item -->
-    </p>
-    <img id="vertical--bottom" src="images/vertical-bottom.jpg" />
-    <p id="vertical--center__location">
-      earth identified from mars <!-- this will be search term of favorited item -->
-    </p>
+<!--search box module-->
+        <form id="search-form">
+          <fieldset>
+            <label class="search-form__name-label" for="search-input">Search: </label>
+            <input type="text" class="search-form__input" id="flickr-search" name="search-input" role="textbox">
+            <input type="submit" value="Go">
+          </fieldset>
+        </form>
+  <!--Viewer Pane / bxSlider module -->
+      <div class="row flex-container__main">
+
+        <div id="viewer-container" class="eight columns">
+          <ul class="bxslider">
+            <li><img src="images/watch.jpg" /></li> <!--stock photos to preload-->
+            <li><img src="images/bowl.jpg" /></li>
+            <li><img src="images/suitcases.jpg" /></li>
+            <li><img src="images/bottles.jpg" /></li>
+          </ul>
+        </div>
+
+        <div class="flex-container__vertical three columns">
+          <h4>Recent Favorites</h4>
+          <div class="photo-container">
+            <img id="vertical--top" src="images/vertical-top.jpg" />
+            <p id="vertical--top__location">
+              Mars <!-- this will be search term of favorited item -->
+            </p>
+          </div>
+          <div class="photo-container">
+            <img id="vertical--center" src="images/vertical-center.jpg" />
+            <p id="vertical--center__location">
+              Mars landscape <!-- this will be search term of favorited item -->
+            </p>
+          </div>
+          <div class="photo-container">
+            <img id="vertical--bottom" src="images/vertical-bottom.jpg" />
+            <p id="vertical--center__location">
+              earth identified from mars <!-- this will be search term of favorited item -->
+            </p>
+          </div>
+        </div>
   </div>
 <!--Scrollbox Module -->
       <div id="wikiScrollBox"> <!--placeholder text -->

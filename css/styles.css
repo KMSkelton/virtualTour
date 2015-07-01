@@ -15,6 +15,15 @@ a {
   align-items: center;
   border: thin solid black;
 }
+.flex-container__main {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+
 .horiz-bar--header {
   margin-bottom: 0;
 }
@@ -42,15 +51,6 @@ a {
     padding: 0.1em;
     max-width: 15em;
 }
-img {
-  width: 15em;
-}
-h3 {
-  margin: 0;
-}
-
-
-
 
 
 .flex-container__login {
@@ -125,9 +125,9 @@ header h1{
 
 /** -- Viewer Pane Module **/
 
-.bx-wrapper {
+/*.bx-wrapper {
   width: 75%;
-}
+}*/
 #wikiScrollBox {
   max-height: 7em;
   overflow: auto;
