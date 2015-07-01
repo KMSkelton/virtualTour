@@ -141,6 +141,10 @@ header h1{
 
 /** -- Viewer Pane Module **/
 
+/*#viewer-container {
+  position:relative;
+}*/
+
 #wikiScrollBox {
   max-height: 7em;
   overflow: auto;
@@ -172,6 +176,11 @@ header h1{
   background-position: 0px -32px;
   width: 32px;
   height: 32px;
+}
+#hearts {
+  position:absolute;
+  z-index: 500;
+  margin-top:-7em;
 }
 /** THEME **/
 
