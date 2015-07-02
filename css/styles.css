@@ -55,6 +55,7 @@ footer {
   margin-top: 3em;
 }
 #search-form {
+  width: 100%;
   background-color: gray;
   margin-top: .25em;
 }
@@ -91,9 +92,9 @@ footer {
     align-items: center;
     border: thin solid black;
   }
-.three.columns {
+/*.three.columns {
   width:100%
-}
+}*/
 }
 @media only screen and (min-width: 45em) { /*skeleton pops*/
   #login-container {
@@ -116,9 +117,9 @@ footer {
     border: 0.1em solid;
     padding: 0.1em;
   }
-.three.columns {
+/*.three.columns {
   width:22%
-}
+}*/
 }
 
 
@@ -142,10 +143,12 @@ header h1{
 /** -- Viewer Pane Module **/
 
 #viewer-container {
-  position:relative;
+  position: relative;
 }
 
 #wikiScrollBox {
+  width: 100%;
+  margin:0 2em 2em;
   max-height: 7em;
   overflow: auto;
   border: thin solid black;
@@ -209,10 +212,5 @@ header h1{
 .account-form button:hover {
   background-color: #A3BEC2;
 }
-
-
-
-
-
 
 

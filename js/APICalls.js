@@ -86,6 +86,10 @@ var photoSearch = function(){
 
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
+        // z medium 640, 640 on longest side
+        // c medium 800, 800 on longest side
+        // b large, 1024 on longest side
+        // h large 1600, 1600 on longest side
 
         var title = data.photos.photo[i].title;
 
@@ -98,6 +102,9 @@ var photoSearch = function(){
         pager: true,
         pagerType:'short',  //use numbers instead of dots
         captions: true , //will show captions from text in title field of <img>
+        adaptiveHeight: true,
+        slideWidth: 850,
+        maxSlides: 1,
         onSlideAfter: function(){
           // alert('A slide has finished transitioning. Bravo. Click OK to continue!');
           var current = slider.getCurrentSlide();
@@ -130,6 +137,9 @@ $('#search-form').submit(function(event) {
 });
 
 $(document).ready(function(){ //run on load with stock photos
-  $('.bxslider').bxSlider();
+  $('.bxslider').bxSlider({
+        adaptiveHeight: true,
+        slideWidth: 640
+        });
 });
 
