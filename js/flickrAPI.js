@@ -31,7 +31,7 @@ var search = function(){
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
       //data.photos.photo.length
-      for (var i=0; i < 25; i++){
+      for (var i=0; i < 50; i++){
         //assemble the URL of the photo
         //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
         var farm = data.photos.photo[i].farm;
@@ -40,7 +40,7 @@ var search = function(){
         var secret = data.photos.photo[i].secret;
 
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
-        + "/" + id + "_" + secret + "_c.jpg";  //underscore letter signals size of resultb
+        + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
 
         var title = data.photos.photo[i].title;
 
@@ -49,10 +49,15 @@ var search = function(){
       viewer = viewer + '</ul>';
       clear();
       $("#viewer-container").append(viewer);
-      $('.bxslider').bxSlider({
+      var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
-        captions: true      //will show captions from text in title field of <img>
+        captions: true , //will show captions from text in title field of <img>
+        onSlideAfter: function(){
+          // alert('A slide has finished transitioning. Bravo. Click OK to continue!');
+          var current = slider.getCurrentSlide();
+          console.log("current is:", current);
+        }
       });
     }
     console.log("$flickrSearch", $flickrSearch);
