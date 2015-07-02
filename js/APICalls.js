@@ -13,7 +13,7 @@ var wikiSearch = function(){
   var wikiTitleTag ="&titles=";
 
   var wikiRequest = wikiBaseURL + wikiAction + wikiProp
-  + wikiFormat + wikiSize + wikiIntro + wikiPageID + wikiTitleTag + $wikiSearch;
+  + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + $wikiSearch;
 
   // $.getJSON(wikiRequest, function(){
   //   console.log(data);
@@ -32,7 +32,8 @@ var wikiSearch = function(){
 
       console.log("data.query.pages[pageID]", data.query.pages[pageID]);
       console.log("data.query.pages[pageID].extract", data.query.pages[pageID].extract);
-      var extract= data.query.pages[pageID].extract;
+      var extract = data.query.pages[pageID].extract;
+      $("#wikiScrollBox").html(extract);
 
 
     }
