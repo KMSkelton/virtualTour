@@ -1,9 +1,50 @@
-var clear = function(){
+var wikiSearch = function(){
+  console.log("in wikiSearch");
+
+  var $wikiSearch =  $("#location-search").val();
+
+  var wikiBaseURL ="https://en.wikipedia.org/w/api.php?";
+  var wikiAction ="action=query";
+  var wikiProp ="&prop=extracts";
+  var wikiFormat = "&format=json";
+  var wikiSize = "&exchars=250";
+  var wikiIntro = "&exintro=";
+  var wikiTitleTag ="&titles=";
+
+  var wikiRequest = wikiBaseURL + wikiAction + wikiProp
+  + wikiFormat + wikiSize + wikiIntro + wikiTitleTag + $wikiSearch;
+
+  // $.getJSON(wikiRequest, function(){
+  //   console.log(data);
+  // });
+
+
+$.ajax({
+    url: wikiRequest,
+
+    // The name of the callback parameter, as specified by the YQL service
+    jsonp: "callback",
+
+    // Tell jQuery we're expecting JSONP
+    dataType: "jsonp",
+
+    // Work with the response
+    success: function( response ) {
+        console.log( response ); // server response
+    }
+});
+
+
+}
+
+
+var photoClear = function(){
   $("#viewer-container").html("");
 }
 
-var search = function(){
-  var $flickrSearch =  $("#flickr-search").val();
+var photoSearch = function(){
+  console.log("in photoSearch")
+  var $flickrSearch =  $("#location-search").val();
 
   var flickrBaseURL ="https://api.flickr.com/services/rest/";
   var api_key = "&api_key=fa3e0832f30851339c73d3dd3c27f961";
@@ -26,7 +67,8 @@ var search = function(){
 
   var placeTag = "&place_id=";
 
-  function findPlaceID(data){
+  function findFlickrPlaceID(data){
+    console.log("in findFlickrPlaceID");
     var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
@@ -47,7 +89,7 @@ var search = function(){
         viewer = viewer +  '<li><img src="'+ photoURL +'" title="' + title + '"></li>'
       }
       viewer = viewer + '</ul>';
-      clear();
+      photoClear();
       $("#viewer-container").append(viewer);
       var slider = $('.bxslider').bxSlider({
         pager: true,
@@ -74,12 +116,14 @@ var search = function(){
     console.log(flickrRequest);
     $.getJSON(flickrRequest, loadPhotos);
   }
-  $.getJSON(placeIDRequest, findPlaceID);
+  $.getJSON(placeIDRequest, findFlickrPlaceID);
 }
 
 $('#search-form').submit(function(event) {
+  console.log("clicked search");
   event.preventDefault();
-  search();
+  photoSearch();
+  wikiSearch();
 });
 
 $(document).ready(function(){ //run on load with stock photos
