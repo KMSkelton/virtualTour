@@ -1,0 +1,133 @@
+/** BASE **/
+
+a {
+  text-decoration: none;
+}
+
+/** LAYOUT **/
+
+.flex-container__horiz {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  border: thin solid black;
+}
+.horiz-bar--header {
+  margin-bottom: 0;
+}
+.photo-container {
+  background-color: gray;
+  margin: 0.25em;
+}
+.photo-container img {
+  width: 100%;
+  display: block;
+}
+.photo-container--searchterm{
+  padding: 1em;
+  margin-bottom: 0;
+}
+.flex-container__login {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: stretch;
+}
+.account-form {
+  padding: 1em;
+  margin-top: 3em;
+}
+
+/* LAYOUT - Media Query */
+
+@media only screen and (min-width: 15em) { /*phones */
+  #login-container {
+    text-align: center;
+  }
+  header h1 {
+    font-size: 7em;
+  }
+  #branding img {
+    height: 7em;
+  }
+}
+@media only screen and (min-width: 45em) { /*skeleton pops*/
+  #login-container {
+    text-align: right;
+    float: right;
+  }
+  header h1 {
+    font-size: 8em;
+  }
+  #branding img {
+    height: 8em;
+  }
+}
+
+/** MODULES **/
+
+/** -- Banner Module **/
+#branding img {
+  float: left;
+  padding: 1em;
+}
+header h1{
+  font-family: 'Fairview', 'Arial', sans-serif;
+  float: left;
+}
+#login-container {
+  background-color: gray;
+  padding: 1em;
+}
+
+/** -- Viewer Pane Module **/
+
+.bx-wrapper {
+  width: 75%;
+}
+#wikiScrollBox {
+  max-height: 7em;
+  overflow: auto;
+  border: thin solid black;
+  border-radius: 0.5em;
+  padding: 0 0.5em;
+}
+
+/** THEME **/
+
+@font-face {
+  font-family: 'Fairview';
+  src: url("../fonts/Fairview_Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+.account-form{
+  border: thin solid #75CED9;
+  border-radius: .5em;
+}
+.account-form button {
+  background-color: #518F96;
+  color: white;
+}
+
+/** STATE **/
+
+#login-form:hover,
+#signup-form:hover {
+  background:#75CED9;
+}
+.account-form button:hover {
+  background-color: #A3BEC2;
+}
+
+
+
+
+
+
+
