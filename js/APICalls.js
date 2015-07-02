@@ -9,32 +9,34 @@ var wikiSearch = function(){
   var wikiFormat = "&format=json";
   var wikiSize = "&exchars=250";
   var wikiIntro = "&exintro=";
+  var wikiPageID = "&indexpageids="
   var wikiTitleTag ="&titles=";
 
   var wikiRequest = wikiBaseURL + wikiAction + wikiProp
-  + wikiFormat + wikiSize + wikiIntro + wikiTitleTag + $wikiSearch;
+  + wikiFormat + wikiSize + wikiIntro + wikiPageID + wikiTitleTag + $wikiSearch;
 
   // $.getJSON(wikiRequest, function(){
   //   console.log(data);
   // });
 
 
-$.ajax({
+  $.ajax({
     url: wikiRequest,
-
-    // The name of the callback parameter, as specified by the YQL service
     jsonp: "callback",
-
-    // Tell jQuery we're expecting JSONP
     dataType: "jsonp",
+    success: function( data ) {
+      console.log( "data.query", data.query); // server response
+      var pageID = data.query.pageids[0];
+      console.log("pageID", pageID);
+      console.log("data.query.pages", data.query.pages);
 
-    // Work with the response
-    success: function( response ) {
-        console.log( response ); // server response
+      console.log("data.query.pages[pageID]", data.query.pages[pageID]);
+      console.log("data.query.pages[pageID].extract", data.query.pages[pageID].extract);
+      var extract= data.query.pages[pageID].extract;
+
+
     }
-});
-
-
+  });
 }
 
 
