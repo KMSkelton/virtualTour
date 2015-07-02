@@ -22,6 +22,7 @@ var search = function(){
   var freshness = "&min_upload_date=1388534400&min_taken_date=1388534400" // taken and uploaded after 1-1-14
   var sort = "&sort=interestingness-desc";        //sort order
   var content_type = "&content_type=1";           //only photos
+  var ingallery = "&in_gallery=1"
 
   var placeTag = "&place_id=";
 
@@ -29,7 +30,8 @@ var search = function(){
     var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
-      for (var i=0; i < data.photos.photo.length; i++){
+      //data.photos.photo.length
+      for (var i=0; i < 25; i++){
         //assemble the URL of the photo
         //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
         var farm = data.photos.photo[i].farm;
@@ -53,8 +55,16 @@ var search = function(){
       });
     }
     console.log("$flickrSearch", $flickrSearch);
-    var flickrRequest = flickrBaseURL + method_photoSearch + api_key + photoQuery +
-              + $flickrSearch + placeTag + placeID + format;
+
+    //construct the request
+    // base + method + api + photoQuery + flickrSearch + <-- always first
+    // freshness + sort + type + placeTag + placeID + ingallery <-- must be in this order
+    // +format <--always last
+
+    var flickrRequest = flickrBaseURL + method_photoSearch + api_key
+                    + photoQuery + $flickrSearch
+                    + freshness + sort + content_type +format;
+                    // + placeTag + placeID + format;
     console.log(flickrRequest);
     $.getJSON(flickrRequest, loadPhotos);
 
