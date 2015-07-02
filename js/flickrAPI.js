@@ -67,7 +67,6 @@ var search = function(){
                     // + placeTag + placeID + format;
     console.log(flickrRequest);
     $.getJSON(flickrRequest, loadPhotos);
-
   }
   $.getJSON(placeIDRequest, findPlaceID);
 }
