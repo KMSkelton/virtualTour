@@ -47,6 +47,7 @@ var search = function(){
         viewer = viewer +  '<li><img src="'+ photoURL +'" title="' + title + '"></li>'
       }
       viewer = viewer + '</ul>';
+      clear();
       $("#viewer-container").append(viewer);
       $('.bxslider').bxSlider({
         pager: true,
@@ -73,7 +74,6 @@ var search = function(){
 
 $('#search-form').submit(function(event) {
   event.preventDefault();
-  clear();
   search();
 });
 
