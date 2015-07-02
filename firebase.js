@@ -57,6 +57,8 @@ $("#loginButton").on("click", function() {
       }
     } else {
       console.log("Authenticated successfully with payload:", authData);
+      localStorage.setItem("user_id", authData.uid);
+      localStorage.setItem("provider",authData.provider);
     }
   });
   return false;

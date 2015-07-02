@@ -12,14 +12,18 @@ function saveUser(name, simpleuserid) {
   var usersRef = myDataRef.child("users/").child(simpleuserid);
   usersRef.set({
     name: name,
-    photos: {},
-    currentPlan: "",
-    plans: {}
+    //photos: {},
+    //currentPlan: "",
+    //plans: {}
   }, reportError());
   return false;
 }
 //savePlan --adds plan to plansJSON. updates 'autoincrement' (uses firebase-generated UID from push() method instead).
 function savePlan(planName, simpleuserid) {
+  console.log("in savePlan");
+  console.log(planName);
+  console.log(simpleuserid);
+  console.log("saving plan:");
   var plansRef = myDataRef.child("plans");
   var newPlanRef = plansRef.push({
     name: planName,
@@ -28,16 +32,18 @@ function savePlan(planName, simpleuserid) {
     flickrUID: {}, //hash to use Object.keys(plansJSON:photos).length ...slow, but cheap in lines of code :)
     wikiURL: ""
   }, reportError());
+  console.log("after saving Plan");
   var planId = newPlanRef.key();
+  console.log("planId",planId);
   var usersPlansRef = myDataRef.child("users").child(simpleuserid).child("plans");
-  usersPlansRef.set({
-    planId: true
-  }, reportError());
+  var addPlan = {};
+  addPlan[planId] = true;
+  usersPlansRef.update(addPlan, reportError());
   var usersRef = myDataRef.child("users").child(simpleuserid);
-  usersRef.set({
+  usersRef.update({
     currentPlan: planId
   }, reportError());
-
+  return false;
 }
 
 //updateUser --changes user info in usersJSON. NOT MVP.
