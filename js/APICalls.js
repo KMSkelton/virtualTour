@@ -1,6 +1,4 @@
 var wikiSearch = function(){
-  console.log("in wikiSearch");
-
   var $wikiSearch =  $("#location-search").val();
 
   var wikiBaseURL ="https://en.wikipedia.org/w/api.php?";
@@ -15,38 +13,22 @@ var wikiSearch = function(){
   var wikiRequest = wikiBaseURL + wikiAction + wikiProp
   + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + $wikiSearch;
 
-  // $.getJSON(wikiRequest, function(){
-  //   console.log(data);
-  // });
-
-
   $.ajax({
     url: wikiRequest,
     jsonp: "callback",
     dataType: "jsonp",
     success: function( data ) {
-      console.log( "data.query", data.query); // server response
       var pageID = data.query.pageids[0];
-      console.log("pageID", pageID);
-      console.log("data.query.pages", data.query.pages);
-
-      console.log("data.query.pages[pageID]", data.query.pages[pageID]);
-      console.log("data.query.pages[pageID].extract", data.query.pages[pageID].extract);
       var extract = data.query.pages[pageID].extract;
       $("#wikiScrollBox").html(extract);
-
-
     }
   });
 }
 
-
 var photoClear = function(){
   $("#viewer-container").html("");
 }
-
 var photoSearch = function(){
-  console.log("in photoSearch")
   var $flickrSearch =  $("#location-search").val();
 
   var flickrBaseURL ="https://api.flickr.com/services/rest/";
@@ -71,7 +53,6 @@ var photoSearch = function(){
   var placeTag = "&place_id=";
 
   function findFlickrPlaceID(data){
-    console.log("in findFlickrPlaceID");
     var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
@@ -110,12 +91,11 @@ var photoSearch = function(){
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
-        captions: true , //will show captions from text in title field of <img>
+        captions: true ,    //will show captions from text in title field of <img>
         adaptiveHeight: true,
         slideWidth: 850,
         maxSlides: 1,
         onSlideAfter: function(){
-          // alert('A slide has finished transitioning. Bravo. Click OK to continue!');
           var current = slider.getCurrentSlide();
           console.log("current is:", current);
         }

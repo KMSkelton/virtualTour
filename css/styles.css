@@ -40,8 +40,6 @@ footer {
   margin-bottom: 0;
 }
 
-
-
 .flex-container__login {
   display: flex;
   flex-direction: row;
@@ -92,9 +90,6 @@ footer {
     align-items: center;
     border: thin solid black;
   }
-/*.three.columns {
-  width:100%
-}*/
 }
 @media only screen and (min-width: 45em) { /*skeleton pops*/
   #login-container {
@@ -117,12 +112,7 @@ footer {
     border: 0.1em solid;
     padding: 0.1em;
   }
-/*.three.columns {
-  width:22%
-}*/
 }
-
-
 
 /** MODULES **/
 
@@ -147,7 +137,6 @@ header h1{
 }
 
 #wikiScrollBox {
-  width: 100%;
   margin-bottom: 2em;
   max-height: 10em;
   overflow: auto;
@@ -155,7 +144,6 @@ header h1{
   border-radius: 0.5em;
   padding: 0 0.5em;
 }
-
 .bx-wrapper img {
     margin: 0 auto;
 }
