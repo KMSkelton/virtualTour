@@ -141,21 +141,19 @@ var photoSearch = function(){
         adaptiveHeight: true,
         slideWidth: 850,
         maxSlides: 1,
-        onSliderLoad: function(slider,currentIndex){
-          var currentSlide = slider.getCurrentSlide(currentIndex);
-          var currentImgURL = currentSlide[0].children[0].src;
-          setupHearts(currentImgURL);           
-        },
+  //      onSliderLoad: function(currentIndex){
+  //        var slider = this;
+  //        console.log("slider",slider);
+  //        console.log("currentIndex",currentIndex);        
+  //        var currentSlide = slider.getCurrentSlide(currentIndex);
+  //       console.log(currentSlide);
+  //       var currentImgURL = currentSlide[0].children[0].src;
+  //        setupHearts(currentImgURL);           
+  //      },
         onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
-          // alert('A slide has finished transitioning. Bravo. Click OK to continue!');
           var current = slider.getCurrentSlide();
-          console.log("current is:", current);
-          console.log("currentSlideNumber",currentSlideNumber);
-          console.log("currentSlide",currentSlide);
-          console.log("currentSrc",currentSlide[0].children[0].src);
           var currentImgURL = currentSlide[0].children[0].src;
           setupHearts(currentImgURL);          
- 
         }
       });
     }
