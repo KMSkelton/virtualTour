@@ -1,6 +1,12 @@
 var wikiSearch = function(){
   var $wikiSearch =  $("#location-search").val();
 
+  function toTitleCase(str) { //avoids WikiVoyage redirects based on non-Title case
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  }
+  var capitalSearch = toTitleCase($wikiSearch);
+
   var wikiBaseURL ="https://en.wikipedia.org/w/api.php?";
   var wikiAction ="action=query";
   var wikiProp ="&prop=extracts";
@@ -11,7 +17,7 @@ var wikiSearch = function(){
   var wikiTitleTag ="&titles=";
 
   var wikiRequest = wikiBaseURL + wikiAction + wikiProp
-  + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + $wikiSearch;
+  + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + capitalSearch;
 
   $.ajax({
     url: wikiRequest,
@@ -38,7 +44,7 @@ function setupHearts(currentImgURL) {
         }
         if ($(this).hasClass('openHeart')) {
           $(this).addClass('filledHeart').removeClass('openHeart');
-          console.log("calling savePhoto",user);
+          // console.log("calling savePhoto",user);
           savePhoto(currentImgURL,user);
 
         } else if ($(this).hasClass('filledHeart')) {
@@ -53,7 +59,6 @@ function setupHearts(currentImgURL) {
         };
           });
 }
-
 
 var photoSearch = function(){
   var $flickrSearch =  $("#location-search").val();
@@ -83,7 +88,7 @@ var photoSearch = function(){
     var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
-      //data.photos.photo.length
+      //data.photos.photo.length will give you total number of results
       for (var i=0; i < 50; i++){
         //assemble the URL of the photo
         //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
@@ -91,7 +96,6 @@ var photoSearch = function(){
         var server = data.photos.photo[i].server;
         var id = data.photos.photo[i].id;
         var secret = data.photos.photo[i].secret;
-        //console.log("data.photos",data.photos);
 
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
@@ -107,7 +111,6 @@ var photoSearch = function(){
 
         var newCaption = '<div class="newCaption"><a href="'
                           + attrURL + '">' + title + '</a></div>';
-        //console.log("newCaption", newCaption);
 
         viewer = viewer +  '<li><img src="'+ photoURL
               + '" title="' + title + '">'+ newCaption +'</li>' ;
@@ -120,7 +123,6 @@ var photoSearch = function(){
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
-        captions: true ,    //will show captions from text in title field of <img>
         adaptiveHeight: true,
         slideWidth: 850,
         maxSlides: 1,
@@ -141,8 +143,6 @@ var photoSearch = function(){
         }
       });
     }
-    console.log("$flickrSearch", $flickrSearch);
-
     //construct the request
     // base + method + api + photoQuery + flickrSearch + <-- always first
     // freshness + sort + type + placeTag + placeID + ingallery <-- must be in this order
@@ -152,18 +152,14 @@ var photoSearch = function(){
                     + photoQuery + $flickrSearch
                     + freshness + sort + content_type +format;
                     // + placeTag + placeID + format;
-    console.log(flickrRequest);
-
     $.getJSON(flickrRequest, loadPhotos);
-
-
   }
   $.getJSON(placeIDRequest, findFlickrPlaceID);
 
 }
 
 $('#search-form').submit(function(event) {
-  console.log("clicked search");
+  // console.log("clicked search");
   event.preventDefault();
   photoSearch();
   wikiSearch();
@@ -171,7 +167,7 @@ $('#search-form').submit(function(event) {
 
 $(document).ready(function(){ //run on load with stock photos
   $('.bxslider').bxSlider({
-    captions: true , //will show captions from text in title field of <img>
+    //captions: true  // no longer using bxSlider captions; use custom
     adaptiveHeight: true,
     slideWidth: 850
     });
