@@ -95,9 +95,18 @@ var photoSearch = function(){
 
         viewer = viewer +  '<li><img src="'+ photoURL +'" title="' + title + '"></li>'
       }
-      viewer = viewer + '</ul>';
+      viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
       photoClear();
       $("#viewer-container").append(viewer);
+      $('#hearts').click(function() {         //reattach click handler for heart
+        if ($(this).hasClass('openHeart')) {
+          $(this).addClass('filledHeart').removeClass('openHeart');
+        } else if ($(this).hasClass('filledHeart')) {
+          $(this).addClass('brokenHeart').removeClass('filledHeart');
+        } else {
+          $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
+        };
+      });
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
