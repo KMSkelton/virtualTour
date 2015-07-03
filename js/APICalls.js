@@ -148,7 +148,7 @@ $('#search-form').submit(function(event) {
 $(document).ready(function(){ //run on load with stock photos
   $('.bxslider').bxSlider({
         adaptiveHeight: true,
-        slideWidth: 640
+        slideWidth: 850
         });
 });
 
