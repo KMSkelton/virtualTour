@@ -148,8 +148,8 @@ header h1{
 
 #wikiScrollBox {
   width: 100%;
-  margin:0 2em 2em;
-  max-height: 7em;
+  margin-bottom: 2em;
+  max-height: 10em;
   overflow: auto;
   border: thin solid black;
   border-radius: 0.5em;
