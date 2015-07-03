@@ -112,8 +112,7 @@ var photoSearch = function(){
         var newCaption = '<div class="newCaption"><a href="'
                           + attrURL + '">' + title + '</a></div>';
 
-        viewer = viewer +  '<li><img src="'+ photoURL
-              + '" title="' + title + '">'+ newCaption +'</li>' ;
+        viewer = viewer +  '<li><img src="'+ photoURL + '"><p>'+ newCaption +'</p></li>' ;
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';

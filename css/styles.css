@@ -199,6 +199,24 @@ header h1{
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'EdmondSans';
+  src: url("../fonts/Edmondsans-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'EdmondSans';
+  src: url("../fonts/Edmondsans-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+p {
+  font-family: 'EdmondSans', sans-serif;
+}
+
 .account-form{
   border: thin solid #75CED9;
   border-radius: .5em;
