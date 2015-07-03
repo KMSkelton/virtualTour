@@ -8,6 +8,10 @@ footer {
 }
 /** LAYOUT **/
 
+#branding {
+  background-color: gray;
+}
+
 .flex-container__horiz {
   display:flex;
   flex-direction: row;
