@@ -46,6 +46,30 @@ var photoClear = function(){
 }
 var user = localStorage.uid;
 
+function setupHearts(currentImgURL) {
+         $('#hearts').click(function() {         //reattach click handler for heart
+        if (typeof user == 'undefined') {
+        //  alert("You must be logged in to save a photo");
+        }
+        if ($(this).hasClass('openHeart')) {
+          $(this).addClass('filledHeart').removeClass('openHeart');
+          console.log("calling savePhoto",user);
+          savePhoto(currentImgURL,user);
+
+        } else if ($(this).hasClass('filledHeart')) {
+          $(this).addClass('brokenHeart').removeClass('filledHeart');
+ 
+          $(this).delay(1000).queue(function(next) { 
+              $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart'); 
+              next(); 
+          });
+        } else {
+          $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
+        };
+          });
+} 
+          
+
 var photoSearch = function(){
   console.log("in photoSearch")
   var $flickrSearch =  $("#location-search").val();
@@ -84,6 +108,7 @@ var photoSearch = function(){
         var server = data.photos.photo[i].server;
         var id = data.photos.photo[i].id;
         var secret = data.photos.photo[i].secret;
+        //console.log("data.photos",data.photos);
 
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
@@ -92,35 +117,23 @@ var photoSearch = function(){
         // b large, 1024 on longest side
         // h large 1600, 1600 on longest side
 
+        var owner = data.photos.photo[i].owner;
+        var attrURL = "https://www.flickr.com/photos/" + owner + "/" + id + "/";
+        
         var title = data.photos.photo[i].title;
 
-        viewer = viewer +  '<li><img src="'+ photoURL +'" title="' + title + '"></li>'
+        var newCaption = '<div class="newCaption"><a href="'
+                          + attrURL + '">' + title + '</a></div>';
+        //console.log("newCaption", newCaption);
+
+        viewer = viewer +  '<li><img src="'+ photoURL
+              + '" title="' + title + '">'+ newCaption +'</li>' ;
+
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
       photoClear();
       $("#viewer-container").append(viewer);
-      
-      $('#hearts').click(function() {         //reattach click handler for heart
-        if (typeof user == 'undefined') {
-        //  alert("You must be logged in to save a photo");
-        }
-        if ($(this).hasClass('openHeart')) {
-          $(this).addClass('filledHeart').removeClass('openHeart');
-          console.log("calling savePhoto",user);
-          savePhoto(photoURL,user);
-
-        } else if ($(this).hasClass('filledHeart')) {
-          $(this).addClass('brokenHeart').removeClass('filledHeart');
- 
-          $(this).delay(1000).queue(function(next) { 
-              $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart'); 
-              next(); 
-          });
-        } else {
-          $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
-        };
-      });
-      
+    
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
@@ -128,15 +141,26 @@ var photoSearch = function(){
         adaptiveHeight: true,
         slideWidth: 850,
         maxSlides: 1,
-        onSlideAfter: function(){
+        onSliderLoad: function(slider,currentIndex){
+          var currentSlide = slider.getCurrentSlide(currentIndex);
+          var currentImgURL = currentSlide[0].children[0].src;
+          setupHearts(currentImgURL);           
+        },
+        onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
           // alert('A slide has finished transitioning. Bravo. Click OK to continue!');
           var current = slider.getCurrentSlide();
           console.log("current is:", current);
+          console.log("currentSlideNumber",currentSlideNumber);
+          console.log("currentSlide",currentSlide);
+          console.log("currentSrc",currentSlide[0].children[0].src);
+          var currentImgURL = currentSlide[0].children[0].src;
+          setupHearts(currentImgURL);          
+ 
         }
       });
     }
     console.log("$flickrSearch", $flickrSearch);
-
+                        
     //construct the request
     // base + method + api + photoQuery + flickrSearch + <-- always first
     // freshness + sort + type + placeTag + placeID + ingallery <-- must be in this order
@@ -147,9 +171,13 @@ var photoSearch = function(){
                     + freshness + sort + content_type +format;
                     // + placeTag + placeID + format;
     console.log(flickrRequest);
+    
     $.getJSON(flickrRequest, loadPhotos);
+    
+    
   }
   $.getJSON(placeIDRequest, findFlickrPlaceID);
+  
 }
 
 $('#search-form').submit(function(event) {
