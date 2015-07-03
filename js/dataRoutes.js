@@ -15,7 +15,7 @@ function getUserPlans(uid) {
     console.log("list is ",list);
   console.log("list is ",list.$indexOf("plans"));
   var index = list.$indexOf("plans");
-  console.log("list plans are", list[index]); */               
+  console.log("list plans are", list[index]); */
   var plans = {};
   /*
   userRef.child(uid).on("value",function(snapshot) {
@@ -29,19 +29,18 @@ function getUserPlans(uid) {
         }
         console.log("plans before return",plans);
      return plans;
-      });                                                               
+      });
     }
-    
+
   }, function(errorObject) {
       console.log("The read failed: "+ errorObject.code)
-  });         
-  */  
+  });
+  */
   plans["-JtFvtxXz2BnFRL9FP8m"] = "fda";  // id = name
   plans["current"] = "fjdklafjdla";
   plans["fjdklafjdla"] = "fdjkalfj";
- 
-}
 
+}
 
 //savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
 function savePhoto(photoURL, uid){
@@ -60,11 +59,11 @@ function savePhoto(photoURL, uid){
     var photoID = "";
     photosRef.orderByChild('photoURL').equalTo(photoURL).once("value",function(snapshot) {
       console.log("photoURL checks",snapshot.val());
-      if (snapshot.val() == null) {     
+      if (snapshot.val() == null) {
         //save the photo to photos using push
         var plansObj = {};
         plansObj[currentPlan] = true;
-        
+
         console.log()
         var newPhotoRef = photosRef.push({
           photoURL: photoURL,
@@ -74,15 +73,15 @@ function savePhoto(photoURL, uid){
         console.log("newPhotoRef",newPhotoRef);
         photoID = newPhotoRef.key();
         console.log("photoID",photoID);
-           
+
         //update plans with the photoUID
         var plansRef = myDataRef.child("plans");
         plansRef.child(currentPlan).child("photos").child(photoID).set(true);
-    
+
         //update users with the photoUID
-        userRef.child(uid).child("photos").child(photoID).set(true);    
+        userRef.child(uid).child("photos").child(photoID).set(true);
       }
-     
+
     }, function(errorObject) {
       console.log("The read failed: "+ errorObject.code);
     });
@@ -110,16 +109,14 @@ function savePlan(planName, simpleuserid) {
     flickrUID: {}, //hash to use   Object.keys(plansJSON:photos).length ...slow, but cheap in lines of code :)
     wikiURL: ""
   }, reportError());
-                
+
   var planId = newPlanRef.key();
   var usersPlansRef = myDataRef.child("users").child(simpleuserid).child("plans");
   usersPlansRef.child(planId).set(true);
-    
+
   var usersRef = myDataRef.child("users").child(simpleuserid);
-  console.log("usersRef", usersRef);
-  console.log("usersRefCurrentPlan",usersRef.child("currentPlan"));
   usersRef.child("currentPlan").set(planId);
-  
+
 
 }
 
