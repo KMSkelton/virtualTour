@@ -8,28 +8,55 @@ var wikiSearch = function(){
   var capitalSearch = toTitleCase($wikiSearch);
 
   var wikiBaseURL ="https://en.wikipedia.org/w/api.php?";
-  var wikiAction ="action=query";
-  var wikiProp ="&prop=extracts";
+  var wikiQuery ="action=query";
+
+  var wikiCat = "&prop=categories";
+  var wikiExtracts ="&prop=extracts";
+
   var wikiFormat = "&format=json";
-  var wikiSize = "&exchars=250";
   var wikiIntro = "&exintro=";
   var wikiPageID = "&indexpageids="
   var wikiTitleTag ="&titles=";
 
-  var wikiRequest = wikiBaseURL + wikiAction + wikiProp
-  + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + capitalSearch;
+  var wikiRequestCategory = wikiBaseURL + wikiQuery
+          + wikiCat + wikiFormat + wikiPageID +wikiTitleTag + capitalSearch;
 
+  //check if search retrieves a disambiguation page
   $.ajax({
-    url: wikiRequest,
+    url: wikiRequestCategory,
     jsonp: "callback",
     dataType: "jsonp",
     success: function( data ) {
       var pageID = data.query.pageids[0];
-      var extract = data.query.pages[pageID].extract;
-      $("#wikiScrollBox").html(extract);
+      var categoryArray = data.query.pages[pageID].categories;
+
+      var isArticle = true;
+
+      for (var i=0; i< categoryArray.length && isArticle; i++){
+        var currentCat = categoryArray[i].title;
+        isArticle = (currentCat.indexOf("disambig") < 0);
+      }
+      if (isArticle){
+        $.ajax({
+          url: wikiRequestExtract,
+          jsonp: "callback",
+          dataType: "jsonp",
+          success: function( data ) {
+            var extract = data.query.pages[pageID].extract;
+            $("#wikiScrollBox").html(extract);
+          }
+        });
+      } else {
+        $("#wikiScrollBox").html("WikiVoyage requires a more specific search term.");
+      }
     }
   });
+
+  var wikiRequestExtract = wikiBaseURL + wikiQuery + wikiExtracts
+  + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + capitalSearch;
+
 }
+
 
 var photoClear = function(){
   $("#viewer-container").html("");
@@ -72,7 +99,7 @@ var photoSearch = function(){
         var server = data.photos.photo[i].server;
         var id = data.photos.photo[i].id;
         var secret = data.photos.photo[i].secret;
-        console.log("data.photos", data.photos);
+      // console.log("data.photos", data.photos);
 
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
@@ -134,7 +161,6 @@ var photoSearch = function(){
     $.getJSON(flickrRequest, loadPhotos);
   }
   $.getJSON(placeIDRequest, findFlickrPlaceID);
-
 }
 
 $('#search-form').submit(function(event) {
