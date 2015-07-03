@@ -35,31 +35,6 @@ var photoClear = function(){
   $("#viewer-container").html("");
 }
 
-
-
-function setupHearts(currentImgURL) {
-         $('#hearts').click(function() {         //reattach click handler for heart
-        if (typeof user == 'undefined') {
-        //  alert("You must be logged in to save a photo");
-        }
-        if ($(this).hasClass('openHeart')) {
-          $(this).addClass('filledHeart').removeClass('openHeart');
-          // console.log("calling savePhoto",user);
-          savePhoto(currentImgURL,user);
-
-        } else if ($(this).hasClass('filledHeart')) {
-          $(this).addClass('brokenHeart').removeClass('filledHeart');
-
-          $(this).delay(1000).queue(function(next) {
-              $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
-              next();
-          });
-        } else {
-          $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
-        };
-          });
-}
-
 var photoSearch = function(){
   var $flickrSearch =  $("#location-search").val();
 
@@ -119,7 +94,7 @@ var photoSearch = function(){
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
       photoClear();
       $("#viewer-container").append(viewer);
-
+      setupHearts();
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
@@ -171,5 +146,6 @@ $(document).ready(function(){ //run on load with stock photos
     adaptiveHeight: true,
     slideWidth: 850
     });
+  setupHearts();
 });
 
