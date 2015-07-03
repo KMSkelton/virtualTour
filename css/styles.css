@@ -161,19 +161,19 @@ header h1{
   text-align: left;
 }
 .brokenHeart {
-  background: url('../images/heartSprite.png') no-repeat;
+  background: url('../images/heartSprite-black.png') no-repeat;
   background-position: -0px -0px;
   width: 32px;
   height: 32px;
 }
 .openHeart {
-  background: url('../images/heartSprite.png') no-repeat;
+  background: url('../images/heartSprite-black.png') no-repeat;
   background-position: -0px -64px;
   width: 32px;
   height: 32px;
 }
 .filledHeart {
-  background: url('../images/heartSprite.png') no-repeat;
+  background: url('../images/heartSprite-black.png') no-repeat;
   background-position: 0px -32px;
   width: 32px;
   height: 32px;
