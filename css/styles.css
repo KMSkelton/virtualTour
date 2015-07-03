@@ -63,16 +63,18 @@ footer {
 }
 #search-form fieldset {
   padding-top: 1em;
-  text-align: center;
+  text-align: left;
 }
 #search-form label {
   display: inline-block;
 }
 #search-form input[type="text"] {
-  width: 50%;
+  width: 30%;
   display: inline-block;
 }
-
+#plansParent {
+  display: inline-block;
+}
 /* LAYOUT - Media Query */
 
 @media only screen and (min-width: 15em) { /*phones */
@@ -209,5 +211,3 @@ header h1{
 .account-form button:hover {
   background-color: #A3BEC2;
 }
-
-
