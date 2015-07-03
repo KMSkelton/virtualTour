@@ -188,7 +188,7 @@ header h1{
   position:absolute;
   z-index: 500;
   margin-top:-7em;
-  right:0;
+  right:1em;
 }
 /** THEME **/
 
