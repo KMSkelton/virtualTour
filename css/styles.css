@@ -62,8 +62,7 @@ footer {
   margin-top: .25em;
 }
 #search-form fieldset {
-  padding-top: 1em;
-  text-align: left;
+  padding: 1em;
 }
 #search-form label {
   display: inline-block;
@@ -131,6 +130,7 @@ header h1{
   float: left;
 }
 #login-container {
+  float:right;
   text-align: center;
   background-color: gray;
   padding: 3em;
@@ -213,7 +213,7 @@ header h1{
   font-style: normal;
 }
 
-p {
+body {
   font-family: 'EdmondSans', sans-serif;
 }
 

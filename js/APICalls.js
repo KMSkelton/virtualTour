@@ -110,12 +110,13 @@ var photoSearch = function(){
 
         var title = data.photos.photo[i].title;
         var newCaption = '<div class="newCaption"><a href="'
-                          + attrURL + '">' + title + '</a></div>';
+                          + attrURL + '"><p>' + title + '</p></a></div>';
 
-        viewer = viewer +  '<li><img src="'+ photoURL + '"><p>'+ newCaption +'</p></li>' ;
+        viewer = viewer +  '<li><img src="'+ photoURL + '">'+ newCaption +'</li>' ;
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
+      console.log(viewer)
       photoClear();
       $("#viewer-container").append(viewer);
       setupHearts();
