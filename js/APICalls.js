@@ -1,6 +1,12 @@
 var wikiSearch = function(){
   var $wikiSearch =  $("#location-search").val();
 
+  function toTitleCase(str) { //avoids WikiVoyage redirects based on non-Title case
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  }
+  var capitalSearch = toTitleCase($wikiSearch);
+
   var wikiBaseURL ="https://en.wikipedia.org/w/api.php?";
   var wikiAction ="action=query";
   var wikiProp ="&prop=extracts";
@@ -11,7 +17,7 @@ var wikiSearch = function(){
   var wikiTitleTag ="&titles=";
 
   var wikiRequest = wikiBaseURL + wikiAction + wikiProp
-  + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + $wikiSearch;
+  + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + capitalSearch;
 
   $.ajax({
     url: wikiRequest,
@@ -28,6 +34,7 @@ var wikiSearch = function(){
 var photoClear = function(){
   $("#viewer-container").html("");
 }
+
 var photoSearch = function(){
   var $flickrSearch =  $("#location-search").val();
 
@@ -57,7 +64,7 @@ var photoSearch = function(){
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
 
-      //data.photos.photo.length
+      //data.photos.photo.length will give you total number of results
       for (var i=0; i < 50; i++){
         //assemble the URL of the photo
         //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
@@ -74,14 +81,15 @@ var photoSearch = function(){
         // b large, 1024 on longest side
         // h large 1600, 1600 on longest side
 
+
         var owner = data.photos.photo[i].owner;
-        var attrURL = "https://www.flickr.com/photos/" + owner + "/" +id +"/";
+        var attrURL = "https://www.flickr.com/photos/" + owner + "/" + id + "/";
 
         var title = data.photos.photo[i].title;
 
+
         var newCaption = '<div class="newCaption"><a href="'
                           + attrURL + '">' + title + '</a></div>';
-        console.log("newCaption", newCaption);
 
         viewer = viewer +  '<li><img src="'+ photoURL
               + '" title="' + title + '">'+ newCaption +'</li>' ;
@@ -90,15 +98,7 @@ var photoSearch = function(){
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
       photoClear();
       $("#viewer-container").append(viewer);
-      $('#hearts').click(function() {         //reattach click handler for heart
-        if ($(this).hasClass('openHeart')) {
-          $(this).addClass('filledHeart').removeClass('openHeart');
-        } else if ($(this).hasClass('filledHeart')) {
-          $(this).addClass('brokenHeart').removeClass('filledHeart');
-        } else {
-          $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
-        };
-      });
+      setupHearts();
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
@@ -106,9 +106,20 @@ var photoSearch = function(){
         adaptiveHeight: true,
         slideWidth: 850,
         maxSlides: 1,
-        onSlideAfter: function(){
+
+  //      onSliderLoad: function(currentIndex){
+  //        var slider = this;
+  //        console.log("slider",slider);
+  //        console.log("currentIndex",currentIndex);
+  //        var currentSlide = slider.getCurrentSlide(currentIndex);
+  //       console.log(currentSlide);
+  //       var currentImgURL = currentSlide[0].children[0].src;
+  //        setupHearts(currentImgURL);
+  //      },
+        onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
           var current = slider.getCurrentSlide();
-          console.log("current is:", current);
+          var currentImgURL = currentSlide[0].children[0].src;
+          setupHearts(currentImgURL);
         }
       });
     }
@@ -123,6 +134,7 @@ var photoSearch = function(){
     $.getJSON(flickrRequest, loadPhotos);
   }
   $.getJSON(placeIDRequest, findFlickrPlaceID);
+
 }
 
 $('#search-form').submit(function(event) {
@@ -133,9 +145,10 @@ $('#search-form').submit(function(event) {
 
 $(document).ready(function(){ //run on load with stock photos
   $('.bxslider').bxSlider({
-    captions: true , //will show captions from text in title field of <img>
+    //captions: true  // no longer using bxSlider captions; use custom
     adaptiveHeight: true,
     slideWidth: 850
     });
+  setupHearts();
 });
 

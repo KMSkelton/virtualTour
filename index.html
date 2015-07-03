@@ -35,13 +35,27 @@
             <label class="search-form__name-label" for="search-input">Search: </label>
             <input type="text" class="search-form__input" id="location-search" name="search-input" role="textbox">
             <input type="submit" value="Go">
+            <!-- TEST WHETHER USER LOGGED IN -->
+                <div id="plansParent">
+                  <select width="100" id="planSelect" name="planSelect" class="add_select"></select>
+                  <a href="#" id="addChildPlan">Add Plan</a>
+                </div>
           </fieldset>
         </form>
         <div id="viewer-container"  >
-          <ul class="bxslider">
-            <li><img title="Chichen Itza (Mexico)" src="images/SLuVT-chichenItza-lg.jpg" /></li> <!--stock photos to preload-->
-            <li><img title="Giza (Egypt)" src="images/SLuVT-giza-lg.jpg" /></li>
-            <li><img title="Petra (Jordan)" src="images/SLuVT-Petra-lg.jpg" /></li>
+          <ul class="bxslider"> <!--stock photos to preload-->
+            <li>
+              <img src="images/SLuVT-chichenItza-lg.jpg" />
+              <div class="newCaption">Chichen Itza (Mexico)</div>
+            </li>
+            <li>
+              <img src="images/SLuVT-giza-lg.jpg" />
+              <div class="newCaption">Giza (Egypt)</div>
+            </li>
+            <li>
+              <img title="Petra (Jordan)" src="images/SLuVT-Petra-lg.jpg" />
+              <div class="newCaption">Petra (Jordan)</div>
+            </li>
           </ul>
           <div id="hearts" class="openHeart"></div>
         </div>
@@ -78,8 +92,13 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="js/jquery.bxslider.min.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+    <script type="text/javascript" src="js/firebase.js"></script>
+    <script type="text/javascript" src="js/dataRoutes.js"></script>
+    <script type="text/javascript" src="js/selectorTester.js"></script>
+    <script type="text/javascript" src="js/setupHearts.js"></script>
     <script type="text/javascript" src="js/APICalls.js"></script>
-    <script type="text/javascript" src="js/sprites.js"></script>
 
   </body>
 </html>

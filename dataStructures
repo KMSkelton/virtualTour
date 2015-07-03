@@ -1,0 +1,34 @@
+plans: {
+  planId (firebase generated unique ID from push): {
+    user: userID (simplelogin:3),
+    notes: "",
+    photos: {
+      photoUID (Flickr URL): true
+    },
+    name: "Plan Name",
+    wikiUrl: "http://wikipedia.com/topic"
+  }
+}
+
+photos: {
+  photoUID (Flickr URL): {
+    users: {
+      userID (simplelogin:3): true
+    },
+    plans: {
+      planID (firebase generated unique ID from push): true
+    }
+  }
+}
+
+users: {
+  userID (simplelogin:3): {
+    photos: {
+        photoUID (Flickr URL): true
+    },
+    currentPlan: planID (firebase generated unique id from push),
+    plans: {
+      planID (firebase generated unique id from push): true
+    }
+  }
+}
