@@ -44,6 +44,7 @@ var wikiSearch = function(){
 var photoClear = function(){
   $("#viewer-container").html("");
 }
+var user = localStorage.uid;
 
 var photoSearch = function(){
   console.log("in photoSearch")
@@ -98,15 +99,28 @@ var photoSearch = function(){
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
       photoClear();
       $("#viewer-container").append(viewer);
+      
       $('#hearts').click(function() {         //reattach click handler for heart
+        if (typeof user == 'undefined') {
+        //  alert("You must be logged in to save a photo");
+        }
         if ($(this).hasClass('openHeart')) {
           $(this).addClass('filledHeart').removeClass('openHeart');
+          console.log("calling savePhoto",user);
+          savePhoto(photoURL,user);
+
         } else if ($(this).hasClass('filledHeart')) {
           $(this).addClass('brokenHeart').removeClass('filledHeart');
+ 
+          $(this).delay(1000).queue(function(next) { 
+              $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart'); 
+              next(); 
+          });
         } else {
           $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
         };
       });
+      
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
