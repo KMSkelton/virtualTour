@@ -1,5 +1,8 @@
 $(document).ready(function() {
-
+console.log("local storage says:" + localStorage.uid);
+if (localStorage.uid !== undefined){
+  $("#login-container").replaceWith("<p>Welcome back " + "<a href='/plans.html'>insert getUser code here</a>" + "!</p>" + "<p><a id='logout' href='loggedOut.html'>Log Out</a>");
+};
 
   // load Current Plans into planSelect
   function loadUserPlans(uid) {
@@ -40,4 +43,12 @@ $(document).ready(function() {
 
   // when everything has loaded check to load plans now
   loadUserPlans(localStorage.uid);
+
+  //logging Out
+  $("#logout").click(function(){
+    alert("Come back soon!");
+    window.localStorage.clear();
+    location.reload();
+    return false;
+  })
 });
