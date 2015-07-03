@@ -147,8 +147,9 @@ $('#search-form').submit(function(event) {
 
 $(document).ready(function(){ //run on load with stock photos
   $('.bxslider').bxSlider({
-        adaptiveHeight: true,
-        slideWidth: 850
-        });
+    captions: true , //will show captions from text in title field of <img>
+    adaptiveHeight: true,
+    slideWidth: 850
+    });
 });
 
