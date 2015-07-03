@@ -5,6 +5,7 @@ var wikiSearch = function(){
     return str.replace(/\w\S*/g, function(txt){
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   }
+
   var capitalSearch = toTitleCase($wikiSearch);
 
   var wikiBaseURL ="https://en.wikipedia.org/w/api.php?";
@@ -16,12 +17,14 @@ var wikiSearch = function(){
   var wikiFormat = "&format=json";
   var wikiIntro = "&exintro=";
   var wikiPageID = "&indexpageids="
-  var wikiTitleTag ="&titles=";
+  var wikiTitleTag = "&titles=";
 
   var wikiRequestCategory = wikiBaseURL + wikiQuery
           + wikiCat + wikiFormat + wikiPageID +wikiTitleTag + capitalSearch;
 
-  //check if search retrieves a disambiguation page
+  var wikiRequestExtract = wikiBaseURL + wikiQuery + wikiExtracts
+      + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + capitalSearch;
+
   $.ajax({
     url: wikiRequestCategory,
     jsonp: "callback",
@@ -31,7 +34,6 @@ var wikiSearch = function(){
       var categoryArray = data.query.pages[pageID].categories;
 
       var isArticle = true;
-
       for (var i=0; i< categoryArray.length && isArticle; i++){
         var currentCat = categoryArray[i].title;
         isArticle = (currentCat.indexOf("disambig") < 0);
@@ -47,16 +49,11 @@ var wikiSearch = function(){
           }
         });
       } else {
-        $("#wikiScrollBox").html("WikiVoyage requires a more specific search term.");
+        $("#wikiScrollBox").html("Can you be more specific with your search? WikiVoyage needs a more precise location.");
       }
     }
   });
-
-  var wikiRequestExtract = wikiBaseURL + wikiQuery + wikiExtracts
-  + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + capitalSearch;
-
-}
-
+} //end of wikiSearch()
 
 var photoClear = function(){
   $("#viewer-container").html("");
@@ -99,7 +96,7 @@ var photoSearch = function(){
         var server = data.photos.photo[i].server;
         var id = data.photos.photo[i].id;
         var secret = data.photos.photo[i].secret;
-      // console.log("data.photos", data.photos);
+        // console.log("data.photos", data.photos);
 
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
@@ -108,13 +105,10 @@ var photoSearch = function(){
         // b large, 1024 on longest side
         // h large 1600, 1600 on longest side
 
-
         var owner = data.photos.photo[i].owner;
         var attrURL = "https://www.flickr.com/photos/" + owner + "/" + id + "/";
 
         var title = data.photos.photo[i].title;
-
-
         var newCaption = '<div class="newCaption"><a href="'
                           + attrURL + '">' + title + '</a></div>';
 
