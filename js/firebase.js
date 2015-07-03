@@ -27,6 +27,8 @@ $("#registerButton").on("click", function() {
     if (!error) {
       var name = firstname + " " + lastname;
       saveUser(name, user.uid);
+      alert("Welcome! You're now an authorized user.");
+      window.location = "http://localhost:8000/index.html";
     } else {
       alert(error);
     }
@@ -56,9 +58,12 @@ $("#loginButton").on("click", function() {
           console.log("Error logging user in:", error);
       }
     } else {
+      alert("Welcome back!");
       console.log("Authenticated successfully with payload:", authData);
       localStorage.setItem("uid", authData.uid);
-      localStorage.setItem("provider",authData.provider);
+      localStorage.setItem("provider", authData.provider);
+      window.location = "http://localhost:8000/index.html";
+
     }
   });
   return false;
