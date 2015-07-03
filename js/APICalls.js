@@ -56,6 +56,7 @@ var photoSearch = function(){
     var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
+
       //data.photos.photo.length
       for (var i=0; i < 50; i++){
         //assemble the URL of the photo
@@ -64,6 +65,7 @@ var photoSearch = function(){
         var server = data.photos.photo[i].server;
         var id = data.photos.photo[i].id;
         var secret = data.photos.photo[i].secret;
+        console.log("data.photos", data.photos);
 
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
@@ -72,9 +74,18 @@ var photoSearch = function(){
         // b large, 1024 on longest side
         // h large 1600, 1600 on longest side
 
+        var owner = data.photos.photo[i].owner;
+        var attrURL = "https://www.flickr.com/photos/" + owner + "/" +id +"/";
+
         var title = data.photos.photo[i].title;
 
-        viewer = viewer +  '<li><img src="'+ photoURL +'" title="' + title + '"></li>'
+        var newCaption = '<div class="newCaption"><a href="'
+                          + attrURL + '">' + title + '</a></div>';
+        console.log("newCaption", newCaption);
+
+        viewer = viewer +  '<li><img src="'+ photoURL
+              + '" title="' + title + '">'+ newCaption +'</li>' ;
+
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
       photoClear();
@@ -91,7 +102,7 @@ var photoSearch = function(){
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
-        captions: true ,    //will show captions from text in title field of <img>
+        captions: false ,    //will show captions from text in title field of <img>
         adaptiveHeight: true,
         slideWidth: 850,
         maxSlides: 1,
@@ -101,25 +112,20 @@ var photoSearch = function(){
         }
       });
     }
-    console.log("$flickrSearch", $flickrSearch);
-
     //construct the request
     // base + method + api + photoQuery + flickrSearch + <-- always first
     // freshness + sort + type + placeTag + placeID + ingallery <-- must be in this order
     // +format <--always last
-
     var flickrRequest = flickrBaseURL + method_photoSearch + api_key
                     + photoQuery + $flickrSearch
                     + freshness + sort + content_type +format;
                     // + placeTag + placeID + format;
-    console.log(flickrRequest);
     $.getJSON(flickrRequest, loadPhotos);
   }
   $.getJSON(placeIDRequest, findFlickrPlaceID);
 }
 
 $('#search-form').submit(function(event) {
-  console.log("clicked search");
   event.preventDefault();
   photoSearch();
   wikiSearch();
