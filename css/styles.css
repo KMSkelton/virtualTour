@@ -72,9 +72,6 @@ footer {
 /* LAYOUT - Media Query */
 
 @media only screen and (min-width: 15em) { /*phones */
-  #login-container {
-    text-align: center;
-  }
   header h1 {
     font-size: 7em;
   }
@@ -90,12 +87,11 @@ footer {
     align-items: center;
     border: thin solid black;
   }
+  .three.columns {
+    width:100%; /* to change when skeleton pops three columns to full width */
+  }
 }
 @media only screen and (min-width: 45em) { /*skeleton pops*/
-  #login-container {
-    text-align: right;
-    float: right;
-  }
   header h1 {
     font-size: 8em;
   }
@@ -112,6 +108,9 @@ footer {
     border: 0.1em solid;
     padding: 0.1em;
   }
+  .three.columns {
+    width:22%; /* to change when skeleton pops three columns to full width */
+  }
 }
 
 /** MODULES **/
@@ -126,6 +125,7 @@ header h1{
   float: left;
 }
 #login-container {
+  text-align: center;
   background-color: gray;
   padding: 3em;
 }
