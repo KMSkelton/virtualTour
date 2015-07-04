@@ -1,77 +1,65 @@
 var wikiSearch = function(){
-  console.log("in wikiSearch");
-
   var $wikiSearch =  $("#location-search").val();
 
+  function toTitleCase(str) { //avoids WikiVoyage redirects based on non-Title case
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  }
+
+  var capitalSearch = toTitleCase($wikiSearch);
+
   var wikiBaseURL ="https://en.wikipedia.org/w/api.php?";
-  var wikiAction ="action=query";
-  var wikiProp ="&prop=extracts";
+  var wikiQuery ="action=query";
+
+  var wikiCat = "&prop=categories";
+  var wikiExtracts ="&prop=extracts";
+
   var wikiFormat = "&format=json";
-  var wikiSize = "&exchars=250";
   var wikiIntro = "&exintro=";
   var wikiPageID = "&indexpageids="
-  var wikiTitleTag ="&titles=";
+  var wikiTitleTag = "&titles=";
 
-  var wikiRequest = wikiBaseURL + wikiAction + wikiProp
-  + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + $wikiSearch;
+  var wikiRequestCategory = wikiBaseURL + wikiQuery
+          + wikiCat + wikiFormat + wikiPageID +wikiTitleTag + capitalSearch;
 
-  // $.getJSON(wikiRequest, function(){
-  //   console.log(data);
-  // });
-
+  var wikiRequestExtract = wikiBaseURL + wikiQuery + wikiExtracts
+      + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + capitalSearch;
 
   $.ajax({
-    url: wikiRequest,
+    url: wikiRequestCategory,
     jsonp: "callback",
     dataType: "jsonp",
     success: function( data ) {
-      console.log( "data.query", data.query); // server response
       var pageID = data.query.pageids[0];
-      console.log("pageID", pageID);
-      console.log("data.query.pages", data.query.pages);
+      var categoryArray = data.query.pages[pageID].categories;
 
-      console.log("data.query.pages[pageID]", data.query.pages[pageID]);
-      console.log("data.query.pages[pageID].extract", data.query.pages[pageID].extract);
-      var extract = data.query.pages[pageID].extract;
-      $("#wikiScrollBox").html(extract);
-
-
+      var isArticle = true;
+      for (var i=0; i< categoryArray.length && isArticle; i++){
+        var currentCat = categoryArray[i].title;
+        isArticle = (currentCat.indexOf("disambig") < 0);
+      }
+      if (isArticle){
+        $.ajax({
+          url: wikiRequestExtract,
+          jsonp: "callback",
+          dataType: "jsonp",
+          success: function( data ) {
+            var extract = data.query.pages[pageID].extract;
+            $("#wikiScrollBox").html(extract);
+          }
+        });
+      } else {
+        $("#wikiScrollBox").html("Can you be more specific with your search? WikiVoyage needs a more precise location.");
+      }
     }
   });
-}
-
+} //end of wikiSearch()
 
 var photoClear = function(){
   $("#viewer-container").html("");
 }
-var user = localStorage.uid;
-
-function setupHearts(currentImgURL) {
-         $('#hearts').click(function() {         //reattach click handler for heart
-        if (typeof user == 'undefined') {
-        //  alert("You must be logged in to save a photo");
-        }
-        if ($(this).hasClass('openHeart')) {
-          $(this).addClass('filledHeart').removeClass('openHeart');
-          console.log("calling savePhoto",user);
-          savePhoto(currentImgURL,user);
-
-        } else if ($(this).hasClass('filledHeart')) {
-          $(this).addClass('brokenHeart').removeClass('filledHeart');
- 
-          $(this).delay(1000).queue(function(next) { 
-              $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart'); 
-              next(); 
-          });
-        } else {
-          $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
-        };
-          });
-} 
-          
 
 var photoSearch = function(){
-  console.log("in photoSearch")
   var $flickrSearch =  $("#location-search").val();
 
   var flickrBaseURL ="https://api.flickr.com/services/rest/";
@@ -96,11 +84,11 @@ var photoSearch = function(){
   var placeTag = "&place_id=";
 
   function findFlickrPlaceID(data){
-    console.log("in findFlickrPlaceID");
     var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
-      //data.photos.photo.length
+
+      //data.photos.photo.length will give you total number of results
       for (var i=0; i < 50; i++){
         //assemble the URL of the photo
         //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
@@ -108,7 +96,7 @@ var photoSearch = function(){
         var server = data.photos.photo[i].server;
         var id = data.photos.photo[i].id;
         var secret = data.photos.photo[i].secret;
-        //console.log("data.photos",data.photos);
+        // console.log("data.photos", data.photos);
 
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
@@ -119,67 +107,57 @@ var photoSearch = function(){
 
         var owner = data.photos.photo[i].owner;
         var attrURL = "https://www.flickr.com/photos/" + owner + "/" + id + "/";
-        
+
         var title = data.photos.photo[i].title;
-
         var newCaption = '<div class="newCaption"><a href="'
-                          + attrURL + '">' + title + '</a></div>';
-        //console.log("newCaption", newCaption);
+                          + attrURL + '"><p>' + title + '</p></a></div>';
 
-        viewer = viewer +  '<li><img src="'+ photoURL
-              + '" title="' + title + '">'+ newCaption +'</li>' ;
+        viewer = viewer +  '<li><img src="'+ photoURL + '">'+ newCaption +'</li>' ;
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
+      console.log(viewer)
       photoClear();
       $("#viewer-container").append(viewer);
-    
+      setupHearts();
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
-        captions: true , //will show captions from text in title field of <img>
+        captions: false ,    //will show captions from text in title field of <img>
         adaptiveHeight: true,
         slideWidth: 850,
         maxSlides: 1,
+
   //      onSliderLoad: function(currentIndex){
   //        var slider = this;
   //        console.log("slider",slider);
-  //        console.log("currentIndex",currentIndex);        
+  //        console.log("currentIndex",currentIndex);
   //        var currentSlide = slider.getCurrentSlide(currentIndex);
   //       console.log(currentSlide);
   //       var currentImgURL = currentSlide[0].children[0].src;
-  //        setupHearts(currentImgURL);           
+  //        setupHearts(currentImgURL);
   //      },
         onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
           var current = slider.getCurrentSlide();
           var currentImgURL = currentSlide[0].children[0].src;
-          setupHearts(currentImgURL);          
+          setupHearts(currentImgURL);
         }
       });
     }
-    console.log("$flickrSearch", $flickrSearch);
-                        
     //construct the request
     // base + method + api + photoQuery + flickrSearch + <-- always first
     // freshness + sort + type + placeTag + placeID + ingallery <-- must be in this order
     // +format <--always last
-
     var flickrRequest = flickrBaseURL + method_photoSearch + api_key
                     + photoQuery + $flickrSearch
                     + freshness + sort + content_type +format;
                     // + placeTag + placeID + format;
-    console.log(flickrRequest);
-    
     $.getJSON(flickrRequest, loadPhotos);
-    
-    
   }
   $.getJSON(placeIDRequest, findFlickrPlaceID);
-  
 }
 
 $('#search-form').submit(function(event) {
-  console.log("clicked search");
   event.preventDefault();
   photoSearch();
   wikiSearch();
@@ -187,8 +165,10 @@ $('#search-form').submit(function(event) {
 
 $(document).ready(function(){ //run on load with stock photos
   $('.bxslider').bxSlider({
-        adaptiveHeight: true,
-        slideWidth: 640
-        });
+    //captions: true  // no longer using bxSlider captions; use custom
+    adaptiveHeight: true,
+    slideWidth: 850
+    });
+  setupHearts();
 });
 
