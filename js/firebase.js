@@ -24,6 +24,9 @@ $("#registerButton").on("click", function() {
       var name = firstname + " " + lastname;
       saveUser(name, user.uid);
       alert("Welcome! You're now an authorized user.");
+      localStorage.setItem("uid", user.uid);
+      localStorage.setItem("provider", user.provider);
+      localStorage.setItem("firstName",firstname);
       window.location = "http://localhost:8000/index.html";
     } else {
       alert(error);
@@ -43,6 +46,8 @@ function getUserData(authData) {
     var fullName = snapshot.val().name;
     var displayName = fullName.split(' ');
     localStorage.setItem("firstName", displayName[0]);
+    var currentPlan = snapshot.val().currentPlan;
+    localStorage.setItem("currentPlan", currentPlan);
     //redirect to user-enabled home page
     goHome();
    });  

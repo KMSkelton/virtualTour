@@ -56,6 +56,7 @@ function savePhoto(photoURL, uid){
 //saveUser --creates user in usersJSON, not the same as 'register' function
 function saveUser(name, simpleuserid) {
   var usersRef = myDataRef.child("users/").child(simpleuserid);
+  console.log("saving user",name,simpleuserid)
   usersRef.set({
     name: name,
     currentPlan: "",
@@ -86,6 +87,32 @@ function savePlan(planName, simpleuserid) {
 
 //updateUser --changes user info in usersJSON. NOT MVP.
 //updatePlan --updates currentPlan in usersJSON. called when user clicks on a not-current plan (from sidebar).
+function updatePlan(planId,uid){  // NOT TESTED
+  //update users currentPlan
+  usersRef = myDataRef.child("users").child(simpleuserid);
+  usersRef.child("currentPlan").set(planId);
+}
 
 //deletePhoto --click filled heart to show broken heart (on click calls 'deletePhoto') removes photoUID from photos key in usersJSON. removes user from users key in photosJSON.
+function deletePhoto(photoId,planId,uid) {
+  photoRef = myDataRef.child("photos").child(photoId);
+  console.log("removing photo", photoRef);
+  //photoRef.remove(reportError());
+  userPhotoRef = myDataRef.child("users").child(uid).child("photos").child(photoId);
+  console.log("removing user photo",userPhotoRef);
+  //userPhotoRef.remove(reportError());
+  planPhotoRef = myDataRef.child("plans").child(planId).child("photos").child(photoId);
+  console.log("removing plan photo",planPhotoRef);
+  //planPhotoRef.remove(reportError());  
+}
+
 //deletePlan -- button. removes plan from plansJSON, usersJSON and photosJSON. NOT MVP.
+function deletePlan(planId,uid) {
+  planRef = myDataRef.child("plans").child(planId);
+  console.log("deleting plan",planRef);
+  //planRef.remove(reportError());
+  userPlanRef = myDataRef.child("users").child(uid).child("plans").child(planId);
+  console.log("deleting user plan",userPlanRef);
+  //userPlanRef.remove(reportError());
+  
+}

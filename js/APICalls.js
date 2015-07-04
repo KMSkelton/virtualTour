@@ -116,10 +116,10 @@ var photoSearch = function(){
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
-      console.log(viewer)
+      //console.log(viewer)
       photoClear();
       $("#viewer-container").append(viewer);
-      setupHearts();
+      
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
