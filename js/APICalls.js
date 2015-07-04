@@ -179,7 +179,6 @@ $('#search-form').submit(function(event) {
 
 $(document).ready(function(){ //run on load with stock photos
   $('.bxslider').bxSlider({
-    //captions: true  // no longer using bxSlider captions; use custom
     adaptiveHeight: true,
     slideWidth: 850
     });
