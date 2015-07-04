@@ -19,6 +19,10 @@
           <img src="images/airplane.svg">
           <h1>SLüVT</h1>
         </a>
+        <div class="three columns" id="login-container">
+          <a href="/login-signup.html">Login</a> or
+          <a href="/login-signup.html">Signup</a>
+        </div>
       </div>
 
     </header>
@@ -27,8 +31,13 @@
   <!--Viewer Pane / bxSlider module -->
       <div class="row flex-container__main">
         <div class="eight columns offset-by-one"><!--Search box module -->
+        <div class="fixmetomakemesidebyside">
           <div class="plan-title">
             <h3>Currently viewing: <span id="plan-name">Plan Name</span></h3> <!-- need to insert< current plan name-->
+          </div>
+          <div id="plansParent">
+             <select width="100" id="planSelect" name="planSelect" class="add_select"></select>
+          </div>
           </div>
           <div id="viewer-container"  >
             <ul class="bxslider"> <!--stock photos to preload-->
@@ -78,6 +87,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="js/jquery.bxslider.min.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
     <script type="text/javascript" src="js/APICalls.js"></script>
     <script type="text/javascript" src="js/firebase.js"></script>
     <script type="text/javascript" src="js/sluvt.js"></script>

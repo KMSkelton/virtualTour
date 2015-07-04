@@ -152,9 +152,9 @@ var photoSearch = function(){
   //        setupHearts(currentImgURL);
   //      },
         onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
-          var current = slider.getCurrentSlide();
+          var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
           var currentImgURL = currentSlide[0].children[0].src;
-          setupHearts(currentImgURL);
+          setupHearts(currentImgURL,currentSlideCaptionText);
         }
       });
     }
@@ -182,6 +182,5 @@ $(document).ready(function(){ //run on load with stock photos
     adaptiveHeight: true,
     slideWidth: 850
     });
-  setupHearts();
 });
 

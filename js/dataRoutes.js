@@ -8,7 +8,7 @@ function reportError(error) {
 
 
 //savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
-function savePhoto(photoURL, uid){
+function savePhoto(photoURL, currentSlideCaptionText, uid){
   console.log("savePhoto Called", photoURL, uid);
   //get user
   var userRef = new Firebase("https://shining-fire-453.firebaseio.com/users");
@@ -33,7 +33,8 @@ function savePhoto(photoURL, uid){
         var newPhotoRef = photosRef.push({
           photoURL: photoURL,
           users: uid,
-          plans: plansObj
+          plans: plansObj,
+          captionText: currentSlideCaptionText
         }, reportError());
         console.log("newPhotoRef",newPhotoRef);
         photoID = newPhotoRef.key();
@@ -107,12 +108,22 @@ function deletePhoto(photoId,planId,uid) {
 }
 
 //deletePlan -- button. removes plan from plansJSON, usersJSON and photosJSON. NOT MVP.
+// we expect user to delete currentPlan, so set a new currentPlan that is the latest in the list
 function deletePlan(planId,uid) {
   planRef = myDataRef.child("plans").child(planId);
   console.log("deleting plan",planRef);
   //planRef.remove(reportError());
-  userPlanRef = myDataRef.child("users").child(uid).child("plans").child(planId);
+  userRef = myDataRef.child("users").child(uid);
+  userPlanRef = userRef.child("plans").child(planId);
   console.log("deleting user plan",userPlanRef);
   //userPlanRef.remove(reportError());
+  
+  // get the latest plan for the user  # NEEDS FIXING
+  myDataRef.child("plans").orderByChild("users").equalTo(uid).once("value", function(snap) {
+    console.log("deletePlan snap".snap.val());  
+  }); 
+  
+  //set the latest plan to currentPlan
+  //userRef.child("currentPlan").set(planId);
   
 }

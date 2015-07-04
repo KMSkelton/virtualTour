@@ -1,18 +1,16 @@
 $(document).ready(function() {
 
-  if (localStorage.uid !== undefined){
-
+  if (localStorage.firstName !== undefined){
     $("#login-container").replaceWith("<div class='three columns' id='login-container'> <p>Welcome back " + "<a href='/plans.html'>" +
       localStorage.firstName
-    +"</a>" + "!</p>" + "<p><a id='logout' href='loggedOut.html'>Log Out</a></div>" + "<div id='deletePlan'> +
-      <button name='deletePlanButton'>Delete this Plan</button>
-    </div>");
+    +"</a>" + "!</p>" + "<p><a id='logout' href='index.html'>Log Out</a></div>");
   };
 
   function updateSelectBox(current,planId,planData) {
       var option = "<option value='' id='" + planId + "' ";
       if (current == planId) {
           option += 'selected="selected"';
+          localStorage.setItem("currentPlanName",planData.name);
       }
       option += ">" + planData.name + "</option>";
       $(".add_select").append(option);
@@ -25,7 +23,6 @@ $(document).ready(function() {
        //get the user's current plan
       var currentPlan = snapshot.val().currentPlan;
       myDataRef.child("users").child(uid).child("plans").once("value", function(snapshot){
-
         for (var planId in snapshot.val()) {
           myDataRef.child("plans").child(planId).once("value", function(snap) {
             updateSelectBox(currentPlan,planId,snap.val());
@@ -35,6 +32,24 @@ $(document).ready(function() {
     });
   }
 
+  //plan.html
+  function loadUserPhotos(uid) {
+    var planPhotoRef = new Firebase("https://shining-fire-453.firebaseio.com/plans");
+    planPhotoRef.child("photos").once("value",function(snapshot) {
+      for (var photoId in snapshot.val()) {
+          myDataRef.child("photos").child(photoId).once("value", function(snap) {
+            console.log("loadUserPhotos",uid,photoId,snap.val());
+            loadUserPlanPhotos(snap.val().photoURL);
+          });
+      }
+    });
+  }
+  
+  //add the user photos in the current plan to bxslider
+  function loadUserPlanPhotos(){
+      
+  }
+  
   // Show form for entering plan name and add link
   $("#addChildPlan").on("click", function() {
     var html = '<div class="add_container"><input class="add_input" type="text" size="50" maxlength="255"/><a href="#" class="add_link">Add</a></div>';

@@ -1,6 +1,6 @@
 var user = localStorage.uid;
 
-function setupHearts(currentImgURL) {
+function setupHearts(currentImgURL,currentSlideCaptionText) {
          $('#hearts').click(function() {         //reattach click handler for heart
         if (typeof user == 'undefined') {
         //  alert("You must be logged in to save a photo");
@@ -8,7 +8,7 @@ function setupHearts(currentImgURL) {
         if ($(this).hasClass('openHeart')) {
           $(this).addClass('filledHeart').removeClass('openHeart');
           console.log("calling savePhoto",user);
-          savePhoto(currentImgURL,user);
+          savePhoto(currentImgURL,currentSlideCaptionText,user);
 
         } else if ($(this).hasClass('filledHeart')) {
           $(this).addClass('brokenHeart').removeClass('filledHeart');
