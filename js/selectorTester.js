@@ -1,12 +1,12 @@
 $(document).ready(function() {
 
   if (localStorage.uid !== undefined){
-       
-    $("#login-container").replaceWith("<p>Welcome back " + "<a href='/plans.html'>" +
+
+    $("#login-container").replaceWith("<div class='three columns' id='login-container'> <p>Welcome back " + "<a href='/plans.html'>" +
       localStorage.firstName
-    +"</a>" + "!</p>" + "<p><a id='logout' href='loggedOut.html'>Log Out</a>");
+    +"</a>" + "!</p>" + "<p><a id='logout' href='loggedOut.html'>Log Out</a></div>");
   };
-  
+
   function updateSelectBox(current,planId,planData) {
       var option = "<option value='' id='" + planId + "' ";
       if (current == planId) {
@@ -23,16 +23,16 @@ $(document).ready(function() {
        //get the user's current plan
       var currentPlan = snapshot.val().currentPlan;
       myDataRef.child("users").child(uid).child("plans").once("value", function(snapshot){
-      
+
         for (var planId in snapshot.val()) {
           myDataRef.child("plans").child(planId).once("value", function(snap) {
-            updateSelectBox(currentPlan,planId,snap.val());    
+            updateSelectBox(currentPlan,planId,snap.val());
           });
-        }    
+        }
       });
     });
   }
-      
+
   // Show form for entering plan name and add link
   $("#addChildPlan").on("click", function() {
     var html = '<div class="add_container"><input class="add_input" type="text" size="50" maxlength="255"/><a href="#" class="add_link">Add</a></div>';
