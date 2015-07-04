@@ -263,7 +263,7 @@ header a, form a {
   color: #244159;
   /* dark navy */
 }
-button, form input[type="submit"] {
+.add_link, button, form input[type="submit"] {
   background-color: #39668C;
   /* medium blue */
   color: white;
@@ -279,7 +279,7 @@ header a:hover, form a:hover, fieldset input:hover {
   background: #708A9F;
   /* muted blue gray*/
 }
-button:hover, form input[type="submit"]:hover {
+.add_link:hover, button:hover, form input[type="submit"]:hover {
   background-color: #579ED8;
   /* bright blue */
 }

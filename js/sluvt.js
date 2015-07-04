@@ -66,7 +66,7 @@ $(document).ready(function() {
 
   // Show form for entering plan name and add link
   $("#addChildPlan").on("click", function() {
-    var html = '<div class="add_container"><input class="add_input" type="text" size="50" maxlength="255"/><a href="#" class="add_link">Add</a></div>';
+    var html = '<div class="add_container"><input class="add_input" type="text" size="50" maxlength="255"/><button class="add_link">Add</button></div>';
     $("#plansParent").append(html);
   });
 
