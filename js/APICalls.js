@@ -8,11 +8,13 @@ var wikiSearch = function(){
 
   var capitalSearch = toTitleCase($wikiSearch);
 
-  var wikiBaseURL ="https://en.wikipedia.org/w/api.php?";
+  var wikiBaseURL ="https://en.wikivoyage.org/w/api.php?";
   var wikiQuery ="action=query";
 
   var wikiCat = "&prop=categories";
   var wikiExtracts ="&prop=extracts";
+  var wikiInfo = "&prop=info";
+  var wikiGetURL = "&inprop=url";
 
   var wikiFormat = "&format=json";
   var wikiIntro = "&exintro=";
@@ -20,10 +22,15 @@ var wikiSearch = function(){
   var wikiTitleTag = "&titles=";
 
   var wikiRequestCategory = wikiBaseURL + wikiQuery
-          + wikiCat + wikiFormat + wikiPageID +wikiTitleTag + capitalSearch;
+    + wikiCat + wikiFormat + wikiPageID +wikiTitleTag + capitalSearch;
 
-  var wikiRequestExtract = wikiBaseURL + wikiQuery + wikiExtracts
-      + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + capitalSearch;
+  var wikiRequestExtract = wikiBaseURL + wikiQuery
+      + wikiExtracts + wikiFormat + wikiIntro + wikiPageID + wikiTitleTag + capitalSearch;
+
+  var wikiRequestURL = wikiBaseURL + wikiQuery
+      + wikiInfo + wikiFormat + wikiGetURL + wikiTitleTag + capitalSearch;
+  console.log(wikiRequestURL);
+
 
   $.ajax({
     url: wikiRequestCategory,
@@ -44,8 +51,18 @@ var wikiSearch = function(){
           jsonp: "callback",
           dataType: "jsonp",
           success: function( data ) {
-            var extract = data.query.pages[pageID].extract;
+            var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
             $("#wikiScrollBox").html(extract);
+          }
+        });
+        $.ajax({
+          url: wikiRequestURL,
+          jsonp: "callback",
+          dataType: "jsonp",
+          success: function( data ) {
+            var wikiURL = data.query.pages[pageID].fullurl;
+            var wikiLink = "<a href=" + wikiURL + ">Read more...</a>"
+            $(".wikiResult").after(wikiLink);
           }
         });
       } else {
@@ -116,7 +133,6 @@ var photoSearch = function(){
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
-      console.log(viewer)
       photoClear();
       $("#viewer-container").append(viewer);
       setupHearts();
