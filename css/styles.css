@@ -71,6 +71,7 @@ footer {
   display: inline-block;
 }
 .navbar {
+  box-sizing: border-box;
   width: 100%;
   padding: 1em;
   margin-top: .25em;
