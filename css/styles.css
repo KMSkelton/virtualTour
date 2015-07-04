@@ -74,7 +74,12 @@ footer {
 #plansParent {
   display: inline-block;
 }
-
+#deletePlan button {
+  text-align: center;
+  font-size: .25em
+  display: inline-block;
+  width: 10%;
+}
 /* LAYOUT - Media Query */
 
 @media only screen and (min-width: 15em) {
