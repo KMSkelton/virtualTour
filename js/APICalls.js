@@ -29,8 +29,6 @@ var wikiSearch = function(){
 
   var wikiRequestURL = wikiBaseURL + wikiQuery
       + wikiInfo + wikiFormat + wikiGetURL + wikiTitleTag + capitalSearch;
-  console.log(wikiRequestURL);
-
 
   $.ajax({
     url: wikiRequestCategory,
