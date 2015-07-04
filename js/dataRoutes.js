@@ -6,41 +6,6 @@ function reportError(error) {
   }
 }
 
-//getUserPlans
-function getUserPlans(uid) {
-  /*console.log("getUserPlans called");
-  var userRef = new Firebase("https://shining-fire-453.firebaseio.com/users");
-  var planRef = new Firebase("https://shining-fire-453.firebaseio.com/plans");
-  var list = Firebase.getAsArray(userRef.child(uid));
-    console.log("list is ",list);
-  console.log("list is ",list.$indexOf("plans"));
-  var index = list.$indexOf("plans");
-  console.log("list plans are", list[index]); */
-  var plans = {};
-  /*
-  userRef.child(uid).on("value",function(snapshot) {
-    console.log("userRef snapshot val ",snapshot.val());
-    for (var plan in snapshot.val().plans) {
-      console.log("plan is",plan);
-      planRef.child(plan).once("value",function(planSnap) {
-        if (planSnap.val() != null) {
-          console.log("planRef snapshot is",planSnap.val());
-          plans[plan] = planSnap.val().name;
-        }
-        console.log("plans before return",plans);
-     return plans;
-      });
-    }
-
-  }, function(errorObject) {
-      console.log("The read failed: "+ errorObject.code)
-  });
-  */
-  plans["-JtFvtxXz2BnFRL9FP8m"] = "fda";  // id = name
-  plans["current"] = "fjdklafjdla";
-  plans["fjdklafjdla"] = "fdjkalfj";
-
-}
 
 //savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
 function savePhoto(photoURL, uid){
@@ -106,7 +71,6 @@ function savePlan(planName, simpleuserid) {
     name: planName,
     user: simpleuserid,
     notes: "", //max 750 char?
-    flickrUID: {}, //hash to use   Object.keys(plansJSON:photos).length ...slow, but cheap in lines of code :)
     wikiURL: ""
   }, reportError());
 
