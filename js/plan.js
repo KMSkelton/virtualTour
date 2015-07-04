@@ -1,6 +1,6 @@
 // plans.js for plan.html
 
-    function loadPhotos(data){
+    function loadPhoto(data){
       var viewer = '<ul class="bxslider">';
 
       //data.photos.photo.length will give you total number of results

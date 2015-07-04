@@ -131,6 +131,7 @@ var photoSearch = function(){
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
+      console.log("viewer",viewer);
       photoClear();
       $("#viewer-container").append(viewer);
       
@@ -141,20 +142,20 @@ var photoSearch = function(){
         adaptiveHeight: true,
         slideWidth: 850,
         maxSlides: 1,
-
-  //      onSliderLoad: function(currentIndex){
-  //        var slider = this;
-  //        console.log("slider",slider);
-  //        console.log("currentIndex",currentIndex);
-  //        var currentSlide = slider.getCurrentSlide(currentIndex);
-  //       console.log(currentSlide);
-  //       var currentImgURL = currentSlide[0].children[0].src;
-  //        setupHearts(currentImgURL);
-  //      },
-        onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
+        onSliderLoad: function(currentSlide,currentIndex){
           var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
           var currentImgURL = currentSlide[0].children[0].src;
+          console.log("loading first hearts ",currentImgURL,currentSlideCaptionText);
           setupHearts(currentImgURL,currentSlideCaptionText);
+          checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+        },
+        onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
+          $("#hearts").unbind();  // remove the old handler
+          var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
+          var currentImgURL = currentSlide[0].children[0].src;
+          console.log("hearts should ",currentImgURL,currentSlideCaptionText);
+          setupHearts(currentImgURL,currentSlideCaptionText);  // add new handler
+          checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
         }
       });
     }

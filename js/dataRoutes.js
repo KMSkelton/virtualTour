@@ -7,56 +7,65 @@ function reportError(error) {
 }
 
 
-//savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
-function savePhoto(photoURL, currentSlideCaptionText, uid){
-  console.log("savePhoto Called", photoURL, uid);
-  //get user
-  var userRef = new Firebase("https://shining-fire-453.firebaseio.com/users");
-  userRef.child(uid).once("value",function(snapshot) {
-    console.log("snapshot val ",snapshot.val());
-    //get the user's current plan
-    var currentPlan = snapshot.val().currentPlan;
-    console.log("currentPlan", currentPlan);
+function thingExists(){
+  if (exists) {
+    return true;
+  } else{
+    return false;
+  }
+}
 
-    // start adding the photo
-    var photosRef = myDataRef.child("photos");
-    //check to see if the photo exists
-    var photoID = "";
-    photosRef.orderByChild('photoURL').equalTo(photoURL).once("value",function(snapshot) {
-      console.log("photoURL checks",snapshot.val());
-      if (snapshot.val() == null) {
-        //save the photo to photos using push
-        var plansObj = {};
-        plansObj[currentPlan] = true;
-
-        console.log()
-        var newPhotoRef = photosRef.push({
-          photoURL: photoURL,
-          users: uid,
-          plans: plansObj,
-          captionText: currentSlideCaptionText
-        }, reportError());
-        console.log("newPhotoRef",newPhotoRef);
-        photoID = newPhotoRef.key();
-        console.log("photoID",photoID);
-
-        //update plans with the photoUID
-        var plansRef = myDataRef.child("plans");
-        plansRef.child(currentPlan).child("photos").child(photoID).set(true);
-
-        //update users with the photoUID
-        userRef.child(uid).child("photos").child(photoID).set(true);
-      }
-
-    }, function(errorObject) {
-      console.log("The read failed: "+ errorObject.code);
-    });
+//checkPhoto -- checks to see if the photo is in the database
+function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, currentPlan, uid) {
+  console.log("checkPhoto Called", requestedOperation, photoURL, currentSlideCaptionText, currentPlan, uid);
+  // start adding the photo
+  var photosRef = myDataRef.child("photos");
+  //check to see if the photo exists
+  photosRef.orderByChild('photoURL').equalTo(photoURL).once("value",function(snapshot) {
+    console.log("existing photo:",snapshot.val());
+    //call savePhoto ? maybe as callback to once?
+    if (snapshot.val() === null && requestedOperation === "save") {
+      savePhoto(photoURL,currentSlideCaptionText,currentPlan,uid);
+    } else if (snapshot.val() != null && requestedOperation === "check") {
+      savedHeart();
+    } else if (snapshot.val() != null && requestedOperation === "delete") {
+      
+      var data = snapshot.val();
+      console.log("checkPhotos snapshot",snapshot,data,Object.keys(data));
+      deletePhoto(Object.keys(snapshot.val())[0],currentPlan,uid);
+    }  
   });
+}
+
+// savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
+function savePhoto(photoURL, currentSlideCaptionText, currentPlan, uid){
+  //save the photo to photos using push
+  var plansObj = {};
+  plansObj[currentPlan] = true;
+
+  console.log("saving photo",photoURL, uid, plansObj,currentSlideCaptionText,currentPlan);
+  var photosRef = myDataRef.child("photos");
+  var newPhotoRef = photosRef.push({
+      photoURL: photoURL,
+      users: uid,
+      plans: plansObj,
+      captionText: currentSlideCaptionText
+  }, reportError());
+  console.log("newPhotoRef",newPhotoRef);
+  photoID = newPhotoRef.key();
+  console.log("photoID",photoID);
+
+  //update plans with the photoUID
+  var plansRef = myDataRef.child("plans");
+  plansRef.child(currentPlan).child("photos").child(photoID).set(true);
+
+  //update users with the photoUID
+  myDataRef.child("users").child(uid).child("photos").child(photoID).set(true);
 }
 
 //saveUser --creates user in usersJSON, not the same as 'register' function
 function saveUser(name, simpleuserid) {
-  var usersRef = myDataRef.child("users/").child(simpleuserid);
+  var usersRef = myDataRef.child("users").child(simpleuserid);
   console.log("saving user",name,simpleuserid)
   usersRef.set({
     name: name,
@@ -96,15 +105,18 @@ function updatePlan(planId,uid){  // NOT TESTED
 
 //deletePhoto --click filled heart to show broken heart (on click calls 'deletePhoto') removes photoUID from photos key in usersJSON. removes user from users key in photosJSON.
 function deletePhoto(photoId,planId,uid) {
-  photoRef = myDataRef.child("photos").child(photoId);
-  console.log("removing photo", photoRef);
-  //photoRef.remove(reportError());
-  userPhotoRef = myDataRef.child("users").child(uid).child("photos").child(photoId);
-  console.log("removing user photo",userPhotoRef);
-  //userPhotoRef.remove(reportError());
-  planPhotoRef = myDataRef.child("plans").child(planId).child("photos").child(photoId);
-  console.log("removing plan photo",planPhotoRef);
-  //planPhotoRef.remove(reportError());  
+    console.log("deletePhoto called with",photoId,planId,uid);
+      photoRef = myDataRef.child("photos").child(photoId);
+      console.log("removing photo", photoRef);
+      photoRef.remove(reportError());
+      
+      userPhotoRef = myDataRef.child("users").child(uid).child("photos").child(photoId);
+      console.log("removing user photo",userPhotoRef);
+      userPhotoRef.remove(reportError());
+      planPhotoRef = myDataRef.child("plans").child(planId).child("photos").child(photoId);
+      console.log("removing plan photo",planPhotoRef);
+      planPhotoRef.remove(reportError());
+    
 }
 
 //deletePlan -- button. removes plan from plansJSON, usersJSON and photosJSON. NOT MVP.

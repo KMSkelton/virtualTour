@@ -1,24 +1,26 @@
-var user = localStorage.uid;
-
 function setupHearts(currentImgURL,currentSlideCaptionText) {
-         $('#hearts').click(function() {         //reattach click handler for heart
-        if (typeof user == 'undefined') {
-        //  alert("You must be logged in to save a photo");
+    $('#hearts').removeClass().addClass("openHeart");
+    $('#hearts').click(function() {         //reattach click handler for heart
+        if (typeof localStorage.uid == 'undefined') {
+          alert("You must be logged in to save a photo");
+          window.location = "http://localhost:8000/login-signup.html";
         }
-        if ($(this).hasClass('openHeart')) {
-          $(this).addClass('filledHeart').removeClass('openHeart');
-          console.log("calling savePhoto",user);
-          savePhoto(currentImgURL,currentSlideCaptionText,user);
-
-        } else if ($(this).hasClass('filledHeart')) {
-          $(this).addClass('brokenHeart').removeClass('filledHeart');
-
+        if ($(this).hasClass('filledHeart')) {
+          $(this).removeClass().addClass('brokenHeart');
+          console.log("calling deletePhoto",currentImgURL,localStorage.currentPlan,localStorage.uid);
+          checkPhoto("delete",currentImgURL,currentSlideCaptionText,localStorage.currentPlan,localStorage.uid);
           $(this).delay(1000).queue(function(next) {
-              $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
+              $(this).removeClass().fadeOut(500).fadeIn(500).addClass('openHeart');
               next();
           });
-        } else {
-          $(this).fadeOut(500).addClass('openHeart').fadeIn(500).removeClass('brokenHeart');
-        };
-          });
+        } else if ($(this).hasClass('openHeart')) {
+          $(this).removeClass().addClass('filledHeart');
+          console.log("calling checkPhoto",localStorage.uid);
+          checkPhoto("save",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+        }
+    });
+}
+
+function savedHeart(){
+   $('#hearts').removeClass().addClass("filledHeart");  
 }
