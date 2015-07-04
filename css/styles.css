@@ -4,11 +4,14 @@ a {
   text-decoration: none;
 }
 footer {
+  margin-top: 1em;
   font-size: .7em;
 }
 /** LAYOUT **/
 
-
+.plan-title {
+  margin-top:2em;
+}
 
 .flex-container__horiz {
   display:flex;
@@ -210,46 +213,51 @@ body {
   font-family: 'EdmondSans', sans-serif;
 }
 .account-form{
-  border: thin solid #75CED9;
+  border: thin solid #244159; /* dark navy */
   border-radius: .5em;
 }
-.account-form button {
-  background-color: #518F96;
-  color: white;
-}
-#branding,
-#login-container {
-  background-color: #708A9F;
-}
 
-/*colors*/
-/*accents, caption bgd, banner bgd, link text, link text hover, link text visited*/
+
 /*match to hovers on form hovers*/
 /*change color of SVG Logo to match brand name, need hover states for those*/
+#branding,
+#login-container,
+fieldset,
+.photo-container {
+  background-color: #708A9F; /* muted blue gray*/
+}
 
 .newCaption {
-  background-color: #244159;
-  color:white;
+  background-color: #244159; /* dark navy */
+  color: white;
 }
-.newCaption a {
-  color:white;
-}
-
-header a{
-  color:#244159;
-}
-header a:hover {
-  color:#39668C;
+.newCaption a,
+.photo-container {
+  color: white;
 }
 .newCaption a:hover {
-  color:#579ED8;
+  color: #579ED8; /* bright blue */
 }
-/** STATE **/
+header a,
+form a {
+  color: #244159; /* dark navy */
+}
+header a:hover,
+form a:hover,
+fieldset input:hover {
+  color: #579ED8; /* medium blue */
+}
 
 #login-form:hover,
 #signup-form:hover {
-  background:#75CED9;
+  background:#708A9F; /* muted blue gray*/
 }
-.account-form button:hover {
-  background-color: #A3BEC2;
+.account-form button,
+form input[type="submit"] {
+  background-color: #39668C; /* medium blue */
+  color: white;
+}
+.account-form button:hover,
+form input[type="submit"]:hover {
+  background-color: #579ED8; /* bright blue */
 }

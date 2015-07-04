@@ -13,38 +13,39 @@
   <body>
     <main role="main">
 <!--Header module-->
-      <header class="row">
-      <div class="seven columns" id="branding">
+      <header class="row flex-container__main">
+      <div class="eight columns offset-by-one" id="branding">
         <a href="header.html">
           <img src="images/airplane.svg">
           <h1>SLüVT</h1>
         </a>
       </div>
-      <!-- don't need this on plan page? -->
- <!--      <div class="four columns" id="login-container">
-        <a href="#">Login</a>
-        <a href="#">Signup</a>
-      </div> -->
+
     </header>
 
     <main role="main">
   <!--Viewer Pane / bxSlider module -->
       <div class="row flex-container__main">
         <div class="eight columns offset-by-one"><!--Search box module -->
-          <form id="search-form">
-          <fieldset>
-            <label class="search-form__name-label" for="search-input">Search: </label>
-            <input type="text" class="search-form__input" id="location-search" name="search-input" role="textbox">
-            <input type="submit" value="Go">
-          </fieldset>
-        </form>
-        <div id="viewer-container"  >
-          <ul class="bxslider">
-            <li><img src="images/SLuVT-chichenItza.jpg" /></li> <!--stock photos to preload-->
-            <li><img src="images/SLuVT-giza.jpg" /></li>
-            <li><img src="images/SLuVT-Petra.jpg" /></li>
-          </ul>
-          <div id="hearts" class="openHeart"></div>
+          <div class="plan-title">
+            <h3>Currently viewing: <span id="plan-name">Plan Name</span></h3> <!-- need to insert< current plan name-->
+          </div>
+          <div id="viewer-container"  >
+            <ul class="bxslider"> <!--stock photos to preload-->
+              <li>
+                <img src="images/SLuVT-chichenItza-lg.jpg" />
+                <div class="newCaption"><p>Chichen Itza (Mexico)</p></div>
+              </li>
+              <li>
+                <img src="images/SLuVT-giza-lg.jpg" />
+                <div class="newCaption">Giza (Egypt)</div>
+              </li>
+              <li>
+                <img title="Petra (Jordan)" src="images/SLuVT-Petra-lg.jpg" />
+                <div class="newCaption">Petra (Jordan)</div>
+              </li>
+            </ul>
+            <div id="hearts" class="openHeart"></div>
         </div>
         <!--Scrollbox Module -->
         <div id="wikiScrollBox"> <!--placeholder text -->
@@ -74,7 +75,7 @@
     </main>
 <!--Footer module -->
     <footer>
-    South Lake Union Virtual Tours (SLuVT) thanks Flickr for use of the images on this site. SLuVT receives no sponsorhsip or endorsement, nor is connected with, the licensors of images used on this site. Every effort is made to ensure all images are obtained via Creative Commons license 3.0. SLuVT appreciates the contributors at WikiVoyge. Where reasonably possible, attribution is given to creators of copyrighted works. SLuVT is not responsible for the content of images or text derived from outside sources.
+    South Lake Union Virtual Tours (SLuVT) thanks Flickr for use of the images on this site. SLuVT receives no sponsorship or endorsement, nor is connected with, the licensors of images used on this site. Every effort is made to ensure all images are obtained via Creative Commons license 3.0. SLuVT appreciates the contributors at WikiVoyge. Where reasonably possible, attribution is given to creators of copyrighted works. SLuVT is not responsible for the content of images or text derived from outside sources.
     <p>&#169 SLuVT 2015</p>
     </footer>
 
