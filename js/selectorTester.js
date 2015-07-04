@@ -1,7 +1,10 @@
 $(document).ready(function() {
 
   if (localStorage.uid !== undefined){
-    $("#login-container").replaceWith("<p>Welcome back " + "<a href='/plans.html'>insert getUser code here</a>" + "!</p>" + "<p><a id='logout' href='loggedOut.html'>Log Out</a>");
+       
+    $("#login-container").replaceWith("<p>Welcome back " + "<a href='/plans.html'>" +
+      localStorage.firstName
+    +"</a>" + "!</p>" + "<p><a id='logout' href='loggedOut.html'>Log Out</a>");
   };
   
   function updateSelectBox(current,planId,planData) {
@@ -51,7 +54,9 @@ $(document).ready(function() {
   });
 
   // when everything has loaded check to load plans now
-  loadUserPlans(localStorage.uid);
+  if (localStorage.uid && localStorage.uid !== null) {
+    loadUserPlans(localStorage.uid);
+  }
 
   //logging Out
   $("#logout").click(function(){
