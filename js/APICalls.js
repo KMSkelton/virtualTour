@@ -172,16 +172,3 @@ var photoSearch = function(){
   $.getJSON(placeIDRequest, findFlickrPlaceID);
 }
 
-$('#search-form').submit(function(event) {
-  event.preventDefault();
-  photoSearch();
-  wikiSearch();
-});
-
-$(document).ready(function(){ //run on load with stock photos
-  $('.bxslider').bxSlider({
-    adaptiveHeight: true,
-    slideWidth: 850
-    });
-});
-

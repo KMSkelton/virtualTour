@@ -1,3 +1,15 @@
+
+$('#search-form').submit(function(event) {
+  event.preventDefault();
+  photoSearch();
+  wikiSearch();
+});
+
+$(document).ready(function(){ //run on load with stock photos
+
+});
+
+
 $(document).ready(function() {
       if (window.location.pathname === "/plan.html" && localStorage.firstName === undefined) {
         $("#plansParent").replaceWith('<h4>Please log in to see your plans.</h4>');
@@ -91,4 +103,9 @@ $(document).ready(function() {
           location.reload();
           return false;
         })
-      });
+        
+        $('.bxslider').bxSlider({
+          adaptiveHeight: true,
+          slideWidth: 850
+        });
+});

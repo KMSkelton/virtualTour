@@ -57,7 +57,6 @@ footer {
   margin-top: 3em;
 }
 #search-form {
-  width: 100%;
   background-color: gray;
   margin-top: .25em;
 }
@@ -68,8 +67,13 @@ footer {
   display: inline-block;
 }
 #search-form input[type="text"] {
-  width: 30%;
+  width: 20%;
   display: inline-block;
+}
+.navbar {
+  width: 100%;
+  padding: 1em;
+  margin-top: .25em;
 }
 #plansParent {
   margin-top: 0.5em;
@@ -238,7 +242,7 @@ body {
   /* dark navy */
   border-radius: .5em;
 }
-#branding, #login-container, fieldset, .photo-container {
+#branding, #login-container, fieldset, .navbar, .photo-container {
   background-color: #708A9F;
   /* muted blue gray*/
 }
