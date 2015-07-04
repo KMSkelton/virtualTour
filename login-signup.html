@@ -1,50 +1,60 @@
 <!doctype html>
 <html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Login /Signup</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/skeleton.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
-  </head>
-  <body>
-    <main>
-      <div class="flex-container__login">
-        <form class="four columns account-form" id="signup-form">
-          <h4>Sign Up</h4>
 
-          <label for="firstname-input">First Name</label>
-          <input type="text" name="firstname-input" required autocomplete="off" />
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Login /Signup</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/skeleton.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+</head>
 
-          <label for="lastname-input">Last Name</label>
-          <input type="text" name="lastname-input" required autocomplete="off"/>
+<body>
+  <main>
+    <div class="flex-container__login">
+      <form class="four columns account-form" id="signup-form">
+        <h4>Sign Up</h4>
 
-          <label for="signup-email-input">Email Address</label>
-          <input type="email" name="signup-email-input" required autocomplete="off"/>
+        <label for="firstname-input">First Name</label>
+        <input type="text" id="firstname" name="firstname-input" required autocomplete="off" />
 
-          <label for="setpassword">Set Password</label>
-          <input type="password" name="setpassword" required autocomplete="off"/><br>
+        <label for="lastname-input">Last Name</label>
+        <input type="text" id="lastname" name="lastname-input" required autocomplete="off" />
 
-          <button type="submit">Join SLüVT!</button>
-        </form>
+        <label for="signup-email-input">Email Address</label>
+        <input type="email" id="registerEmail" name="signup-email-input" required autocomplete="off" />
 
-        <form class="four columns account-form" id="login-form">
-          <h4>Welcome Back!</h4>
+        <label for="setpassword">Set Password</label>
+        <input type="password" id="registerPassword" name="setpassword" required autocomplete="off" />
+        <br>
 
-          <label for="login-email-input">Email Address</label>
-          <input type="email" name="login-email-input" required autocomplete="off"/>
+        <button type="submit" id="registerButton">Join SLüVT!</button>
+      </form>
 
-          <label for="password-input">Password</label>
-          <input type="password" name="password-input" required autocomplete="off"/>
+      <form class="four columns account-form" id="login-form">
+        <h4>Welcome Back!</h4>
 
-          <p class="forgot"><a href="#">Forgot Password?</a></p>
+        <label for="login-email-input">Email Address</label>
+        <input type="email" id="loginEmail" name="login-email-input" required autocomplete="off" />
 
-          <button>Log In</button>
-        </form>
-      </div>
-    </main>
+        <label for="password-input">Password</label>
+        <input type="password" id="loginPassword" name="password-input" required autocomplete="off" />
+
+        <p class="forgot"><a href="#">Forgot Password?</a></p>
+
+        <button id="loginButton">Log In</button>
+      </form>
+    </div>
+  </main>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  </body>
+  <script src="js/selectorTester.js"></script> <!-- must run before firebase -->
+  <script src="js/dataRoutes.js"></script>
+  <script src="js/firebase.js"></script>
+
+</body>
+
 </html>

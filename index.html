@@ -11,100 +11,95 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
    </head>
   <body>
-    <main role="main">
 <!--Header module-->
-      <header class="row">
-      <div class="seven columns" id="branding">
-        <a href="header.html">
+    <header class="row flex-container__main">
+      <div class="eight columns offset-by-one" id="branding">
+        <a href="#">
           <img src="images/airplane.svg">
           <h1>SLüVT</h1>
         </a>
+        <div class="three columns" id="login-container">
+          <a href="#">Login</a> or
+          <a href="#">Signup</a>
+        </div>
       </div>
-      <div class="four columns" id="login-container">
-        <a href="#">Login</a>
-        <a href="#">Signup</a>
-      </div>
+
     </header>
 
     <main role="main">
-
-
   <!--Viewer Pane / bxSlider module -->
       <div class="row flex-container__main">
-        <div class="eight columns">
-  <!--search box module-->
+        <div class="eight columns offset-by-one">
+          <!--Search box module -->
           <form id="search-form">
           <fieldset>
             <label class="search-form__name-label" for="search-input">Search: </label>
-            <input type="text" class="search-form__input" id="flickr-search" name="search-input" role="textbox">
+            <input type="text" class="search-form__input" id="location-search" name="search-input" role="textbox">
             <input type="submit" value="Go">
+            <!-- TEST WHETHER USER LOGGED IN -->
+                <div id="plansParent">
+                  <select width="100" id="planSelect" name="planSelect" class="add_select"></select>
+                  <a href="#" id="addChildPlan">Add Plan</a>
+                </div>
           </fieldset>
         </form>
         <div id="viewer-container"  >
-          <ul class="bxslider">
-            <li><img src="images/SLuVT-chichenItza.jpg" /></li> <!--stock photos to preload-->
-            <li><img src="images/SLuVT-giza.jpg" /></li>
-            <li><img src="images/SLuVT-Petra.jpg" /></li>
+          <ul class="bxslider"> <!--stock photos to preload-->
+            <li>
+              <img src="images/SLuVT-chichenItza-lg.jpg" />
+              <div class="newCaption"><p>Chichen Itza (Mexico)</p></div>
+            </li>
+            <li>
+              <img src="images/SLuVT-giza-lg.jpg" />
+              <div class="newCaption">Giza (Egypt)</div>
+            </li>
+            <li>
+              <img title="Petra (Jordan)" src="images/SLuVT-Petra-lg.jpg" />
+              <div class="newCaption">Petra (Jordan)</div>
+            </li>
           </ul>
           <div id="hearts" class="openHeart"></div>
         </div>
-    <!--Scrollbox Module -->
+        <!--Scrollbox Module -->
         <div id="wikiScrollBox"> <!--placeholder text -->
-          <p>TEST TEXT - Shibuya garage market alcohol sunglasses sentient modem military-grade augmented reality BASE jump artisanal numinous. Disposable tiger-team lights A.I. neon smart-modem. Vehicle 8-bit digital sign wonton soup human singularity marketing free-market physical DIY voodoo god realism RAF vinyl sub-orbital Tokyo. Tank-traps crypto-bicycle skyscraper assault rain corporation network. Advert claymore mine savant shoes market bicycle pre-face forwards. Concrete nano-denim rebar katana fetishism skyscraper disposable systema cartel shrine refrigerator. Engine post-systema math-crypto-assassin Kowloon sentient military-grade cartel render-farm vehicle BASE jump marketing rebar chrome. Corrupted vinyl dolphin garage towards San Francisco Chiba gang</p>
+          <p>Welcome to SLüVT! Where do you want to go today?</p>
         </div>
       </div>
-      <div class="three columns">
-        <h4>Recent Favorites</h4>
-        <div class="flex-container__favorites ">
-          <div class="photo-container">
-            <img id="vertical--top" src="images/SLuVT-tajMahal.jpg" />
-            <p id="vertical--top__location">
-              India <!-- this will be search term of favorited item -->
-            </p>
-          </div>
-          <div class="photo-container">
-            <img id="vertical--center" src="images/SLuVT-christRedeemer.jpg" />
-            <p id="vertical--center__location">
-              Rio <!-- this will be search term of favorited item -->
-            </p>
-          </div>
-          <div class="photo-container">
-            <img id="vertical--bottom" src="images/SLuVT-greatWall.jpg" />
-            <p id="vertical--center__location">
-              China <!-- this will be search term of favorited item -->
-            </p>
-          </div>
-        </div>
-      </div>
-  </div>
+</div>
+
 
 <!--Horizontal Bar Module -->
-      <h4 class="horiz-bar--header">Other SLuVTrs are searching for:</h4>
+      <h4 class="horiz-bar--header">Recent Favorites:</h4>
       <div class="flex-container__horiz">
         <div class="photo-container" id="horiz--left">
-          <img src="images/SLuVT-colosseum.jpg"> <!--using placeholders for size-->
-          <p class="photo-container--searchterm">Rome</p>
+          <img src="images/SLuVT-tajMahal.jpg">
+          <p class="photo-container--searchterm">Taj Mahal (India)</p>
         </div>
         <div class="photo-container" id="horiz--center">
-          <img src="images/SLuVT-giza.jpg">
-          <p class="photo-container--searchterm">Giza</p>
+          <img src="images/SLuVT-christRedeemer.jpg"> <!--using placeholders for size-->
+          <p class="photo-container--searchterm">Colosseum (Rome)</p>
         </div>
         <div class="photo-container" id="horiz--right">
           <img src="images/SLuVT-machuPicchu.jpg">
-          <p class="photo-container--searchterm">Peru</p>
+          <p class="photo-container--searchterm">Machu Picchu (Peru)</p>
         </div>
       </div>
     </main>
 <!--Footer module -->
     <footer>
-    South Lake Union Virtual Tours (SLuVT) thanks Flickr for use of the images on this site. SLuVT receives no sponsorhsip or endorsement, nor is connected with, the licensors of images used on this site. Every effort is made to ensure all images are obtained via Creative Commons license 3.0. SLuVT appreciates the contributors at WikiVoyge. Where reasonably possible, attribution is given to creators of copyrighted works. SLuVT is not responsible for the content of images or text derived from outside sources.
+    South Lake Union Virtual Tours (SLuVT) thanks Flickr for use of the images on this site. SLuVT receives no sponsorship or endorsement, nor is connected with, the licensors of images used on this site. Every effort is made to ensure all images are obtained via Creative Commons license 3.0. SLuVT appreciates the contributors at WikiVoyge. Where reasonably possible, attribution is given to creators of copyrighted works. SLuVT is not responsible for the content of images or text derived from outside sources.
     <p>&#169 SLuVT 2015</p>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="js/jquery.bxslider.min.js"></script>
-    <script type="text/javascript" src="js/flickrAPI.js"></script>
-    <script type="text/javascript" src="js/sprites.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+    <script type="text/javascript" src="js/firebase.js"></script>
+    <script type="text/javascript" src="js/dataRoutes.js"></script>
+    <script type="text/javascript" src="js/selectorTester.js"></script>
+    <script type="text/javascript" src="js/setupHearts.js"></script>
+    <script type="text/javascript" src="js/APICalls.js"></script>
 
   </body>
 </html>
