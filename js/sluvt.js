@@ -4,9 +4,7 @@ $(document).ready(function() {
 
     $("#login-container").replaceWith("<div class='three columns' id='login-container'> <p>Welcome back " + "<a href='/plans.html'>" +
       localStorage.firstName
-    +"</a>" + "!</p>" + "<p><a id='logout' href='loggedOut.html'>Log Out</a></div>" + "<div id='deletePlan'> +
-      <button name='deletePlanButton'>Delete this Plan</button>
-    </div>");
+    +"</a>" + "!</p>" + "<p><a id='logout' href='index.html'>Log Out</a></div>");
   };
 
   function updateSelectBox(current,planId,planData) {
