@@ -4,30 +4,6 @@ $(document).ready(function() {
     $("#login-container").replaceWith("<p>Welcome back " + "<a href='/plans.html'>insert getUser code here</a>" + "!</p>" + "<p><a id='logout' href='loggedOut.html'>Log Out</a>");
   };
   
-    // load Current Plans into planSelect using jQuery AJAX calls   - deprecated
-  /*  function loadUserPlans(uid) {
-      $(".add_select").html(); //reset the select values
-      $.get("https://shining-fire-453.firebaseio.com/users/"+uid+"/.json"
-      ).then(function(data) {
-        console.log("data in ajax call is ",data);
-        for (var planId in data.plans) {
-          console.log("planId in data",planId);
-          $.get(
-            "https://shining-fire-453.firebaseio.com/plans/"+planId+"/.json"
-            ).done(function(planData) {
-              console.log("planData",planData);
-              var option = "<option value='' id='"+planId+"' ";
-              if (data.current == planId) {
-                option += 'selected="selected"';
-              }
-              option += ">" + planData.name + "</option>";
-              $(".add_select").append(option);
-            });
-        }
-      });
-    }
-      */
-    
   function updateSelectBox(current,planId,planData) {
       var option = "<option value='' id='" + planId + "' ";
       if (current == planId) {
