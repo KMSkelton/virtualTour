@@ -1,3 +1,5 @@
+var myDataRef = new Firebase('https://shining-fire-453.firebaseio.com');
+
 function reportError(error) {
   if (error) {
     alert("Data could not be saved." + error);
@@ -30,12 +32,19 @@ function reportError(error) {
     $("#viewer-container").html('<ul class="bxslider">');
     console.log("viewer container at start",$("#viewer-container").html());
     myDataRef.child("photos").orderByChild("plans").equalTo(planId).once("value",function(snap) {
-      snap.forEach(function(data){
-        console.log("loadCurrentPlanPhotos foreach",data.val());
-        addPlanSlide(data.val());
-        console.log("after loadPlanViewer");
-        
-      });
+      console.log("loadPlanViewer snap",snap.val());
+      if (snap.val() === null) {
+        console.log("snap is null");
+        $('.bxslider').append('<li><img src="images/colosseum2-1024.jpg"><div class="newCaption"><p>Colosseum (Rome)</p></div></li>');
+        $('#wikiScrollBox').html('<p>No images in this plan.  Please add an image via the search page.</p>');
+      }else {
+        snap.forEach(function(data){
+          console.log("loadCurrentPlanPhotos foreach",data.val());
+          addPlanSlide(data.val());
+          console.log("after loadPlanViewer");
+          
+        });
+      }
       $("#viewer-container").append('</ul>');
       console.log("after snap for functions",$("#viewer-container").html());
       loadPlanSlider();
@@ -46,7 +55,7 @@ function reportError(error) {
  
   function addPlanSlide(data){
     console.log("addPlanSlide",data,data.photoURL,data.captionText);
-     $('.bxslider').append('<li><img src="'+ data.photoURL + '">'+ data.captionText +'</li>');
+     $('.bxslider').append('<li><img src="'+ data.photoURL + '"><div class="newCaption">'+ data.captionText +'</div></li>');
      console.log("after append",$('#viewer-container').html());
   }
  /* 

@@ -1,4 +1,3 @@
-
 function updateSelectBox(current, planId, planData) {
    var option = "<option value='' id='" + planId + "' ";
   if (current == planId) {
@@ -25,69 +24,62 @@ function updateUserSavedPlans(snapshot) {
   });      
 } 
 
- function loadFavorites() { 
-    if (window.location.pathname === "/plan.html") {
-      myDataRef.child("users").child(localStorage.uid).child("plans").orderByKey().limitToLast(3).once("value",function(snapshot) {
-        var ids = ["horiz--left","horiz--center","horiz--right"];
-        var cnt = 0;
-        snapshot.forEach(function(data) {
-          loadPlanLastPhoto(data.key(),ids[cnt]);
-          cnt++;
-        });            
-      });
-    } else{
-      // get 3 latest photos and display
-      myDataRef.child("photos").orderByKey().limitToLast(3).once("value", function(snapshot) {
-        var ids = ["horiz--left","horiz--center","horiz--right"];
-        var cnt = 0;
-        snapshot.forEach(function(data){
-          updateFavorites(data.val(),ids[cnt]);
-          cnt++;
-        });    
-      });
-    }
+function loadFavorites() { 
+  if (window.location.pathname === "/plan.html") {
+    myDataRef.child("users").child(localStorage.uid).child("plans").orderByKey().limitToLast(3).once("value",function(snapshot) {
+      var ids = ["horiz--left","horiz--center","horiz--right"];
+      var cnt = 0;
+      snapshot.forEach(function(data) {
+        loadPlanLastPhoto(data.key(),ids[cnt]);
+        cnt++;
+      });            
+    });
+  } else{
+    // get 3 latest photos and display
+    myDataRef.child("photos").orderByKey().limitToLast(3).once("value", function(snapshot) {
+      var ids = ["horiz--left","horiz--center","horiz--right"];
+      var cnt = 0;
+      snapshot.forEach(function(data){
+        updateFavorites(data.val(),ids[cnt]);
+        cnt++;
+      });    
+    });
   }
+}
 
-function reloadSlider(slider) {
+// has to be in a callback so that it waits until loadPlanSlider is finished to reload
+function reloadSlider(slider){
   slider.reloadSlider();
 }
   
-  function loadPlanSlider(){
-     //called after loadCurrentPlanPhotos(planId) executes in callback chain
-      
-      console.log("after loadPhotos");    
-      $("#viewer-container").append('<div id="hearts" class="openHeart"></div>');
-      console.log("viewer should be complete",$("#viewer-container").html());            
-      slider = $('.bxslider').bxSlider({
-        pager: true,
-        pagerType:'short',  //use numbers instead of dots
-        captions: false ,    //will show captions from text in title field of <img>
-        adaptiveHeight: true,
-        slideWidth: 850,
-        maxSlides: 1,
-        onSliderLoad: function(currentSlide,currentIndex){
-          var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
-          var currentImgURL = currentSlide[0].children[0].src;
-          //console.log("loading first hearts ",currentImgURL,currentSlideCaptionText);
-          setupHearts(currentImgURL,currentSlideCaptionText);
-          checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
-          loadFavorites();
-        },
-        onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
-          $("#hearts").unbind();  // remove the old handler
-          var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
-          var currentImgURL = currentSlide[0].children[0].src;
-          //console.log("hearts should ",currentImgURL,currentSlideCaptionText);
-          setupHearts(currentImgURL,currentSlideCaptionText);  // add new handler
-          checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
-          loadFavorites();
-        }
-      });
-      
-      console.log("slider should be setup");
-      reloadSlider(slider);      
+function loadPlanSlider(){
+  //called after loadCurrentPlanPhotos(planId) executes in callback chain
+  $("#viewer-container").append('<div id="hearts" class="openHeart"></div>');
+  slider = $('.bxslider').bxSlider({
+    pager: true,
+    pagerType:'short',  //use numbers instead of dots
+    captions: false ,    //will show captions from text in title field of <img>
+    adaptiveHeight: true,
+    slideWidth: 850,
+    maxSlides: 1,
+    onSliderLoad: function(currentSlide,currentIndex){
+      var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
+      var currentImgURL = currentSlide[0].children[0].src;
+      setupHearts(currentImgURL,currentSlideCaptionText);
+      checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+      loadFavorites();
+    },
+    onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
+      $("#hearts").unbind();  // remove the old handler
+      var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
+      var currentImgURL = currentSlide[0].children[0].src;
+      setupHearts(currentImgURL,currentSlideCaptionText);  // add new handler
+      checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+      loadFavorites();
     }
-  
+  });
+  reloadSlider(slider);      
+}
 
 $(document).ready(function() {
   if (window.location.pathname === "/plan.html") {
@@ -101,7 +93,11 @@ $(document).ready(function() {
       loadFavorites();
       loadPlanViewer(localStorage.currentPlan);
     }
-  } else {
+  } else if(window.location.pathname === "/index.html" ){
+    $('.bxslider').bxSlider({
+      adaptiveHeight: true,
+      slideWidth: 850
+    });
     loadFavorites();
   }
 
@@ -168,11 +164,9 @@ $(document).ready(function() {
     }
   });
 
-
-  // when everything has loaded check to load plans now
+  // when everything has loaded check to load plan select box now
   if (localStorage.uid && localStorage.uid !== null) {
     loadUserPlans(localStorage.uid);
-
   }
 
   //logging Out
@@ -181,14 +175,5 @@ $(document).ready(function() {
     window.localStorage.clear();
     location.reload();
     return false;
-  })
-
-  if(window.location.pathname === "/index.html" ){
-    $('.bxslider').bxSlider({
-      adaptiveHeight: true,
-      slideWidth: 850
-    });
-  }
-  
-  
+  });
 });
