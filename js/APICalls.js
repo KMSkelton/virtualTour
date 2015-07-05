@@ -55,7 +55,7 @@ var wikiSearch = function(){
       var isArticle = true;
       for (var i=0; i< categoryArray.length && isArticle; i++){
         var currentCat = categoryArray[i].title;
-        isArticle = (currentCat.indexOf("disambig") < 0);
+        isArticle = (currentCat.indexOf("isambig") < 0);
       }
       if (isArticle){
         wikiSearchExtract(wikiRequestExtract);
