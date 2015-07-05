@@ -8,8 +8,11 @@ function wikiSearchExtract(wikiRequestExtract) {
             var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
             $("#wikiScrollBox").html(extract);
             localStorage.setItem("wikiExtract",wikiRequestExtract);
+          },
+        }).fail(function(error) {
+            console.log("error with wikiSearchExtract",error);
           }
-        });
+        );
 }
         
 var wikiSearch = function(){
@@ -117,8 +120,7 @@ var photoSearch = function(){
         var server = data.photos.photo[i].server;
         var id = data.photos.photo[i].id;
         var secret = data.photos.photo[i].secret;
-        // console.log("data.photos", data.photos);
-
+        
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
         // z medium 640, 640 on longest side
@@ -137,7 +139,6 @@ var photoSearch = function(){
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
-      //console.log("viewer",viewer);
       photoClear();
       $("#viewer-container").append(viewer);
       
@@ -151,7 +152,6 @@ var photoSearch = function(){
         onSliderLoad: function(currentSlide,currentIndex){
           var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
           var currentImgURL = currentSlide[0].children[0].src;
-          //console.log("loading first hearts ",currentImgURL,currentSlideCaptionText);
           setupHearts(currentImgURL,currentSlideCaptionText);
           checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
           loadFavorites();
@@ -160,7 +160,6 @@ var photoSearch = function(){
           $("#hearts").unbind();  // remove the old handler
           var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
           var currentImgURL = currentSlide[0].children[0].src;
-          //console.log("hearts should ",currentImgURL,currentSlideCaptionText);
           setupHearts(currentImgURL,currentSlideCaptionText);  // add new handler
           checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
           loadFavorites();

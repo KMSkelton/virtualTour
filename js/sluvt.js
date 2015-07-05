@@ -81,13 +81,24 @@ function loadPlanSlider(){
   reloadSlider(slider);      
 }
 
+function updateStockLink(currentSlideNumber){
+  var stockLinks = [
+      '<div><a href="https://en.wikivoyage.org/wiki/Rome">More information about Rome.</a></div>',
+      '<div><a href="https://en.wikivoyage.org/wiki/India">More information about India.</a></div>',
+      '<div><a href="https://en.wikivoyage.org/wiki/Petra">More information about Petra.</a></div>'
+      ];
+   var newLink = stockLinks[currentSlideNumber];
+   $("#wikiLink").html(newLink);      
+}
+
 $(document).ready(function() {
   if (window.location.pathname === "/plan.html") {
     if(localStorage.firstName === undefined) {
       $("#plansParent").replaceWith('<h4>Please log in to see your plans.</h4>');
       $('.bxslider').bxSlider({
         adaptiveHeight: true,
-        slideWidth: 850
+        slideWidth: 850,
+        
       });
     } else {
       loadFavorites();
@@ -96,7 +107,11 @@ $(document).ready(function() {
   } else if( window.location.pathname === "/index.html" || window.location.pathname === "/"){
     $('.bxslider').bxSlider({
       adaptiveHeight: true,
-      slideWidth: 850
+      slideWidth: 850,
+      onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
+          console.log("stockBxSlider onSlideAfter",currentSlide,previousSlideNumber,currentSlideNumber);
+          updateStockLink(currentSlideNumber);
+        }
     });
     loadFavorites();
   }
