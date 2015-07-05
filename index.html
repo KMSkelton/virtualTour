@@ -36,11 +36,11 @@
               <fieldset>
                 <label class="search-form__name-label" for="search-input">Search: </label>
                 <input type="text" class="search-form__input" id="location-search" name="search-input" role="textbox">
-                <input type="submit" value="Go">
+                <input type="submit" id="location-search-submit" value="Go">
                 <div id="plansParent"></div> <!-- all of the plan controls are available after login -->
               </fieldset>
         </form>
-
+        <div id="addFormParent" class="hidden"></div>
         <div id="viewer-container">
           <ul class="bxslider">
             <!--stock photos to preload-->
@@ -102,10 +102,9 @@
   <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
   <script type="text/javascript" src="js/firebase.js"></script>
   <script type="text/javascript" src="js/dataRoutes.js"></script>
-  <script type="text/javascript" src="js/sluvt.js"></script>
   <script type="text/javascript" src="js/setupHearts.js"></script>
   <script type="text/javascript" src="js/APICalls.js"></script>
-
+  <script type="text/javascript" src="js/sluvt.js"></script>
 </body>
 
 </html>
