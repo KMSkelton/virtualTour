@@ -79,7 +79,6 @@ $("#loginButton").on("click", function(e) {
           console.log("Error logging user in:", error);
       }
     } else {
-      alert("Welcome back!");
       localStorage.setItem("uid", authData.uid);
       localStorage.setItem("provider", authData.provider);
       getUserData(authData);      
