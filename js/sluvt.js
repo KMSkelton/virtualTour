@@ -74,6 +74,11 @@ $(document).ready(function() {
     localStorage.setItem("currentPlan",newPlanId);                                                 
     setUserPlan(newPlanId,localStorage.uid);
   });
+  
+  // create firebase on watcher that watches latest-photos
+  myDataRef.child("photos").orderByKey().limitToFirst(3).once("value", function(snapshot) {
+    console.log("snapshot",snapshot.val());    
+  });  
 
   // when everything has loaded check to load plans now
   if (localStorage.uid && localStorage.uid !== null) {
