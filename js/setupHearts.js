@@ -17,6 +17,7 @@ function setupHearts(currentImgURL,currentSlideCaptionText) {
           $(this).removeClass().addClass('filledHeart');
           //console.log("calling checkPhoto",localStorage.uid);
           checkPhoto("save",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+          loadFavorites();
         }
     });
 }

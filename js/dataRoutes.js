@@ -24,18 +24,53 @@ function reportError(error) {
             updateSelectBox(currentPlan, planId, snap.val());
           });
   }
-  
+
+
+  function loadPlanViewer(planId) {               
+    $("#viewer-container").html('<ul class="bxslider">');
+    console.log("viewer container at start",$("#viewer-container").html());
+    myDataRef.child("photos").orderByChild("plans").equalTo(planId).once("value",function(snap) {
+      snap.forEach(function(data){
+        console.log("loadCurrentPlanPhotos foreach",data.val());
+        addPlanSlide(data.val());
+        console.log("after loadPlanViewer");
+        
+      });
+      $("#viewer-container").append('</ul>');
+      console.log("after snap for functions",$("#viewer-container").html());
+      loadPlanSlider();
+            
+    });
+    console.log("after loadCurrentPlanPhotos");
+  } 
+ 
+  function addPlanSlide(data){
+    console.log("addPlanSlide",data,data.photoURL,data.captionText);
+     $('.bxslider').append('<li><img src="'+ data.photoURL + '">'+ data.captionText +'</li>');
+     console.log("after append",$('#viewer-container').html());
+  }
+ /* 
   function loadUserPhotos(uid) {  //plan.html
+    console.log("loadUserPhotos");
     var planPhotoRef = new Firebase("https://shining-fire-453.firebaseio.com/plans");
     planPhotoRef.child("photos").once("value", function(snapshot) {
       for (var photoId in snapshot.val()) {
-        myDataRef.child("photos").child(photoId).once("value", function(snap) {
-          //console.log("loadUserPhotos", uid, photoId, snap.val());
-          loadUserPlanPhotos(snap.val().photoURL);
-        });
+        loadPhotoData(photoId);  
       }
     });
   }
+  
+  function loadPhotoData(photoId) {
+        myDataRef.child("photos").child(photoId).once("value", function(snap) {
+          console.log("loadPhotoData", uid, photoId, snap.val());
+          loadUserPlanPhotos(snap.val().photoURL);
+        });
+  }
+  
+  function loadUserPlanPhotos(photoURL,photoCaption){
+  
+  }
+  */
   
   function loadPlanLastPhoto(planId,elementId){
     myDataRef.child("photos").orderByChild("plans").equalTo(planId).limitToLast(1).once("value",function(snapshot) {
@@ -98,6 +133,7 @@ function savePhoto(photoURL, currentSlideCaptionText, currentPlan, uid){
 
   //update users with the photoUID
   myDataRef.child("users").child(uid).child("photos").child(photoID).set(true);
+  loadFavorites();
 }
 
 //saveUser --creates user in usersJSON, not the same as 'register' function

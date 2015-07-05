@@ -46,14 +46,60 @@ function updateUserSavedPlans(snapshot) {
         });    
       });
     }
-  }  
+  }
+
+function reloadSlider(slider) {
+  slider.reloadSlider();
+}
+  
+  function loadPlanSlider(){
+     //called after loadCurrentPlanPhotos(planId) executes in callback chain
+      
+      console.log("after loadPhotos");    
+      $("#viewer-container").append('<div id="hearts" class="openHeart"></div>');
+      console.log("viewer should be complete",$("#viewer-container").html());            
+      slider = $('.bxslider').bxSlider({
+        pager: true,
+        pagerType:'short',  //use numbers instead of dots
+        captions: false ,    //will show captions from text in title field of <img>
+        adaptiveHeight: true,
+        slideWidth: 850,
+        maxSlides: 1,
+        onSliderLoad: function(currentSlide,currentIndex){
+          var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
+          var currentImgURL = currentSlide[0].children[0].src;
+          //console.log("loading first hearts ",currentImgURL,currentSlideCaptionText);
+          setupHearts(currentImgURL,currentSlideCaptionText);
+          checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+          loadFavorites();
+        },
+        onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
+          $("#hearts").unbind();  // remove the old handler
+          var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
+          var currentImgURL = currentSlide[0].children[0].src;
+          //console.log("hearts should ",currentImgURL,currentSlideCaptionText);
+          setupHearts(currentImgURL,currentSlideCaptionText);  // add new handler
+          checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+          loadFavorites();
+        }
+      });
+      
+      console.log("slider should be setup");
+      reloadSlider(slider);      
+    }
+  
 
 $(document).ready(function() {
   if (window.location.pathname === "/plan.html") {
     if(localStorage.firstName === undefined) {
       $("#plansParent").replaceWith('<h4>Please log in to see your plans.</h4>');
+      $('.bxslider').bxSlider({
+        adaptiveHeight: true,
+        slideWidth: 850
+      });
     } else {
       loadFavorites();
+      loadPlanViewer(localStorage.currentPlan);
     }
   } else {
     loadFavorites();
@@ -117,6 +163,9 @@ $(document).ready(function() {
     localStorage.setItem("planName",newPlanName);
     localStorage.setItem("currentPlan",newPlanId);                                                 
     setUserPlan(newPlanId,localStorage.uid);
+    if (window.location.pathname === "/plan.html") {    
+      loadPlanViewer(localStorage.currentPlan);
+    }
   });
 
 
@@ -134,7 +183,7 @@ $(document).ready(function() {
     return false;
   })
 
-  if(window.location.pathname === "/plan.html"  || window.location.pathname === "/index.html" ){
+  if(window.location.pathname === "/index.html" ){
     $('.bxslider').bxSlider({
       adaptiveHeight: true,
       slideWidth: 850
