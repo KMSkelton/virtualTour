@@ -78,7 +78,7 @@ footer {
 }
 #plansParent {
   margin-top: 0.5em;
-  display: inline-block;
+  display: inline;
 }
 button {
   padding-left: 0.25em;

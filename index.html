@@ -16,7 +16,7 @@
   <!--Header module-->
   <header class="row flex-container__main">
     <div class="eight columns offset-by-one" id="branding">
-      <a href="/index.html">
+      <a href="#">
         <img src="images/airplane.svg">
         <h1>SLüVT</h1>
       </a>
@@ -32,15 +32,16 @@
     <!--Viewer Pane / bxSlider module -->
     <div class="row flex-container__main">
       <div class="eight columns offset-by-one">
+        <!--Search box module -->
         <form id="search-form">
-              <fieldset>
-                <label class="search-form__name-label" for="search-input">Search: </label>
-                <input type="text" class="search-form__input" id="location-search" name="search-input" role="textbox">
-                <input type="submit" value="Go">
-                <div id="plansParent"></div> <!-- all of the plan controls are available after login -->
-              </fieldset>
+          <fieldset>
+            <label class="search-form__name-label" for="search-input">Search: </label>
+            <input type="text" class="search-form__input" id="location-search" name="search-input" role="textbox">
+            <input type="submit" value="Go">
+            <!-- TEST WHETHER USER LOGGED IN -->
+            <div id="plansParent"></div> <!-- all of the plan controls are available after login -->
+          </fieldset>
         </form>
-
         <div id="viewer-container">
           <ul class="bxslider">
             <!--stock photos to preload-->
@@ -97,7 +98,7 @@
   </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="js/jquery.bxslider.js"></script>
+  <script src="js/jquery.bxslider.min.js"></script>
   <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
   <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
   <script type="text/javascript" src="js/firebase.js"></script>
