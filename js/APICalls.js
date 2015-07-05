@@ -1,20 +1,20 @@
 function wikiSearchExtract(wikiRequestExtract) {
   $.ajax({
-          url: wikiRequestExtract,
-          jsonp: "callback",
-          dataType: "jsonp",
-          success: function( data ) {
-            var pageID = data.query.pageids[0];            
-            var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
-            $("#wikiExtract").html(extract);
-            localStorage.setItem("wikiExtract",wikiRequestExtract);
-          },
-        }).fail(function(error) {
-            console.log("error with wikiSearchExtract",error);
-          }
-        );
+    url: wikiRequestExtract,
+    jsonp: "callback",
+    dataType: "jsonp",
+    success: function( data ) {
+      var pageID = data.query.pageids[0];
+      var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
+      $("#wikiExtract").html(extract);
+      localStorage.setItem("wikiExtract", wikiRequestExtract);
+    },
+  }).fail(function(error) {
+      console.log("error with wikiSearchExtract", error);
+    }
+  );
 }
-        
+
 var wikiSearch = function(){
   var $wikiSearch =  $("#location-search").val();
 
@@ -54,13 +54,13 @@ var wikiSearch = function(){
     success: function( data ) {
       var pageID = data.query.pageids[0];
       var categoryArray = data.query.pages[pageID].categories;
-
       var isArticle = true;
       for (var i=0; i< categoryArray.length && isArticle; i++){
         var currentCat = categoryArray[i].title;
         isArticle = (currentCat.indexOf("isambig") < 0);
       }
-      if (isArticle){
+      console.log("categoryArray.length", categoryArray.length);
+      if (isArticle && categoryArray.length > 0 ){
         wikiSearchExtract(wikiRequestExtract);
         $.ajax({
           url: wikiRequestURL,
@@ -68,7 +68,7 @@ var wikiSearch = function(){
           dataType: "jsonp",
           success: function( data ) {
             var wikiURL = data.query.pages[pageID].fullurl;
-            var wikiLink = "<div><a href=" + wikiURL + ">More information about "+capitalSearch+".</a></div>";
+            var wikiLink = "<div><a href=" + wikiURL + ">Read more about " + capitalSearch + "...</a></div>";
             $("#wikiLink").html(wikiLink);
           }
         });
@@ -120,7 +120,7 @@ var photoSearch = function(){
         var server = data.photos.photo[i].server;
         var id = data.photos.photo[i].id;
         var secret = data.photos.photo[i].secret;
-        
+
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
         // z medium 640, 640 on longest side
@@ -141,7 +141,7 @@ var photoSearch = function(){
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
       photoClear();
       $("#viewer-container").append(viewer);
-      
+
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots

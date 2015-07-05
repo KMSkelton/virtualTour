@@ -11,7 +11,7 @@ function updateSelectBox(current, planId, planData) {
 function updateFavorites(data,elementId) {
     $('#'+elementId).find('img').attr('src',data.photoURL);
     $('#'+elementId).find('p').html(data.captionText);
-    $('#'+elementId).find('h3').html('<h3>'+data.planName+'</h3>'); 
+    $('#'+elementId).find('h3').html('<h3>'+data.planName+'</h3>');
  }
 
 
@@ -21,10 +21,10 @@ function updateUserSavedPlans(snapshot) {
   snapshot.forEach(function(data){
     updateFavorites(data.val(),ids[cnt]);
     cnt++;
-  });      
-} 
+  });
+}
 
-function loadFavorites() { 
+function loadFavorites() {
   if (window.location.pathname === "/plan.html") {
     myDataRef.child("users").child(localStorage.uid).child("plans").orderByKey().limitToLast(3).once("value",function(snapshot) {
       var ids = ["horiz--left","horiz--center","horiz--right"];
@@ -32,7 +32,7 @@ function loadFavorites() {
       snapshot.forEach(function(data) {
         loadPlanLastPhoto(data.key(),ids[cnt]);
         cnt++;
-      });            
+      });
     });
   } else{
     // get 3 latest photos and display
@@ -42,7 +42,7 @@ function loadFavorites() {
       snapshot.forEach(function(data){
         updateFavorites(data.val(),ids[cnt]);
         cnt++;
-      });    
+      });
     });
   }
 }
@@ -51,7 +51,7 @@ function loadFavorites() {
 function reloadSlider(slider){
   slider.reloadSlider();
 }
-  
+
 function loadPlanSlider(){
   //called after loadCurrentPlanPhotos(planId) executes in callback chain
   $("#viewer-container").append('<div id="hearts" class="openHeart"></div>');
@@ -78,17 +78,17 @@ function loadPlanSlider(){
       loadFavorites();
     }
   });
-  reloadSlider(slider);      
+  reloadSlider(slider);
 }
 
 function updateStockLink(currentSlideNumber){
   var stockLinks = [
-      '<div><a href="https://en.wikivoyage.org/wiki/Rome">More information about Rome.</a></div>',
-      '<div><a href="https://en.wikivoyage.org/wiki/India">More information about India.</a></div>',
-      '<div><a href="https://en.wikivoyage.org/wiki/Petra">More information about Petra.</a></div>'
+      '<div><a href="https://en.wikivoyage.org/wiki/Rome">Read more about Rome...</a></div>',
+      '<div><a href="https://en.wikivoyage.org/wiki/India">Read more about India...</a></div>',
+      '<div><a href="https://en.wikivoyage.org/wiki/Petra">Read more about Petra...</a></div>'
       ];
    var newLink = stockLinks[currentSlideNumber];
-   $("#wikiLink").html(newLink);      
+   $("#wikiLink").html(newLink);
 }
 
 $(document).ready(function() {
@@ -98,7 +98,7 @@ $(document).ready(function() {
       $('.bxslider').bxSlider({
         adaptiveHeight: true,
         slideWidth: 850,
-        
+
       });
     } else {
       loadFavorites();
@@ -134,11 +134,11 @@ $(document).ready(function() {
     window.location = "/plan.html";
   });
 
-  // PLAN HANDLERS  
+  // PLAN HANDLERS
   // Show form for entering plan name and add link
   $("#addChildPlan").on("click", function(event) {
     event.preventDefault();
-    
+
     var html = '<div class="add_container"><h3>Plan Name:</h3><input class="add_input" type="text" size="50" maxlength="255"/><button id="add-plan-submit" class="add_link">Add</button></div>';
     $("#addFormParent").append(html);
     $("#addFormParent").removeClass().addClass("navbar");
@@ -148,7 +148,7 @@ $(document).ready(function() {
   $("#addFormParent").on("click", ".add_link", function(event) {
     event.preventDefault();
     var planName = $(this).prev(".add_input").val();
-    if (localStorage.uid) {      
+    if (localStorage.uid) {
       savePlan(planName, localStorage.uid);
     } else {
       alert("You must log in before trying to create a plan!");
@@ -159,7 +159,7 @@ $(document).ready(function() {
     $("#addFormParent").removeClass().addClass("hidden");
     loadUserPlans(localStorage.uid);
   });
-  
+
   //Delete the plan from the database
   $("#deletePlan").on("click",function(event) {
     event.preventDefault();
@@ -171,9 +171,9 @@ $(document).ready(function() {
     var newPlanName = $(this).children(":selected").html();
     var newPlanId = $(this).children(":selected").attr("id");
     localStorage.setItem("planName",newPlanName);
-    localStorage.setItem("currentPlan",newPlanId);                                                 
+    localStorage.setItem("currentPlan",newPlanId);
     setUserPlan(newPlanId,localStorage.uid);
-    if (window.location.pathname === "/plan.html") {    
+    if (window.location.pathname === "/plan.html") {
       loadPlanViewer(localStorage.currentPlan);
     }
   });
