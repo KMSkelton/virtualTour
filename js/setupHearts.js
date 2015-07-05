@@ -15,9 +15,9 @@ function setupHearts(currentImgURL,currentSlideCaptionText) {
           });
         } else if ($(this).hasClass('openHeart')) {
           $(this).removeClass().addClass('filledHeart');
-          var wikiURL = $("#wikiLink").find("a").attr('href');
-          //console.log("calling checkphoto in openheart","save",currentImgURL,currentSlideCaptionText,wikiURL,localStorage.wikiExtractURL,localStorage.currentPlan, localStorage.uid);
-          checkPhoto("save",currentImgURL,currentSlideCaptionText,wikiURL,localStorage.wikiExtractURL,localStorage.currentPlan, localStorage.uid);
+          var wikiLink = $("#wikiLink").html();
+          //console.log("calling checkphoto in openheart","save",currentImgURL,currentSlideCaptionText,wikiLink,localStorage.wikiExtractURL,localStorage.currentPlan, localStorage.uid);
+          checkPhoto("save",currentImgURL,currentSlideCaptionText,wikiLink,localStorage.wikiExtract,localStorage.currentPlan, localStorage.uid);
         }
     });
 }

@@ -1,3 +1,17 @@
+function wikiSearchExtract(wikiRequestExtract) {
+  $.ajax({
+          url: wikiRequestExtract,
+          jsonp: "callback",
+          dataType: "jsonp",
+          success: function( data ) {
+            var pageID = data.query.pageids[0];            
+            var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
+            $("#wikiScrollBox").html(extract);
+            localStorage.setItem("wikiExtract",wikiRequestExtract);
+          }
+        });
+}
+        
 var wikiSearch = function(){
   var $wikiSearch =  $("#location-search").val();
 
@@ -44,16 +58,7 @@ var wikiSearch = function(){
         isArticle = (currentCat.indexOf("disambig") < 0);
       }
       if (isArticle){
-        $.ajax({
-          url: wikiRequestExtract,
-          jsonp: "callback",
-          dataType: "jsonp",
-          success: function( data ) {
-            var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
-            $("#wikiScrollBox").html(extract);
-            localStorage.setItem("wikiExtractURL",wikiRequestExtract);
-          }
-        });
+        wikiSearchExtract(wikiRequestExtract);
         $.ajax({
           url: wikiRequestURL,
           jsonp: "callback",

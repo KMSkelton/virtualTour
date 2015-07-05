@@ -27,6 +27,11 @@ function reportError(error) {
           });
   }
 
+  function updatePlanWikiScrollBox(photoData) {
+    //console.log("updatePlanWikiScrollBox photoData",photoData);
+    wikiSearchExtract(photoData.wikiExtractURL);
+    $("#wikiLink").html(photoData.wikiURL);
+  }
 
   function loadPlanViewer(planId) {               
     $("#viewer-container").html('<ul class="bxslider">');
@@ -38,12 +43,15 @@ function reportError(error) {
         $('.bxslider').append('<li><img src="images/colosseum2-1024.jpg"><div class="newCaption"><p>Colosseum (Rome)</p></div></li>');
         $('#wikiScrollBox').html('<p>No images in this plan.  Please add an image via the search page.</p>');
       }else {
+        var first;
+        var cnt = 0;
         snap.forEach(function(data){
+          if (cnt == 0) { first = data.val(); cnt++;}
           //console.log("loadCurrentPlanPhotos foreach",data.val());
           addPlanSlide(data.val());
           //console.log("after loadPlanViewer");
-          
         });
+        updatePlanWikiScrollBox(first);
       }
       $("#viewer-container").append('</ul>');
       //console.log("after snap for functions",$("#viewer-container").html());
@@ -96,16 +104,16 @@ function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, wiki
 }
 
 // savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
-function savePhoto(photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid){
+function savePhoto(photoURL, currentSlideCaptionText, wikiLink, wikiExtractURL, currentPlan, uid){
   //save the photo to photos using push
-  //console.log("saving photo",photoURL,currentSlideCaptionText,wikiURL,wikiExtractURL,currentPlan,uid);
+  //console.log("saving photo",photoURL,currentSlideCaptionText,wikiLink,wikiExtractURL,currentPlan,uid);
   var photosRef = myDataRef.child("photos");
   var newPhotoRef = photosRef.push({
       "photoURL": photoURL,
       "users": uid,
       "plans": currentPlan,
       "captionText": currentSlideCaptionText,
-      "wikiURL": wikiURL,
+      "wikiLink": wikiLink,
       "wikiExtractURL": wikiExtractURL
   }, reportError());
   //console.log("newPhotoRef",newPhotoRef);
