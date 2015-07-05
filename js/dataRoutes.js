@@ -30,33 +30,33 @@ function reportError(error) {
 
   function loadPlanViewer(planId) {               
     $("#viewer-container").html('<ul class="bxslider">');
-    console.log("viewer container at start",$("#viewer-container").html());
+    //console.log("viewer container at start",$("#viewer-container").html());
     myDataRef.child("photos").orderByChild("plans").equalTo(planId).once("value",function(snap) {
-      console.log("loadPlanViewer snap",snap.val());
+      //console.log("loadPlanViewer snap",snap.val());
       if (snap.val() === null) {
-        console.log("snap is null");
+        //console.log("snap is null");
         $('.bxslider').append('<li><img src="images/colosseum2-1024.jpg"><div class="newCaption"><p>Colosseum (Rome)</p></div></li>');
         $('#wikiScrollBox').html('<p>No images in this plan.  Please add an image via the search page.</p>');
       }else {
         snap.forEach(function(data){
-          console.log("loadCurrentPlanPhotos foreach",data.val());
+          //console.log("loadCurrentPlanPhotos foreach",data.val());
           addPlanSlide(data.val());
-          console.log("after loadPlanViewer");
+          //console.log("after loadPlanViewer");
           
         });
       }
       $("#viewer-container").append('</ul>');
-      console.log("after snap for functions",$("#viewer-container").html());
+      //console.log("after snap for functions",$("#viewer-container").html());
       loadPlanSlider();
             
     });
-    console.log("after loadCurrentPlanPhotos");
+    //console.log("after loadCurrentPlanPhotos");
   } 
  
   function addPlanSlide(data){
-    console.log("addPlanSlide",data,data.photoURL,data.captionText);
+    //console.log("addPlanSlide",data,data.photoURL,data.captionText);
      $('.bxslider').append('<li><img src="'+ data.photoURL + '"><div class="newCaption">'+ data.captionText +'</div></li>');
-     console.log("after append",$('#viewer-container').html());
+     //console.log("after append",$('#viewer-container').html());
   }
    
   function loadPlanLastPhoto(planId,elementId){
@@ -78,7 +78,7 @@ function reportError(error) {
 
 //checkPhoto -- checks to see if the photo is in the database
 function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid) {
-  console.log("checkPhoto Called", requestedOperation, photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid);
+  //console.log("checkPhoto Called", requestedOperation, photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid);
   // start adding the photo
   var photosRef = myDataRef.child("photos");
   //check to see if the photo exists
@@ -88,7 +88,6 @@ function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, wiki
     } else if (snapshot.val() != null && requestedOperation === "check") {
       savedHeart();
     } else if (snapshot.val() != null && requestedOperation === "delete") {
-      
       var data = snapshot.val();
       //console.log("checkPhotos snapshot",snapshot,data,Object.keys(data));
       deletePhoto(Object.keys(snapshot.val())[0],currentPlan,uid);
@@ -99,7 +98,7 @@ function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, wiki
 // savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
 function savePhoto(photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid){
   //save the photo to photos using push
-  console.log("saving photo",photoURL,currentSlideCaptionText,wikiURL,wikiExtractURL,currentPlan,uid);
+  //console.log("saving photo",photoURL,currentSlideCaptionText,wikiURL,wikiExtractURL,currentPlan,uid);
   var photosRef = myDataRef.child("photos");
   var newPhotoRef = photosRef.push({
       "photoURL": photoURL,

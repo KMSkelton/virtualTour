@@ -61,7 +61,6 @@ var wikiSearch = function(){
           success: function( data ) {
             var wikiURL = data.query.pages[pageID].fullurl;
             var wikiLink = "<div><a href=" + wikiURL + ">More information about "+capitalSearch+".</a></div>";
-            console.log("adding wikiLink",wikiLink,$("#wikiScrollBox"));
             $("#wikiLink").html(wikiLink);
           }
         });
