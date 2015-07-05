@@ -51,6 +51,7 @@ var wikiSearch = function(){
           success: function( data ) {
             var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
             $("#wikiScrollBox").html(extract);
+            localStorage.setItem("wikiExtractURL",wikiRequestExtract);
           }
         });
         $.ajax({
@@ -59,8 +60,9 @@ var wikiSearch = function(){
           dataType: "jsonp",
           success: function( data ) {
             var wikiURL = data.query.pages[pageID].fullurl;
-            var wikiLink = "<a href=" + wikiURL + ">Read more...</a>"
-            $(".wikiResult").after(wikiLink);
+            var wikiLink = "<div><a href=" + wikiURL + ">More information about "+capitalSearch+".</a></div>";
+            console.log("adding wikiLink",wikiLink,$("#wikiScrollBox"));
+            $("#wikiLink").html(wikiLink);
           }
         });
       } else {
@@ -169,7 +171,10 @@ var photoSearch = function(){
                     + photoQuery + $flickrSearch
                     + freshness + sort + content_type +format;
                     // + placeTag + placeID + format;
-    $.getJSON(flickrRequest, loadPhotos);
+    $.getJSON(flickrRequest, loadPhotos).fail(function(error){
+        console.log("get flickr failed",error);
+      }
+    );
   }
   $.getJSON(placeIDRequest, findFlickrPlaceID);
 }

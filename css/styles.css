@@ -169,11 +169,21 @@ header h1 {
   position: relative;
 }
 #wikiScrollBox {
-  margin-bottom: 2em;
   max-height: 10em;
   overflow: auto;
   border: thin solid black;
-  border-radius: 0.5em;
+  border-bottom:0;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius:0.5em;
+  padding: 0 0.5em;
+}
+#wikiLink {
+  max-height: 10em;
+  overflow: auto;
+  border: thin solid black;
+  border-top: 0;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius:0.5em;
   padding: 0 0.5em;
 }
 .bx-wrapper img {

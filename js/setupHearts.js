@@ -8,16 +8,16 @@ function setupHearts(currentImgURL,currentSlideCaptionText) {
         if ($(this).hasClass('filledHeart')) {
           $(this).removeClass().addClass('brokenHeart');
           //console.log("calling deletePhoto",currentImgURL,localStorage.currentPlan,localStorage.uid);
-          checkPhoto("delete",currentImgURL,currentSlideCaptionText,localStorage.currentPlan,localStorage.uid);
+          checkPhoto("delete",currentImgURL,currentSlideCaptionText,"","",localStorage.currentPlan,localStorage.uid);
           $(this).delay(1000).queue(function(next) {
               $(this).removeClass().fadeOut(500).fadeIn(500).addClass('openHeart');
               next();
           });
         } else if ($(this).hasClass('openHeart')) {
           $(this).removeClass().addClass('filledHeart');
-          //console.log("calling checkPhoto",localStorage.uid);
-          checkPhoto("save",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
-          
+          var wikiURL = $("#wikiLink").find("a").attr('href');
+          console.log("calling checkphoto in openheart","save",currentImgURL,currentSlideCaptionText,wikiURL,localStorage.wikiExtractURL,localStorage.currentPlan, localStorage.uid);
+          checkPhoto("save",currentImgURL,currentSlideCaptionText,wikiURL,localStorage.wikiExtractURL,localStorage.currentPlan, localStorage.uid);
         }
     });
 }

@@ -77,16 +77,14 @@ function reportError(error) {
 
 
 //checkPhoto -- checks to see if the photo is in the database
-function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, currentPlan, uid) {
-  //console.log("checkPhoto Called", requestedOperation, photoURL, currentSlideCaptionText, currentPlan, uid);
+function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid) {
+  console.log("checkPhoto Called", requestedOperation, photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid);
   // start adding the photo
   var photosRef = myDataRef.child("photos");
   //check to see if the photo exists
   photosRef.orderByChild('photoURL').equalTo(photoURL).once("value",function(snapshot) {
-    //console.log("existing photo:",snapshot.val());
-    //call savePhoto ? maybe as callback to once?
     if (snapshot.val() === null && requestedOperation === "save") {
-      savePhoto(photoURL,currentSlideCaptionText,currentPlan,uid);
+      savePhoto(photoURL,currentSlideCaptionText,wikiURL,wikiExtractURL,currentPlan,uid);
     } else if (snapshot.val() != null && requestedOperation === "check") {
       savedHeart();
     } else if (snapshot.val() != null && requestedOperation === "delete") {
@@ -99,15 +97,17 @@ function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, curr
 }
 
 // savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
-function savePhoto(photoURL, currentSlideCaptionText, currentPlan, uid){
+function savePhoto(photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid){
   //save the photo to photos using push
-  //console.log("saving photo",photoURL, uid, plansObj,currentSlideCaptionText,currentPlan);
+  console.log("saving photo",photoURL,currentSlideCaptionText,wikiURL,wikiExtractURL,currentPlan,uid);
   var photosRef = myDataRef.child("photos");
   var newPhotoRef = photosRef.push({
-      photoURL: photoURL,
-      users: uid,
-      plans: currentPlan,
-      captionText: currentSlideCaptionText
+      "photoURL": photoURL,
+      "users": uid,
+      "plans": currentPlan,
+      "captionText": currentSlideCaptionText,
+      "wikiURL": wikiURL,
+      "wikiExtractURL": wikiExtractURL
   }, reportError());
   //console.log("newPhotoRef",newPhotoRef);
   photoID = newPhotoRef.key();
