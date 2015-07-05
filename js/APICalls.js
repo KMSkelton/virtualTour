@@ -35,7 +35,7 @@ var wikiSearch = function(){
 
   var wikiFormat = "&format=json";
   var wikiIntro = "&exintro=";
-  var wikiPageID = "&indexpageids="
+  var wikiPageID = "&indexpageids=";
   var wikiTitleTag = "&titles=";
 
   var wikiRequestCategory = wikiBaseURL + wikiQuery
@@ -111,6 +111,10 @@ var photoSearch = function(){
     var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
+
+if (data.photos.photo.length < 1){
+  console.log("no flickr results");
+}
 
       //data.photos.photo.length will give you total number of results
       for (var i=0; i < 50; i++){
