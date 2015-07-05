@@ -58,29 +58,7 @@ function reportError(error) {
      $('.bxslider').append('<li><img src="'+ data.photoURL + '"><div class="newCaption">'+ data.captionText +'</div></li>');
      console.log("after append",$('#viewer-container').html());
   }
- /* 
-  function loadUserPhotos(uid) {  //plan.html
-    console.log("loadUserPhotos");
-    var planPhotoRef = new Firebase("https://shining-fire-453.firebaseio.com/plans");
-    planPhotoRef.child("photos").once("value", function(snapshot) {
-      for (var photoId in snapshot.val()) {
-        loadPhotoData(photoId);  
-      }
-    });
-  }
-  
-  function loadPhotoData(photoId) {
-        myDataRef.child("photos").child(photoId).once("value", function(snap) {
-          console.log("loadPhotoData", uid, photoId, snap.val());
-          loadUserPlanPhotos(snap.val().photoURL);
-        });
-  }
-  
-  function loadUserPlanPhotos(photoURL,photoCaption){
-  
-  }
-  */
-  
+   
   function loadPlanLastPhoto(planId,elementId){
     myDataRef.child("photos").orderByChild("plans").equalTo(planId).limitToLast(1).once("value",function(snapshot) {
       snapshot.forEach(function(data) {
@@ -93,7 +71,6 @@ function reportError(error) {
     myDataRef.child("plans").child(planId).once("value",function(snapshot){
         data.planName = snapshot.val().planName;
         data.notes = snapshot.val().notes;
-        data.wikiURL = snapshot.val().wikiURL;
         updateFavorites(data,elementId);
     });
   }
@@ -163,7 +140,6 @@ function savePlan(planName, simpleuserid) {
     planName: planName,
     user: simpleuserid,
     notes: "", //max 750 char?
-    wikiURL: ""
   }, reportError());
 
   var planId = newPlanRef.key();
