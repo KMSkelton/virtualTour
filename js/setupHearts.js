@@ -7,7 +7,6 @@ function setupHearts(currentImgURL,currentSlideCaptionText) {
         }
         if ($(this).hasClass('filledHeart')) {
           $(this).removeClass().addClass('brokenHeart');
-          //console.log("calling deletePhoto",currentImgURL,localStorage.currentPlan,localStorage.uid);
           checkPhoto("delete",currentImgURL,currentSlideCaptionText,"","",localStorage.currentPlan,localStorage.uid);
           $(this).delay(1000).queue(function(next) {
               $(this).removeClass().fadeOut(500).fadeIn(500).addClass('openHeart');
@@ -16,7 +15,6 @@ function setupHearts(currentImgURL,currentSlideCaptionText) {
         } else if ($(this).hasClass('openHeart')) {
           $(this).removeClass().addClass('filledHeart');
           var wikiLink = $("#wikiLink").html();
-          //console.log("calling checkphoto in openheart","save",currentImgURL,currentSlideCaptionText,wikiLink,localStorage.wikiExtractURL,localStorage.currentPlan, localStorage.uid);
           checkPhoto("save",currentImgURL,currentSlideCaptionText,wikiLink,localStorage.wikiExtract,localStorage.currentPlan, localStorage.uid);
         }
     });

@@ -3,8 +3,6 @@ var myDataRef = new Firebase('https://shining-fire-453.firebaseio.com');
 function reportError(error) {
   if (error) {
     alert("Data could not be saved." + error);
-  } else {
-    //alert("Data saved successfully.");
   }
 }
 
@@ -28,18 +26,14 @@ function reportError(error) {
   }
 
   function updatePlanWikiScrollBox(photoData) {
-    //console.log("updatePlanWikiScrollBox photoData",photoData);
     wikiSearchExtract(photoData.wikiExtractURL);
     $("#wikiLink").html(photoData.wikiURL);
   }
 
   function loadPlanViewer(planId) {               
     $("#viewer-container").html('<ul class="bxslider">');
-    //console.log("viewer container at start",$("#viewer-container").html());
     myDataRef.child("photos").orderByChild("plans").equalTo(planId).once("value",function(snap) {
-      //console.log("loadPlanViewer snap",snap.val());
       if (snap.val() === null) {
-        //console.log("snap is null");
         $('.bxslider').append('<li><img src="images/colosseum2-1024.jpg"><div class="newCaption"><p>Colosseum (Rome)</p></div></li>');
         $('#wikiScrollBox').html('<p>No images in this plan.  Please add an image via the search page.</p>');
       }else {
@@ -47,24 +41,18 @@ function reportError(error) {
         var cnt = 0;
         snap.forEach(function(data){
           if (cnt == 0) { first = data.val(); cnt++;}
-          //console.log("loadCurrentPlanPhotos foreach",data.val());
           addPlanSlide(data.val());
-          //console.log("after loadPlanViewer");
         });
         updatePlanWikiScrollBox(first);
       }
       $("#viewer-container").append('</ul>');
-      //console.log("after snap for functions",$("#viewer-container").html());
       loadPlanSlider();
             
     });
-    //console.log("after loadCurrentPlanPhotos");
   } 
  
   function addPlanSlide(data){
-    //console.log("addPlanSlide",data,data.photoURL,data.captionText);
      $('.bxslider').append('<li><img src="'+ data.photoURL + '"><div class="newCaption">'+ data.captionText +'</div></li>');
-     //console.log("after append",$('#viewer-container').html());
   }
    
   function loadPlanLastPhoto(planId,elementId){
@@ -86,10 +74,7 @@ function reportError(error) {
 
 //checkPhoto -- checks to see if the photo is in the database
 function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid) {
-  //console.log("checkPhoto Called", requestedOperation, photoURL, currentSlideCaptionText, wikiURL, wikiExtractURL, currentPlan, uid);
-  // start adding the photo
   var photosRef = myDataRef.child("photos");
-  //check to see if the photo exists
   photosRef.orderByChild('photoURL').equalTo(photoURL).once("value",function(snapshot) {
     if (snapshot.val() === null && requestedOperation === "save") {
       savePhoto(photoURL,currentSlideCaptionText,wikiURL,wikiExtractURL,currentPlan,uid);
@@ -97,7 +82,6 @@ function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, wiki
       savedHeart();
     } else if (snapshot.val() != null && requestedOperation === "delete") {
       var data = snapshot.val();
-      //console.log("checkPhotos snapshot",snapshot,data,Object.keys(data));
       deletePhoto(Object.keys(snapshot.val())[0],currentPlan,uid);
     }  
   });
@@ -105,8 +89,6 @@ function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, wiki
 
 // savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
 function savePhoto(photoURL, currentSlideCaptionText, wikiLink, wikiExtractURL, currentPlan, uid){
-  //save the photo to photos using push
-  //console.log("saving photo",photoURL,currentSlideCaptionText,wikiLink,wikiExtractURL,currentPlan,uid);
   var photosRef = myDataRef.child("photos");
   var newPhotoRef = photosRef.push({
       "photoURL": photoURL,
@@ -116,9 +98,7 @@ function savePhoto(photoURL, currentSlideCaptionText, wikiLink, wikiExtractURL, 
       "wikiLink": wikiLink,
       "wikiExtractURL": wikiExtractURL
   }, reportError());
-  //console.log("newPhotoRef",newPhotoRef);
   photoID = newPhotoRef.key();
-  //console.log("photoID",photoID);
 
   //update plans with the photoUID
   var plansRef = myDataRef.child("plans");
@@ -135,8 +115,6 @@ function saveUser(name, simpleuserid) {
   usersRef.set({
     name: name,
     currentPlan: "",
-    //photos: {},
-    //plans: {}
   }, reportError());
   return false;
 }
@@ -158,7 +136,6 @@ function savePlan(planName, simpleuserid) {
   localStorage.setItem("currentPlan",planId);
 }
 
-//updateUser --changes user info in usersJSON. NOT MVP.
 //updatePlan --updates currentPlan in usersJSON. called when user clicks on a not-current plan (from sidebar).
 function updatePlan(planId,uid){  // NOT TESTED
   //update users currentPlan
@@ -168,42 +145,34 @@ function updatePlan(planId,uid){  // NOT TESTED
 
 //deletePhoto --click filled heart to show broken heart (on click calls 'deletePhoto') removes photoUID from photos key in usersJSON. removes user from users key in photosJSON.
 function deletePhoto(photoId,planId,uid) {
-    //console.log("deletePhoto called with",photoId,planId,uid);
       photoRef = myDataRef.child("photos").child(photoId);
-      //console.log("removing photo", photoRef);
       photoRef.remove(reportError());
-      
+      //remove index reference in users
       userPhotoRef = myDataRef.child("users").child(uid).child("photos").child(photoId);
-      //console.log("removing user photo",userPhotoRef);
       userPhotoRef.remove(reportError());
+      //remove index reference in plans      
       planPhotoRef = myDataRef.child("plans").child(planId).child("photos").child(photoId);
-      //console.log("removing plan photo",planPhotoRef);
       planPhotoRef.remove(reportError());
-     
 }
 
 //deletePlan -- button. removes plan from plansJSON, usersJSON and photosJSON. NOT MVP.
 // we expect user to delete currentPlan, so set a new currentPlan that is the latest in the list
 function deletePlan(planId,uid) {
   planRef = myDataRef.child("plans").child(planId);
-  //console.log("deleting plan",planRef);
   planRef.remove(reportError());
+  //remove index reference in users::plans
   userRef = myDataRef.child("users").child(uid);
   userPlanRef = userRef.child("plans").child(planId);
-  //console.log("deleting user plan",userPlanRef);
   userPlanRef.remove(reportError());
   
-  // get the latest plan for the user  # NEEDS FIXING
-  //console.log("finding plans for uid",uid);
+  // get the latest plan for the user and set current plan to this plan
   myDataRef.child("plans").orderByChild("user").equalTo(uid).once("value", function(snap) {
-    //console.log("deletePlan snap",snap.val());
     for (var random in snap.val()) break;
     if (random === undefined) {
       random = "";
     }
     setUserPlan(random,uid);  
   }); 
- 
 }
 
 function setUserPlan(planId,uid) {
