@@ -71,7 +71,7 @@ footer {
   display: inline-block;
 }
 .hidden {
-  display: hidden;
+  display: block;
 }
 .navbar {
   box-sizing: border-box;
