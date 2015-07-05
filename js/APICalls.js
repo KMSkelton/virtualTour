@@ -6,7 +6,7 @@ function wikiSearchExtract(wikiRequestExtract) {
           success: function( data ) {
             var pageID = data.query.pageids[0];            
             var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
-            $("#wikiScrollBox").html(extract);
+            $("#wikiExtract").html(extract);
             localStorage.setItem("wikiExtract",wikiRequestExtract);
           },
         }).fail(function(error) {
