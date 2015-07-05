@@ -75,10 +75,21 @@ $(document).ready(function() {
     setUserPlan(newPlanId,localStorage.uid);
   });
   
-  // create firebase on watcher that watches latest-photos
-  myDataRef.child("photos").orderByKey().limitToFirst(3).once("value", function(snapshot) {
-    console.log("snapshot",snapshot.val());    
+  // get 3 latest photos and display
+  myDataRef.child("photos").orderByKey().limitToLast(3).once("value", function(snapshot) {
+    var ids = ["horiz--left","horiz--center","horiz--right"];
+    var cnt = 0;
+    console.log("ids",ids);
+    snapshot.forEach(function(data){
+      updateFavorites(data.val(),ids[cnt]);
+      cnt++;
+    });    
   });  
+
+  function updateFavorites(data,elementId) {
+    $('#'+elementId).find('img').attr('src',data.photoURL);
+    $('#'+elementId).find('p').html(data.captionText); 
+  }
 
   // when everything has loaded check to load plans now
   if (localStorage.uid && localStorage.uid !== null) {
