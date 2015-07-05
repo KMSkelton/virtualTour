@@ -131,7 +131,7 @@ var photoSearch = function(){
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
-      console.log("viewer",viewer);
+      //console.log("viewer",viewer);
       photoClear();
       $("#viewer-container").append(viewer);
       
@@ -145,7 +145,7 @@ var photoSearch = function(){
         onSliderLoad: function(currentSlide,currentIndex){
           var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
           var currentImgURL = currentSlide[0].children[0].src;
-          console.log("loading first hearts ",currentImgURL,currentSlideCaptionText);
+          //console.log("loading first hearts ",currentImgURL,currentSlideCaptionText);
           setupHearts(currentImgURL,currentSlideCaptionText);
           checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
         },
@@ -153,7 +153,7 @@ var photoSearch = function(){
           $("#hearts").unbind();  // remove the old handler
           var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
           var currentImgURL = currentSlide[0].children[0].src;
-          console.log("hearts should ",currentImgURL,currentSlideCaptionText);
+          //console.log("hearts should ",currentImgURL,currentSlideCaptionText);
           setupHearts(currentImgURL,currentSlideCaptionText);  // add new handler
           checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
         }

@@ -30,7 +30,7 @@ function reportError(error) {
     planPhotoRef.child("photos").once("value", function(snapshot) {
       for (var photoId in snapshot.val()) {
         myDataRef.child("photos").child(photoId).once("value", function(snap) {
-          console.log("loadUserPhotos", uid, photoId, snap.val());
+          //console.log("loadUserPhotos", uid, photoId, snap.val());
           loadUserPlanPhotos(snap.val().photoURL);
         });
       }
@@ -39,12 +39,12 @@ function reportError(error) {
 
 //checkPhoto -- checks to see if the photo is in the database
 function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, currentPlan, uid) {
-  console.log("checkPhoto Called", requestedOperation, photoURL, currentSlideCaptionText, currentPlan, uid);
+  //console.log("checkPhoto Called", requestedOperation, photoURL, currentSlideCaptionText, currentPlan, uid);
   // start adding the photo
   var photosRef = myDataRef.child("photos");
   //check to see if the photo exists
   photosRef.orderByChild('photoURL').equalTo(photoURL).once("value",function(snapshot) {
-    console.log("existing photo:",snapshot.val());
+    //console.log("existing photo:",snapshot.val());
     //call savePhoto ? maybe as callback to once?
     if (snapshot.val() === null && requestedOperation === "save") {
       savePhoto(photoURL,currentSlideCaptionText,currentPlan,uid);
@@ -53,7 +53,7 @@ function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, curr
     } else if (snapshot.val() != null && requestedOperation === "delete") {
       
       var data = snapshot.val();
-      console.log("checkPhotos snapshot",snapshot,data,Object.keys(data));
+      //console.log("checkPhotos snapshot",snapshot,data,Object.keys(data));
       deletePhoto(Object.keys(snapshot.val())[0],currentPlan,uid);
     }  
   });
@@ -65,7 +65,7 @@ function savePhoto(photoURL, currentSlideCaptionText, currentPlan, uid){
   var plansObj = {};
   plansObj[currentPlan] = true;
 
-  console.log("saving photo",photoURL, uid, plansObj,currentSlideCaptionText,currentPlan);
+  //console.log("saving photo",photoURL, uid, plansObj,currentSlideCaptionText,currentPlan);
   var photosRef = myDataRef.child("photos");
   var newPhotoRef = photosRef.push({
       photoURL: photoURL,
@@ -73,9 +73,9 @@ function savePhoto(photoURL, currentSlideCaptionText, currentPlan, uid){
       plans: plansObj,
       captionText: currentSlideCaptionText
   }, reportError());
-  console.log("newPhotoRef",newPhotoRef);
+  //console.log("newPhotoRef",newPhotoRef);
   photoID = newPhotoRef.key();
-  console.log("photoID",photoID);
+  //console.log("photoID",photoID);
 
   //update plans with the photoUID
   var plansRef = myDataRef.child("plans");
@@ -88,7 +88,6 @@ function savePhoto(photoURL, currentSlideCaptionText, currentPlan, uid){
 //saveUser --creates user in usersJSON, not the same as 'register' function
 function saveUser(name, simpleuserid) {
   var usersRef = myDataRef.child("users").child(simpleuserid);
-  console.log("saving user",name,simpleuserid)
   usersRef.set({
     name: name,
     currentPlan: "",
@@ -126,35 +125,35 @@ function updatePlan(planId,uid){  // NOT TESTED
 
 //deletePhoto --click filled heart to show broken heart (on click calls 'deletePhoto') removes photoUID from photos key in usersJSON. removes user from users key in photosJSON.
 function deletePhoto(photoId,planId,uid) {
-    console.log("deletePhoto called with",photoId,planId,uid);
+    //console.log("deletePhoto called with",photoId,planId,uid);
       photoRef = myDataRef.child("photos").child(photoId);
-      console.log("removing photo", photoRef);
+      //console.log("removing photo", photoRef);
       photoRef.remove(reportError());
       
       userPhotoRef = myDataRef.child("users").child(uid).child("photos").child(photoId);
-      console.log("removing user photo",userPhotoRef);
+      //console.log("removing user photo",userPhotoRef);
       userPhotoRef.remove(reportError());
       planPhotoRef = myDataRef.child("plans").child(planId).child("photos").child(photoId);
-      console.log("removing plan photo",planPhotoRef);
+      //console.log("removing plan photo",planPhotoRef);
       planPhotoRef.remove(reportError());
-    
+     
 }
 
 //deletePlan -- button. removes plan from plansJSON, usersJSON and photosJSON. NOT MVP.
 // we expect user to delete currentPlan, so set a new currentPlan that is the latest in the list
 function deletePlan(planId,uid) {
   planRef = myDataRef.child("plans").child(planId);
-  console.log("deleting plan",planRef);
+  //console.log("deleting plan",planRef);
   planRef.remove(reportError());
   userRef = myDataRef.child("users").child(uid);
   userPlanRef = userRef.child("plans").child(planId);
-  console.log("deleting user plan",userPlanRef);
+  //console.log("deleting user plan",userPlanRef);
   userPlanRef.remove(reportError());
   
   // get the latest plan for the user  # NEEDS FIXING
-  console.log("finding plans for uid",uid);
+  //console.log("finding plans for uid",uid);
   myDataRef.child("plans").orderByChild("user").equalTo(uid).once("value", function(snap) {
-    console.log("deletePlan snap",snap.val());
+    //console.log("deletePlan snap",snap.val());
     for (var random in snap.val()) break;
     if (random === undefined) {
       random = "";
