@@ -3,17 +3,61 @@ function updateSelectBox(current, planId, planData) {
    var option = "<option value='' id='" + planId + "' ";
   if (current == planId) {
     option += 'selected="selected"';
-    localStorage.setItem("currentPlanName", planData.name);
+    localStorage.setItem("currentPlanName", planData.planName);
   }
-  option += ">" + planData.name + "</option>";
+  option += ">" + planData.planName + "</option>";
   $(".add_select").append(option);
 }
- 
+
+function updateFavorites(data,elementId) {
+    $('#'+elementId).find('img').attr('src',data.photoURL);
+    $('#'+elementId).find('p').html(data.captionText);
+    $('#'+elementId).find('h3').html('<h3>'+data.planName+'</h3>'); 
+ }
+
+
+function updateUserSavedPlans(snapshot) {
+  var ids = ["horiz--left","horiz--center","horiz--right"];
+  var cnt = 0;
+  snapshot.forEach(function(data){
+    updateFavorites(data.val(),ids[cnt]);
+    cnt++;
+  });      
+} 
+
+ function loadFavorites() { 
+    if (window.location.pathname === "/plan.html") {
+      myDataRef.child("users").child(localStorage.uid).child("plans").orderByKey().limitToLast(3).once("value",function(snapshot) {
+        var ids = ["horiz--left","horiz--center","horiz--right"];
+        var cnt = 0;
+        snapshot.forEach(function(data) {
+          loadPlanLastPhoto(data.key(),ids[cnt]);
+          cnt++;
+        });            
+      });
+    } else{
+      // get 3 latest photos and display
+      myDataRef.child("photos").orderByKey().limitToLast(3).once("value", function(snapshot) {
+        var ids = ["horiz--left","horiz--center","horiz--right"];
+        var cnt = 0;
+        snapshot.forEach(function(data){
+          updateFavorites(data.val(),ids[cnt]);
+          cnt++;
+        });    
+      });
+    }
+  }  
 
 $(document).ready(function() {
-  if (window.location.pathname === "/plan.html" && localStorage.firstName === undefined) {
-    $("#plansParent").replaceWith('<h4>Please log in to see your plans.</h4>');
-  };
+  if (window.location.pathname === "/plan.html") {
+    if(localStorage.firstName === undefined) {
+      $("#plansParent").replaceWith('<h4>Please log in to see your plans.</h4>');
+    } else {
+      loadFavorites();
+    }
+  } else {
+    loadFavorites();
+  }
 
   if (localStorage.firstName !== undefined) {
     $("#login-container").replaceWith("<div class='three columns' id='login-container'> <p>Welcome back " + "<a href='/plan.html'>" +
@@ -74,26 +118,12 @@ $(document).ready(function() {
     localStorage.setItem("currentPlan",newPlanId);                                                 
     setUserPlan(newPlanId,localStorage.uid);
   });
-  
-  // get 3 latest photos and display
-  myDataRef.child("photos").orderByKey().limitToLast(3).once("value", function(snapshot) {
-    var ids = ["horiz--left","horiz--center","horiz--right"];
-    var cnt = 0;
-    console.log("ids",ids);
-    snapshot.forEach(function(data){
-      updateFavorites(data.val(),ids[cnt]);
-      cnt++;
-    });    
-  });  
 
-  function updateFavorites(data,elementId) {
-    $('#'+elementId).find('img').attr('src',data.photoURL);
-    $('#'+elementId).find('p').html(data.captionText); 
-  }
 
   // when everything has loaded check to load plans now
   if (localStorage.uid && localStorage.uid !== null) {
     loadUserPlans(localStorage.uid);
+
   }
 
   //logging Out
@@ -104,9 +134,12 @@ $(document).ready(function() {
     return false;
   })
 
-  $('.bxslider').bxSlider({
-    adaptiveHeight: true,
-    slideWidth: 850
-  });
-
+  if(window.location.pathname === "/plan.html"  || window.location.pathname === "/index.html" ){
+    $('.bxslider').bxSlider({
+      adaptiveHeight: true,
+      slideWidth: 850
+    });
+  }
+  
+  
 });

@@ -148,6 +148,7 @@ var photoSearch = function(){
           //console.log("loading first hearts ",currentImgURL,currentSlideCaptionText);
           setupHearts(currentImgURL,currentSlideCaptionText);
           checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+          loadFavorites();
         },
         onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
           $("#hearts").unbind();  // remove the old handler
@@ -156,6 +157,7 @@ var photoSearch = function(){
           //console.log("hearts should ",currentImgURL,currentSlideCaptionText);
           setupHearts(currentImgURL,currentSlideCaptionText);  // add new handler
           checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+          loadFavorites();
         }
       });
     }

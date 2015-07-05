@@ -2,7 +2,7 @@ function reportError(error) {
   if (error) {
     alert("Data could not be saved." + error);
   } else {
-    alert("Data saved successfully.");
+    //alert("Data saved successfully.");
   }
 }
 
@@ -36,6 +36,24 @@ function reportError(error) {
       }
     });
   }
+  
+  function loadPlanLastPhoto(planId,elementId){
+    myDataRef.child("photos").orderByChild("plans").equalTo(planId).limitToLast(1).once("value",function(snapshot) {
+      snapshot.forEach(function(data) {
+        loadPlanName(planId,data.val(),elementId);
+      });
+    });
+  }
+
+  function loadPlanName(planId,data,elementId){
+    myDataRef.child("plans").child(planId).once("value",function(snapshot){
+        data.planName = snapshot.val().planName;
+        data.notes = snapshot.val().notes;
+        data.wikiURL = snapshot.val().wikiURL;
+        updateFavorites(data,elementId);
+    });
+  }
+
 
 //checkPhoto -- checks to see if the photo is in the database
 function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, currentPlan, uid) {
@@ -62,15 +80,12 @@ function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, curr
 // savePhoto --adds a photo to the photosJSON, usersJSON and plansJSON.
 function savePhoto(photoURL, currentSlideCaptionText, currentPlan, uid){
   //save the photo to photos using push
-  var plansObj = {};
-  plansObj[currentPlan] = true;
-
   //console.log("saving photo",photoURL, uid, plansObj,currentSlideCaptionText,currentPlan);
   var photosRef = myDataRef.child("photos");
   var newPhotoRef = photosRef.push({
       photoURL: photoURL,
       users: uid,
-      plans: plansObj,
+      plans: currentPlan,
       captionText: currentSlideCaptionText
   }, reportError());
   //console.log("newPhotoRef",newPhotoRef);
@@ -100,7 +115,7 @@ function saveUser(name, simpleuserid) {
 function savePlan(planName, simpleuserid) {
   var plansRef = myDataRef.child("plans");
   var newPlanRef = plansRef.push({
-    name: planName,
+    planName: planName,
     user: simpleuserid,
     notes: "", //max 750 char?
     wikiURL: ""
