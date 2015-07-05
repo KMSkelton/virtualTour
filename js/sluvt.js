@@ -1,13 +1,14 @@
-$('#search-form').submit(function(event) {
-  event.preventDefault();
-  photoSearch();
-  wikiSearch();
-});
 
-$(document).ready(function() { //run on load with stock photos
-
-});
-
+function updateSelectBox(current, planId, planData) {
+   var option = "<option value='' id='" + planId + "' ";
+  if (current == planId) {
+    option += 'selected="selected"';
+    localStorage.setItem("currentPlanName", planData.name);
+  }
+  option += ">" + planData.name + "</option>";
+  $(".add_select").append(option);
+}
+ 
 
 $(document).ready(function() {
   if (window.location.pathname === "/plan.html" && localStorage.firstName === undefined) {
@@ -20,81 +21,64 @@ $(document).ready(function() {
     $("#plansParent").append('<select width="100" id="planSelect" name="planSelect" class="add_select"></select> <button id="addChildPlan"> Add Plan </button><button id="deletePlan" name="deletePlanButton"> Delete Plan </button> <button class="yourPlans"> Your Plans </button>');
   };
 
-  function updateSelectBox(current, planId, planData) {
-    var option = "<option value='' id='" + planId + "' ";
-    if (current == planId) {
-      option += 'selected="selected"';
-      localStorage.setItem("currentPlanName", planData.name);
-    }
-    option += ">" + planData.name + "</option>";
-    $(".add_select").append(option);
-  }
-
-
-  function loadUserPlans(uid) {
-    var userRef = new Firebase("https://shining-fire-453.firebaseio.com/users");
-    userRef.child(uid).once("value", function(snapshot) {
-      //get the user's current plan
-      var currentPlan = snapshot.val().currentPlan;
-      myDataRef.child("users").child(uid).child("plans").once("value", function(snapshot) {
-        for (var planId in snapshot.val()) {
-          myDataRef.child("plans").child(planId).once("value", function(snap) {
-            updateSelectBox(currentPlan, planId, snap.val());
-          });
-        }
-      });
-    });
-  }
-
-  //plan.html
-  function loadUserPhotos(uid) {
-    var planPhotoRef = new Firebase("https://shining-fire-453.firebaseio.com/plans");
-    planPhotoRef.child("photos").once("value", function(snapshot) {
-      for (var photoId in snapshot.val()) {
-        myDataRef.child("photos").child(photoId).once("value", function(snap) {
-          console.log("loadUserPhotos", uid, photoId, snap.val());
-          loadUserPlanPhotos(snap.val().photoURL);
-        });
-      }
-    });
-  }
-
-  //add the user photos in the current plan to bxslider
-  function loadUserPlanPhotos() {
-
-  }
-
-  // Show form for entering plan name and add link
-  $("#addChildPlan").on("click", function() {
-    var html = '<div class="add_container"><input class="add_input" type="text" size="50" maxlength="255"/><button class="add_link">Add</button></div>';
-    $("#plansParent").append(html);
-  });
-
+  // EVENT HANDLERS
+  $('#location-search-submit').on("click",(function(event) {
+    event.preventDefault();
+    photoSearch();
+    wikiSearch();
+  }));
 
   //redirect to plan.html when "your plans" button is pressed
   $(".yourPlans").click(function() {
+    event.preventDefault();
     window.location = "/plan.html";
   });
 
+  // PLAN HANDLERS  
+  // Show form for entering plan name and add link
+  $("#addChildPlan").on("click", function(event) {
+    event.preventDefault();
+    
+    var html = '<div class="add_container"><h3>Plan Name:</h3><input class="add_input" type="text" size="50" maxlength="255"/><button id="add-plan-submit" class="add_link">Add</button></div>';
+    $("#addFormParent").append(html);
+    $("#addFormParent").removeClass().addClass("navbar");
+  });
+
   // Add the plan to the database and call updateSelector
-  $("#plansParent").on("click", ".add_link", function() {
+  $("#addFormParent").on("click", ".add_link", function(event) {
+    event.preventDefault();
     var planName = $(this).prev(".add_input").val();
-    if (localStorage.uid) {
+    if (localStorage.uid) {      
       savePlan(planName, localStorage.uid);
     } else {
       alert("You must log in before trying to create a plan!");
       window.location = "/login-signup.html";
     }
-    var option = $("<option value='' selected='selected'>" + planName + "</option>");
-    $(".add_select").append(option);
     $(".add_container").remove();
+    $(".add_select").empty();
+    $("#addFormParent").removeClass().addClass("hidden");
+    loadUserPlans(localStorage.uid);
+  });
+  
+  //Delete the plan from the database
+  $("#deletePlan").on("click",function(event) {
+    event.preventDefault();
+    deletePlan(localStorage.currentPlan,localStorage.uid);
+  });
+
+  // on select plan change update the database and localstorage
+  $("#planSelect").change(function(event){
+    var newPlanName = $(this).children(":selected").html();
+    var newPlanId = $(this).children(":selected").attr("id");
+    localStorage.setItem("planName",newPlanName);
+    localStorage.setItem("currentPlan",newPlanId);                                                 
+    setUserPlan(newPlanId,localStorage.uid);
   });
 
   // when everything has loaded check to load plans now
   if (localStorage.uid && localStorage.uid !== null) {
     loadUserPlans(localStorage.uid);
   }
-
 
   //logging Out
   $("#logout").click(function() {

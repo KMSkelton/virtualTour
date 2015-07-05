@@ -6,14 +6,36 @@ function reportError(error) {
   }
 }
 
-
-function thingExists(){
-  if (exists) {
-    return true;
-  } else{
-    return false;
+  function loadUserPlans(uid) {
+    var userRef = new Firebase("https://shining-fire-453.firebaseio.com/users");
+    userRef.child(uid).once("value", function(snapshot) {
+      //get the user's current plan
+      var currentPlan = snapshot.val().currentPlan;
+      myDataRef.child("users").child(uid).child("plans").once("value", function(snapshot) {
+        for (var planId in snapshot.val()) {
+          loadUserPlanData(currentPlan,planId);         
+        }
+      });
+    });
   }
-}
+
+  function loadUserPlanData(currentPlan,planId){
+   myDataRef.child("plans").child(planId).once("value", function(snap) {
+            updateSelectBox(currentPlan, planId, snap.val());
+          });
+  }
+  
+  function loadUserPhotos(uid) {  //plan.html
+    var planPhotoRef = new Firebase("https://shining-fire-453.firebaseio.com/plans");
+    planPhotoRef.child("photos").once("value", function(snapshot) {
+      for (var photoId in snapshot.val()) {
+        myDataRef.child("photos").child(photoId).once("value", function(snap) {
+          console.log("loadUserPhotos", uid, photoId, snap.val());
+          loadUserPlanPhotos(snap.val().photoURL);
+        });
+      }
+    });
+  }
 
 //checkPhoto -- checks to see if the photo is in the database
 function checkPhoto (requestedOperation, photoURL, currentSlideCaptionText, currentPlan, uid) {
@@ -91,8 +113,7 @@ function savePlan(planName, simpleuserid) {
 
   var usersRef = myDataRef.child("users").child(simpleuserid);
   usersRef.child("currentPlan").set(planId);
-
-
+  localStorage.setItem("currentPlan",planId);
 }
 
 //updateUser --changes user info in usersJSON. NOT MVP.
@@ -124,18 +145,30 @@ function deletePhoto(photoId,planId,uid) {
 function deletePlan(planId,uid) {
   planRef = myDataRef.child("plans").child(planId);
   console.log("deleting plan",planRef);
-  //planRef.remove(reportError());
+  planRef.remove(reportError());
   userRef = myDataRef.child("users").child(uid);
   userPlanRef = userRef.child("plans").child(planId);
   console.log("deleting user plan",userPlanRef);
-  //userPlanRef.remove(reportError());
+  userPlanRef.remove(reportError());
   
   // get the latest plan for the user  # NEEDS FIXING
-  myDataRef.child("plans").orderByChild("users").equalTo(uid).once("value", function(snap) {
-    console.log("deletePlan snap".snap.val());  
+  console.log("finding plans for uid",uid);
+  myDataRef.child("plans").orderByChild("user").equalTo(uid).once("value", function(snap) {
+    console.log("deletePlan snap",snap.val());
+    for (var random in snap.val()) break;
+    if (random === undefined) {
+      random = "";
+    }
+    setUserPlan(random,uid);  
   }); 
-  
+ 
+}
+
+function setUserPlan(planId,uid) {
+  userRef = myDataRef.child("users").child(uid);
   //set the latest plan to currentPlan
-  //userRef.child("currentPlan").set(planId);
-  
+  userRef.child("currentPlan").set(planId);
+  localStorage.currentPlan = planId;
+  $(".add_select").empty();
+  loadUserPlans(localStorage.uid);
 }
