@@ -109,9 +109,8 @@ $(document).ready(function() {
       adaptiveHeight: true,
       slideWidth: 850,
       onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
-          console.log("stockBxSlider onSlideAfter",currentSlide,previousSlideNumber,currentSlideNumber);
-          updateStockLink(currentSlideNumber);
-        }
+        updateStockLink(currentSlideNumber);
+      }
     });
     loadFavorites();
   }
