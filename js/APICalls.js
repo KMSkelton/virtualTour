@@ -1,9 +1,54 @@
+var removePrefix = function(rawExtract){
+  //wikiVoyage prefixes some articles with disambiguation redirects enclosed in <dl>
+  //this function searches for this prefix text and strips it off
+  return rawExtract.replace(/<dl>(.|\n)*?<\/dl>/, "");
+}
+
+function wikiSearchExtract(wikiRequestExtract) {
+  $.ajax({
+    url: wikiRequestExtract,
+    jsonp: "callback",
+    dataType: "jsonp",
+    success: function( data ) {
+      var pageID = data.query.pageids[0];
+      var cleanExtract = removePrefix(data.query.pages[pageID].extract);
+      var extract = "<div class='wikiResult'>" + cleanExtract + "</div>";
+      $("#wikiExtract").html(extract);
+      localStorage.setItem("wikiExtract", wikiRequestExtract);
+    },
+    }).fail(function(error) {
+      console.log("error with wikiSearchExtract", error);
+    });
+}
+
+var isArticle = function(page){
+  //if results have no pageID, it's not an article (bad search term)
+  if (!page.pageid){
+    return false;
+  }
+  var categoryArray = page.categories;
+  //if it has a pageID, but no categoryArray, it is an article
+  //return true early to avoid .length error
+  if(!categoryArray){
+    return true;
+  }
+  var isArticle = true;
+  //iterate through categories to look for titles with "disambiguation"
+  //and return not an article if it's just redirects
+  for (var i=0; i < categoryArray.length && isArticle; i++){
+    var currentCat = categoryArray[i].title;
+    isArticle = (currentCat.indexOf("isambig") < 0);
+  }
+  return isArticle;
+}
+
 var wikiSearch = function(){
   var $wikiSearch =  $("#location-search").val();
 
   function toTitleCase(str) { //avoids WikiVoyage redirects based on non-Title case
     return str.replace(/\w\S*/g, function(txt){
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
   }
 
   var capitalSearch = toTitleCase($wikiSearch);
@@ -18,7 +63,7 @@ var wikiSearch = function(){
 
   var wikiFormat = "&format=json";
   var wikiIntro = "&exintro=";
-  var wikiPageID = "&indexpageids="
+  var wikiPageID = "&indexpageids=";
   var wikiTitleTag = "&titles=";
 
   var wikiRequestCategory = wikiBaseURL + wikiQuery
@@ -36,35 +81,21 @@ var wikiSearch = function(){
     dataType: "jsonp",
     success: function( data ) {
       var pageID = data.query.pageids[0];
-      var categoryArray = data.query.pages[pageID].categories;
-
-      var isArticle = true;
-      for (var i=0; i< categoryArray.length && isArticle; i++){
-        var currentCat = categoryArray[i].title;
-        isArticle = (currentCat.indexOf("isambig") < 0);
-      }
-      if (isArticle){
-        $.ajax({
-          url: wikiRequestExtract,
-          jsonp: "callback",
-          dataType: "jsonp",
-          success: function( data ) {
-            var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
-            $("#wikiScrollBox").html(extract);
-          }
-        });
+      if (isArticle(data.query.pages[pageID])){
+        wikiSearchExtract(wikiRequestExtract);
         $.ajax({
           url: wikiRequestURL,
           jsonp: "callback",
           dataType: "jsonp",
           success: function( data ) {
             var wikiURL = data.query.pages[pageID].fullurl;
-            var wikiLink = "<a href=" + wikiURL + ">Read more...</a>"
-            $(".wikiResult").after(wikiLink);
+            var wikiLink = "<div><a href=" + wikiURL + ">Read more about " + capitalSearch + "...</a></div>";
+            $("#wikiLink").html(wikiLink);
           }
         });
       } else {
-        $("#wikiScrollBox").html("Can you be more specific with your search? WikiVoyage needs a more precise location.");
+        $("#wikiExtract").html("Can you be more specific with your search? WikiVoyage needs a more precise location.");
+        $("#wikiLink").html("");
       }
     }
   });
@@ -72,6 +103,20 @@ var wikiSearch = function(){
 
 var photoClear = function(){
   $("#viewer-container").html("");
+}
+
+var errorImage = function(){
+  photoClear();
+  var noFlickrResults = '<ul class="bxslider"><li><img src="images/earth-1024.jpg"></li></ul>'
+  $("#viewer-container").append(noFlickrResults);
+   var slider = $('.bxslider').bxSlider({
+    pager: true,
+    pagerType:'short',  //use numbers instead of dots
+    captions: false ,    //will show captions from text in title field of <img>
+    adaptiveHeight: true,
+    slideWidth: 850,
+    maxSlides: 1
+  });
 }
 
 var photoSearch = function(){
@@ -99,19 +144,26 @@ var photoSearch = function(){
   var placeTag = "&place_id=";
 
   function findFlickrPlaceID(data){
-    var placeID = data.places.place[0].place_id;
+    //var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
-
       //data.photos.photo.length will give you total number of results
-      for (var i=0; i < 50; i++){
+      var numresults = 50;
+      if (data.photos.photo.length < 1){
+        errorImage();
+        return;
+      } else if (data.photos.photo.length < numresults){
+        numresults = data.photos.photo.length;
+      }
+
+      for (var i=0; i < numresults; i++){
+
         //assemble the URL of the photo
         //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
         var farm = data.photos.photo[i].farm;
         var server = data.photos.photo[i].server;
         var id = data.photos.photo[i].id;
         var secret = data.photos.photo[i].secret;
-        // console.log("data.photos", data.photos);
 
         var photoURL = "https://farm" + farm + ".staticflickr.com/" + server
         + "/" + id + "_" + secret + "_b.jpg";  //underscore letter signals size of resultb
@@ -127,13 +179,13 @@ var photoSearch = function(){
         var newCaption = '<div class="newCaption"><a href="'
                           + attrURL + '"><p>' + title + '</p></a></div>';
 
-        viewer = viewer +  '<li><img src="'+ photoURL + '">'+ newCaption +'</li>' ;
+        viewer = viewer +  '<li><img src="'+ photoURL + '">' + newCaption +'</li>' ;
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
       photoClear();
       $("#viewer-container").append(viewer);
-      setupHearts();
+
       var slider = $('.bxslider').bxSlider({
         pager: true,
         pagerType:'short',  //use numbers instead of dots
@@ -141,23 +193,23 @@ var photoSearch = function(){
         adaptiveHeight: true,
         slideWidth: 850,
         maxSlides: 1,
-
-  //      onSliderLoad: function(currentIndex){
-  //        var slider = this;
-  //        console.log("slider",slider);
-  //        console.log("currentIndex",currentIndex);
-  //        var currentSlide = slider.getCurrentSlide(currentIndex);
-  //       console.log(currentSlide);
-  //       var currentImgURL = currentSlide[0].children[0].src;
-  //        setupHearts(currentImgURL);
-  //      },
-        onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
-          var current = slider.getCurrentSlide();
+        onSliderLoad: function(currentSlide,currentIndex){
+          var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
           var currentImgURL = currentSlide[0].children[0].src;
-          setupHearts(currentImgURL);
+          setupHearts(currentImgURL,currentSlideCaptionText);
+          checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+          loadFavorites();
+        },
+        onSlideAfter: function(currentSlide, previousSlideNumber, currentSlideNumber){
+          $("#hearts").unbind();  // remove the old handler
+          var currentSlideCaptionText = currentSlide[0].children[1].innerHTML;
+          var currentImgURL = currentSlide[0].children[0].src;
+          setupHearts(currentImgURL,currentSlideCaptionText);  // add new handler
+          checkPhoto("check",currentImgURL,currentSlideCaptionText,localStorage.currentPlan, localStorage.uid);
+          loadFavorites();
         }
       });
-    }
+    } //loadPhotos
     //construct the request
     // base + method + api + photoQuery + flickrSearch + <-- always first
     // freshness + sort + type + placeTag + placeID + ingallery <-- must be in this order
@@ -165,23 +217,11 @@ var photoSearch = function(){
     var flickrRequest = flickrBaseURL + method_photoSearch + api_key
                     + photoQuery + $flickrSearch
                     + freshness + sort + content_type +format;
-                    // + placeTag + placeID + format;
-    $.getJSON(flickrRequest, loadPhotos);
-  }
+                    // + placeTag + placeID + ingallery + format;
+    $.getJSON(flickrRequest, loadPhotos).fail(function(error){
+        console.log("get flickr failed", error);
+      });
+  } //findFlickrPlaceID
   $.getJSON(placeIDRequest, findFlickrPlaceID);
-}
-
-$('#search-form').submit(function(event) {
-  event.preventDefault();
-  photoSearch();
-  wikiSearch();
-});
-
-$(document).ready(function(){ //run on load with stock photos
-  $('.bxslider').bxSlider({
-    adaptiveHeight: true,
-    slideWidth: 850
-    });
-  setupHearts();
-});
+} // photoSearch
 

@@ -1,53 +1,58 @@
 <!doctype html>
 <html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SLüVT</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/skeleton.css" media="screen" />
-    <link href="css/jquery.bxslider.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
-   </head>
-  <body>
-<!--Header module-->
-    <header class="row flex-container__main">
-      <div class="eight columns offset-by-one" id="branding">
-        <a href="#">
-          <img src="images/airplane.svg">
-          <h1>SLüVT</h1>
-        </a>
-        <div class="three columns" id="login-container">
-          <a href="#">Login</a> or
-          <a href="#">Signup</a>
-        </div>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>SLüVT</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/skeleton.css" media="screen" />
+  <link href="css/jquery.bxslider.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
+</head>
+
+<body>
+  <!--Header module-->
+  <header class="row flex-container__main">
+    <div class="eight columns offset-by-one" id="branding">
+      <a href="index.html">
+        <img src="images/airplane.svg">
+        <h1>SLüVT</h1>
+      </a>
+      <div class="three columns" id="login-container">
+        <a href="/login-signup.html">Login</a> or
+        <a href="/login-signup.html">Signup</a>
       </div>
+    </div>
 
-    </header>
+  </header>
 
-    <main role="main">
-  <!--Viewer Pane / bxSlider module -->
-      <div class="row flex-container__main">
-        <div class="eight columns offset-by-one">
-          <!--Search box module -->
-          <form id="search-form">
+  <main role="main">
+    <!--Viewer Pane / bxSlider module -->
+    <div class="row flex-container__main">
+      <div class="eight columns offset-by-one">
+        <!--Search box module -->
+        <form id="search-form">
+
           <fieldset>
             <label class="search-form__name-label" for="search-input">Search: </label>
             <input type="text" class="search-form__input" id="location-search" name="search-input" role="textbox">
-            <input type="submit" value="Go">
-            <!-- TEST WHETHER USER LOGGED IN -->
-                <div id="plansParent">
-                  <select width="100" id="planSelect" name="planSelect" class="add_select"></select>
-                  <a href="#" id="addChildPlan">Add Plan</a>
-                </div>
+            <input type="submit" id="location-search-submit" value="Go">
+            <div id="plansParent"></div>
+            <!-- all of the plan controls are available after login -->
           </fieldset>
         </form>
-        <div id="viewer-container"  >
-          <ul class="bxslider"> <!--stock photos to preload-->
+        <div id="addFormParent" class="hidden"></div>
+
+        <div id="viewer-container">
+          <ul class="bxslider">
+            <!--stock photos to preload-->
             <li>
               <img src="images/colosseum2-1024.jpg" />
-              <div class="newCaption"><p>Colosseum (Rome)</p></div>
+              <div class="newCaption">
+                <p>Colosseum (Rome)</p>
+              </div>
             </li>
             <li>
               <img src="images/tajmahal2-1024.jpg" />
@@ -61,46 +66,51 @@
           <div id="hearts" class="openHeart"></div>
         </div>
         <!--Scrollbox Module -->
-        <div id="wikiScrollBox"> <!--placeholder text -->
-          <p>Welcome to SLüVT! Where do you want to go today?</p>
+        <div id="wikiScrollBox">
+            <div id="wikiExtract">
+            <!--placeholder text -->
+            <p>Welcome to SLüVT! Where do you want to go today?</p>
+            </div>
+            <div id="wikiLink"><a href="https://en.wikivoyage.org/wiki/Rome">Read more about Rome...</a></div>
+          </div>
         </div>
-      </div>
     </div>
 
 
-<!--Horizontal Bar Module -->
-      <h4 class="horiz-bar--header">Recent Favorites:</h4>
-      <div class="flex-container__horiz">
-        <div class="photo-container" id="horiz--left">
-          <img src="images/chichenItza-480.jpg"> <!--using placeholders for size-->
-          <p class="photo-container--searchterm">Chichen Itza (Mexico)</p>
-        </div>
-        <div class="photo-container" id="horiz--center">
-          <img src="images/giza-480.jpg">
-          <p class="photo-container--searchterm">Giza (Egypt)</p>
-
-        </div>
-        <div class="photo-container" id="horiz--right">
-          <img src="images/machuPicchu-480.jpg">
-          <p class="photo-container--searchterm">Machu Picchu (Peru)</p>
-        </div>
+    <!--Horizontal Bar Module -->
+    <h4 class="horiz-bar--header">Recent Favorites:</h4>
+    <div class="flex-container__horiz">
+      <div class="photo-container" id="horiz--left">
+        <img src="images/chichenItza-480.jpg">
+        <!--using placeholders for size-->
+        <p class="photo-container--searchterm">Chichen Itza (Mexico)</p>
       </div>
-    </main>
-<!--Footer module -->
-    <footer>
-    South Lake Union Virtual Tours (SLuVT) thanks Flickr for use of the images on this site. SLuVT receives no sponsorship or endorsement, nor is connected with, the licensors of images used on this site. Every effort is made to ensure all images are obtained via Creative Commons license 3.0. SLuVT appreciates the contributors at WikiVoyge. Where reasonably possible, attribution is given to creators of copyrighted works. SLuVT is not responsible for the content of images or text derived from outside sources.
+      <div class="photo-container" id="horiz--center">
+        <img src="images/giza-480.jpg">
+        <p class="photo-container--searchterm">Giza (Egypt)</p>
+
+      </div>
+      <div class="photo-container" id="horiz--right">
+        <img src="images/machuPicchu-480.jpg">
+        <p class="photo-container--searchterm">Machu Picchu (Peru)</p>
+      </div>
+    </div>
+  </main>
+  <!--Footer module -->
+  <footer>
+    South Lake Union Virtual Tours (SLuVT) thanks Flickr for use of the images on this site. SLuVT receives no sponsorship or endorsement, nor is connected with, the licensors of images used on this site. Every effort is made to ensure all images are obtained
+    via Creative Commons license 3.0. SLuVT appreciates the contributors at WikiVoyge. Where reasonably possible, attribution is given to creators of copyrighted works. SLuVT is not responsible for the content of images or text derived from outside sources.
     <p>&#169 SLuVT 2015</p>
-    </footer>
+  </footer>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="js/jquery.bxslider.min.js"></script>
-    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-    <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
-    <script type="text/javascript" src="js/firebase.js"></script>
-    <script type="text/javascript" src="js/dataRoutes.js"></script>
-    <script type="text/javascript" src="js/selectorTester.js"></script>
-    <script type="text/javascript" src="js/setupHearts.js"></script>
-    <script type="text/javascript" src="js/APICalls.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="js/jquery.bxslider.js"></script>
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+  <script type="text/javascript" src="js/dataRoutes.js"></script>
+  <script type="text/javascript" src="js/setupHearts.js"></script>
+  <script type="text/javascript" src="js/sluvt.js"></script>
+  <script type="text/javascript" src="js/APICalls.js"></script>
+</body>
 
-  </body>
 </html>

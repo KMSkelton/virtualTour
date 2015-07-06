@@ -1,40 +1,52 @@
 <!doctype html>
 <html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SLüVT</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/skeleton.css" media="screen" />
-    <link href="css/jquery.bxslider.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
-   </head>
-  <body>
-    <main role="main">
-<!--Header module-->
-      <header class="row flex-container__main">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>SLüVT</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/skeleton.css" media="screen" />
+  <link href="css/jquery.bxslider.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
+</head>
+
+<body>
+  <main role="main">
+    <!--Header module-->
+    <header class="row flex-container__main">
       <div class="eight columns offset-by-one" id="branding">
-        <a href="header.html">
+        <a href="index.html">
           <img src="images/airplane.svg">
           <h1>SLüVT</h1>
         </a>
+        <div class="three columns" id="login-container">
+          <a href="/login-signup.html">Login</a> or
+          <a href="/login-signup.html">Signup</a>
+        </div>
       </div>
 
     </header>
 
     <main role="main">
-  <!--Viewer Pane / bxSlider module -->
+      <!--Viewer Pane / bxSlider module -->
       <div class="row flex-container__main">
-        <div class="eight columns offset-by-one"><!--Search box module -->
-          <div class="plan-title">
-            <h3>Currently viewing: <span id="plan-name">Plan Name</span></h3> <!-- need to insert< current plan name-->
+        <div class="eight columns offset-by-one">
+          <form>
+          <div id="plansParent" class="navbar">
+            <span class="currentPlan">Current plan:</span>
           </div>
-          <div id="viewer-container"  >
-            <ul class="bxslider"> <!--stock photos to preload-->
+        </form>
+          <div id="addFormParent" class="hidden"></div>
+          <div id="viewer-container">
+            <ul class="bxslider">
+              <!--stock photos to preload-->
               <li>
                 <img src="images/colosseum2-1024.jpg" />
-                <div class="newCaption"><p>Colosseum (Rome)</p></div>
+                <div class="newCaption">
+                  <p>Colosseum (Rome)</p>
+                </div>
               </li>
               <li>
                 <img src="images/tajmahal2-1024.jpg" />
@@ -47,39 +59,53 @@
             </ul>
             <div id="hearts" class="openHeart"></div>
           </div>
-        <!--Scrollbox Module -->
-          <div id="wikiScrollBox"> <!--placeholder text -->
+          <!--Scrollbox Module -->
+          <div id="wikiScrollBox">
+            <div id="wikiExtract">
+            <!--placeholder text -->
             <p>Welcome to SLüVT! Where do you want to go today?</p>
+            </div>
+            <div id="wikiLink"></div>
           </div>
         </div>
       </div>
-<!--Horizontal Bar Module -->
+      <!--Horizontal Bar Module -->
       <h4 class="horiz-bar--header">Saved Plans:</h4>
       <div class="flex-container__horiz">
         <div class="photo-container" id="horiz--left">
-          <img src="images/chichenItza-480.jpg"> <!--using placeholders for size-->
+          <h3>Mexico</h3>
+          <img src="images/chichenItza-480.jpg">
+          <!--using placeholders for size-->
           <p class="photo-container--searchterm">Chichen Itza (Mexico)</p>
         </div>
         <div class="photo-container" id="horiz--center">
+          <h3>Egypt</h3>
           <img src="images/giza-480.jpg">
           <p class="photo-container--searchterm">Giza (Egypt)</p>
         </div>
         <div class="photo-container" id="horiz--right">
+          <h3>Peru</h3>
           <img src="images/machuPicchu-480.jpg">
           <p class="photo-container--searchterm">Machu Picchu (Peru)</p>
         </div>
       </div>
     </main>
-<!--Footer module -->
+    <!--Footer module -->
     <footer>
-    South Lake Union Virtual Tours (SLuVT) thanks Flickr for use of the images on this site. SLuVT receives no sponsorship or endorsement, nor is connected with, the licensors of images used on this site. Every effort is made to ensure all images are obtained via Creative Commons license 3.0. SLuVT appreciates the contributors at WikiVoyge. Where reasonably possible, attribution is given to creators of copyrighted works. SLuVT is not responsible for the content of images or text derived from outside sources.
-    <p>&#169 SLuVT 2015</p>
+      South Lake Union Virtual Tours (SLuVT) thanks Flickr for use of the images on this site. SLuVT receives no sponsorship or endorsement, nor is connected with, the licensors of images used on this site. Every effort is made to ensure all images are obtained
+      via Creative Commons license 3.0. SLuVT appreciates the contributors at WikiVoyge. Where reasonably possible, attribution is given to creators of copyrighted works. SLuVT is not responsible for the content of images or text derived from outside
+      sources.
+      <p>&#169 SLuVT 2015</p>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="js/jquery.bxslider.min.js"></script>
+    <script src="js/jquery.bxslider.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+    <script type="text/javascript" src="js/dataRoutes.js"></script>
+    <script type="text/javascript" src="js/setupHearts.js"></script>
+    <script type="text/javascript" src="js/sluvt.js"></script>
     <script type="text/javascript" src="js/APICalls.js"></script>
-    <script type="text/javascript" src="js/sprites.js"></script>
+</body>
 
-  </body>
 </html>

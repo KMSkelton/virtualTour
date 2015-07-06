@@ -1,5 +1,4 @@
 /** BASE **/
-
 a {
   text-decoration: none;
 }
@@ -30,6 +29,7 @@ footer {
   align-items: center;
 }
 .horiz-bar--header {
+  margin-top: 1em;
   margin-bottom: 0;
 }
 .photo-container {
@@ -41,8 +41,12 @@ footer {
   display: block;
 }
 .photo-container--searchterm {
-  padding: 1em;
+  padding: 0 1em;
   margin-bottom: 0;
+}
+.photo-container--searchterm p{
+  margin-bottom:0;
+
 }
 .flex-container__login {
   display: flex;
@@ -57,7 +61,6 @@ footer {
   margin-top: 3em;
 }
 #search-form {
-  width: 100%;
   background-color: gray;
   margin-top: .25em;
 }
@@ -68,13 +71,35 @@ footer {
   display: inline-block;
 }
 #search-form input[type="text"] {
-  width: 30%;
+  width: 20%;
   display: inline-block;
+}
+.hidden {
+  display: block;
+}
+.navbar {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1em;
+  margin-top: .25em;
 }
 #plansParent {
+  margin-top: 0.5em;
   display: inline-block;
 }
-
+button {
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  text-align: center;
+  display: inline-block;
+  width: auto;
+}
+.currentPlan {
+  font-size: 2em;
+}
+#planSelect {
+  font-size: 1.25em;
+}
 /* LAYOUT - Media Query */
 
 @media only screen and (min-width: 15em) {
@@ -125,7 +150,6 @@ footer {
 
 /** MODULES **/
 
-
 /** -- Banner Module **/
 
 #branding img {
@@ -148,13 +172,13 @@ header h1 {
   position: relative;
 }
 #wikiScrollBox {
-  margin-bottom: 2em;
   max-height: 10em;
   overflow: auto;
   border: thin solid black;
   border-radius: 0.5em;
   padding: 0 0.5em;
 }
+
 .bx-wrapper img {
   margin: 0 auto;
 }
@@ -225,7 +249,11 @@ body {
   /* dark navy */
   border-radius: .5em;
 }
-#branding, #login-container, fieldset, .photo-container {
+#branding,
+#login-container,
+fieldset,
+.navbar,
+.photo-container {
   background-color: #708A9F;
   /* muted blue gray*/
 }
@@ -234,10 +262,12 @@ body {
   /* dark navy */
   color: white;
 }
-.newCaption a, .photo-container {
+.newCaption a,
+.photo-container a{
   color: white;
 }
-.newCaption a:hover {
+.newCaption a:hover,
+.photo-container a:hover {
   color: #579ED8;
   /* bright blue */
 }
@@ -245,7 +275,9 @@ header a, form a {
   color: #244159;
   /* dark navy */
 }
-.account-form button, form input[type="submit"] {
+.add_link,
+button,
+form input[type="submit"] {
   background-color: #39668C;
   /* medium blue */
   color: white;
@@ -253,15 +285,20 @@ header a, form a {
 
 /** STATE **/
 
-header a:hover, form a:hover, fieldset input:hover {
+header a:hover,
+form a:hover,
+fieldset input:hover {
   color: #579ED8;
   /* medium blue */
 }
-#login-form:hover, #signup-form:hover {
+#login-form:hover,
+#signup-form:hover {
   background: #708A9F;
   /* muted blue gray*/
 }
-.account-form button:hover, form input[type="submit"]:hover {
+.add_link:hover,
+button:hover,
+form input[type="submit"]:hover {
   background-color: #579ED8;
   /* bright blue */
 }
