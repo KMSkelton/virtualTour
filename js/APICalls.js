@@ -15,6 +15,18 @@ function wikiSearchExtract(wikiRequestExtract) {
   );
 }
 
+var isArticle = function(categoryArray){
+  if (!categoryArray){
+    return false;
+  }
+  var isArticle = true;
+  for (var i=0; i < categoryArray.length && isArticle; i++){
+    var currentCat = categoryArray[i].title;
+    isArticle = (currentCat.indexOf("isambig") < 0);
+  }
+  return isArticle;
+}
+
 var wikiSearch = function(){
   var $wikiSearch =  $("#location-search").val();
 
@@ -54,13 +66,7 @@ var wikiSearch = function(){
     success: function( data ) {
       var pageID = data.query.pageids[0];
       var categoryArray = data.query.pages[pageID].categories;
-      var isArticle = true;
-      for (var i=0; i< categoryArray.length && isArticle; i++){
-        var currentCat = categoryArray[i].title;
-        isArticle = (currentCat.indexOf("isambig") < 0);
-      }
-      console.log("categoryArray.length", categoryArray.length);
-      if (isArticle && categoryArray.length > 0 ){
+      if (isArticle(categoryArray)){
         wikiSearchExtract(wikiRequestExtract);
         $.ajax({
           url: wikiRequestURL,
@@ -73,7 +79,8 @@ var wikiSearch = function(){
           }
         });
       } else {
-        $("#wikiScrollBox").html("Can you be more specific with your search? WikiVoyage needs a more precise location.");
+        $("#wikiExtract").html("Can you be more specific with your search? WikiVoyage needs a more precise location.");
+        $("#wikiLink").html("");
       }
     }
   });
@@ -81,6 +88,21 @@ var wikiSearch = function(){
 
 var photoClear = function(){
   $("#viewer-container").html("");
+}
+
+var errorImage = function(){
+  console.log("calling errorimage");
+  photoClear();
+  var noFlickrResults = '<ul class="bxslider"><li><img src="images/earth-1024.jpg"></li></ul>'
+  $("#viewer-container").append(noFlickrResults);
+   var slider = $('.bxslider').bxSlider({
+    pager: true,
+    pagerType:'short',  //use numbers instead of dots
+    captions: false ,    //will show captions from text in title field of <img>
+    adaptiveHeight: true,
+    slideWidth: 850,
+    maxSlides: 1
+  });
 }
 
 var photoSearch = function(){
@@ -108,16 +130,24 @@ var photoSearch = function(){
   var placeTag = "&place_id=";
 
   function findFlickrPlaceID(data){
-    var placeID = data.places.place[0].place_id;
+    //var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
 
-if (data.photos.photo.length < 1){
-  console.log("no flickr results");
-}
-
+      console.log("data.photos.photo", data.photos.photo);
+      console.log("data.photos.photo.length", data.photos.photo.length);
       //data.photos.photo.length will give you total number of results
-      for (var i=0; i < 50; i++){
+      var numresults = 50;
+      if (data.photos.photo.length < 1){
+        console.log("no flickr results");
+        errorImage();
+        return;
+      } else if (data.photos.photo.length < numresults){
+        numresults = data.photos.photo.length;
+      }
+
+      for (var i=0; i < numresults; i++){
+
         //assemble the URL of the photo
         //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
         var farm = data.photos.photo[i].farm;
@@ -139,7 +169,7 @@ if (data.photos.photo.length < 1){
         var newCaption = '<div class="newCaption"><a href="'
                           + attrURL + '"><p>' + title + '</p></a></div>';
 
-        viewer = viewer +  '<li><img src="'+ photoURL + '">'+ newCaption +'</li>' ;
+        viewer = viewer +  '<li><img src="'+ photoURL + '">' + newCaption +'</li>' ;
 
       }
       viewer = viewer + '</ul><div id="hearts" class="openHeart"></div>';
@@ -169,7 +199,7 @@ if (data.photos.photo.length < 1){
           loadFavorites();
         }
       });
-    }
+    } //loadPhotos
     //construct the request
     // base + method + api + photoQuery + flickrSearch + <-- always first
     // freshness + sort + type + placeTag + placeID + ingallery <-- must be in this order
@@ -179,10 +209,9 @@ if (data.photos.photo.length < 1){
                     + freshness + sort + content_type +format;
                     // + placeTag + placeID + format;
     $.getJSON(flickrRequest, loadPhotos).fail(function(error){
-        console.log("get flickr failed",error);
-      }
-    );
-  }
+        console.log("get flickr failed", error);
+      });
+  } //findFlickrPlaceID
   $.getJSON(placeIDRequest, findFlickrPlaceID);
-}
+} // photoSearch
 
