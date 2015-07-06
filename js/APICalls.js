@@ -1,3 +1,9 @@
+var removePrefix = function(rawExtract){
+  //wikiVoyage prefixes some articles with disambiguation redirects enclosed in <dl>
+  //this function searches for this prefix text and strips it off
+  return rawExtract.replace(/<dl>(.|\n)*?<\/dl>/, "");
+}
+
 function wikiSearchExtract(wikiRequestExtract) {
   $.ajax({
     url: wikiRequestExtract,
@@ -5,14 +11,20 @@ function wikiSearchExtract(wikiRequestExtract) {
     dataType: "jsonp",
     success: function( data ) {
       var pageID = data.query.pageids[0];
-      var extract = "<div class='wikiResult'>" + data.query.pages[pageID].extract + "</div>";
+      console.log("in wikiSearchExtract");
+      console.log("data.query.pages[pageID]", data.query.pages[pageID]);
+
+      var cleanExtract = removePrefix(data.query.pages[pageID].extract);
+      console.log("cleanExtract", cleanExtract);
+
+
+      var extract = "<div class='wikiResult'>" + cleanExtract + "</div>";
       $("#wikiExtract").html(extract);
       localStorage.setItem("wikiExtract", wikiRequestExtract);
     },
-  }).fail(function(error) {
+    }).fail(function(error) {
       console.log("error with wikiSearchExtract", error);
-    }
-  );
+    });
 }
 
 var isArticle = function(categoryArray){
@@ -32,7 +44,8 @@ var wikiSearch = function(){
 
   function toTitleCase(str) { //avoids WikiVoyage redirects based on non-Title case
     return str.replace(/\w\S*/g, function(txt){
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
   }
 
   var capitalSearch = toTitleCase($wikiSearch);
@@ -73,6 +86,7 @@ var wikiSearch = function(){
           jsonp: "callback",
           dataType: "jsonp",
           success: function( data ) {
+
             var wikiURL = data.query.pages[pageID].fullurl;
             var wikiLink = "<div><a href=" + wikiURL + ">Read more about " + capitalSearch + "...</a></div>";
             $("#wikiLink").html(wikiLink);
