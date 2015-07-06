@@ -91,7 +91,6 @@ var photoClear = function(){
 }
 
 var errorImage = function(){
-  console.log("calling errorimage");
   photoClear();
   var noFlickrResults = '<ul class="bxslider"><li><img src="images/earth-1024.jpg"></li></ul>'
   $("#viewer-container").append(noFlickrResults);
@@ -133,13 +132,9 @@ var photoSearch = function(){
     //var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
-
-      console.log("data.photos.photo", data.photos.photo);
-      console.log("data.photos.photo.length", data.photos.photo.length);
       //data.photos.photo.length will give you total number of results
       var numresults = 50;
       if (data.photos.photo.length < 1){
-        console.log("no flickr results");
         errorImage();
         return;
       } else if (data.photos.photo.length < numresults){
