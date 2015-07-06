@@ -11,10 +11,8 @@ function wikiSearchExtract(wikiRequestExtract) {
     dataType: "jsonp",
     success: function( data ) {
       var pageID = data.query.pageids[0];
-      console.log("data before removePrefix", data.query);
       var cleanExtract = removePrefix(data.query.pages[pageID].extract);
       var extract = "<div class='wikiResult'>" + cleanExtract + "</div>";
-      console.log("extract ", extract);
       $("#wikiExtract").html(extract);
       localStorage.setItem("wikiExtract", wikiRequestExtract);
     },
@@ -83,9 +81,7 @@ var wikiSearch = function(){
     dataType: "jsonp",
     success: function( data ) {
       var pageID = data.query.pageids[0];
-      console.log(data.query);
       if (isArticle(data.query.pages[pageID])){
-        console.log("is article = true");
         wikiSearchExtract(wikiRequestExtract);
         $.ajax({
           url: wikiRequestURL,
