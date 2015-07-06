@@ -11,13 +11,7 @@ function wikiSearchExtract(wikiRequestExtract) {
     dataType: "jsonp",
     success: function( data ) {
       var pageID = data.query.pageids[0];
-      console.log("in wikiSearchExtract");
-      console.log("data.query.pages[pageID]", data.query.pages[pageID]);
-
       var cleanExtract = removePrefix(data.query.pages[pageID].extract);
-      console.log("cleanExtract", cleanExtract);
-
-
       var extract = "<div class='wikiResult'>" + cleanExtract + "</div>";
       $("#wikiExtract").html(extract);
       localStorage.setItem("wikiExtract", wikiRequestExtract);
