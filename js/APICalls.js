@@ -137,7 +137,7 @@ var photoSearch = function(){
   var placeTag = "&place_id=";
 
   function findFlickrPlaceID(data){
-    //var placeID = data.places.place[0].place_id;
+    var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
       //data.photos.photo.length will give you total number of results
@@ -209,8 +209,8 @@ var photoSearch = function(){
     // +format <--always last
     var flickrRequest = flickrBaseURL + method_photoSearch + api_key
                     + photoQuery + $flickrSearch
-                    + freshness + sort + content_type +format;
-                    // + placeTag + placeID + format;
+                    + freshness + sort + content_type //+format;
+                     + placeTag + placeID + format;
     $.getJSON(flickrRequest, loadPhotos).fail(function(error){
         console.log("get flickr failed", error);
       });
