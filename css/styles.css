@@ -30,6 +30,7 @@ footer {
   align-items: center;
 }
 .horiz-bar--header {
+  margin-top: 1em;
   margin-bottom: 0;
 }
 .photo-container {
@@ -41,8 +42,12 @@ footer {
   display: block;
 }
 .photo-container--searchterm {
-  padding: 1em;
+  padding: 0 1em;
   margin-bottom: 0;
+}
+.photo-container--searchterm p{
+  margin-bottom:0;
+
 }
 .flex-container__login {
   display: flex;
@@ -146,7 +151,6 @@ button {
 
 /** MODULES **/
 
-
 /** -- Banner Module **/
 
 #branding img {
@@ -246,7 +250,11 @@ body {
   /* dark navy */
   border-radius: .5em;
 }
-#branding, #login-container, fieldset, .navbar, .photo-container {
+#branding,
+#login-container,
+fieldset,
+.navbar,
+.photo-container {
   background-color: #708A9F;
   /* muted blue gray*/
 }
@@ -255,10 +263,12 @@ body {
   /* dark navy */
   color: white;
 }
-.newCaption a, .photo-container {
+.newCaption a,
+.photo-container a{
   color: white;
 }
-.newCaption a:hover {
+.newCaption a:hover,
+.photo-container a:hover {
   color: #579ED8;
   /* bright blue */
 }
@@ -266,7 +276,9 @@ header a, form a {
   color: #244159;
   /* dark navy */
 }
-.add_link, button, form input[type="submit"] {
+.add_link,
+button,
+form input[type="submit"] {
   background-color: #39668C;
   /* medium blue */
   color: white;
@@ -274,15 +286,20 @@ header a, form a {
 
 /** STATE **/
 
-header a:hover, form a:hover, fieldset input:hover {
+header a:hover,
+form a:hover,
+fieldset input:hover {
   color: #579ED8;
   /* medium blue */
 }
-#login-form:hover, #signup-form:hover {
+#login-form:hover,
+#signup-form:hover {
   background: #708A9F;
   /* muted blue gray*/
 }
-.add_link:hover, button:hover, form input[type="submit"]:hover {
+.add_link:hover,
+button:hover,
+form input[type="submit"]:hover {
   background-color: #579ED8;
   /* bright blue */
 }
