@@ -11,8 +11,10 @@ function wikiSearchExtract(wikiRequestExtract) {
     dataType: "jsonp",
     success: function( data ) {
       var pageID = data.query.pageids[0];
+      console.log("data before removePrefix", data.query);
       var cleanExtract = removePrefix(data.query.pages[pageID].extract);
       var extract = "<div class='wikiResult'>" + cleanExtract + "</div>";
+      console.log("extract ", extract);
       $("#wikiExtract").html(extract);
       localStorage.setItem("wikiExtract", wikiRequestExtract);
     },
@@ -21,11 +23,20 @@ function wikiSearchExtract(wikiRequestExtract) {
     });
 }
 
-var isArticle = function(categoryArray){
-  if (!categoryArray){
+var isArticle = function(page){
+  //if results have no pageID, it's not an article (bad search term)
+  if (!page.pageid){
     return false;
   }
+  var categoryArray = page.categories;
+  //if it has a pageID, but no categoryArray, it is an article
+  //return true early to avoid .length error
+  if(!categoryArray){
+    return true;
+  }
   var isArticle = true;
+  //iterate through categories to look for titles with "disambiguation"
+  //and return not an article if it's just redirects
   for (var i=0; i < categoryArray.length && isArticle; i++){
     var currentCat = categoryArray[i].title;
     isArticle = (currentCat.indexOf("isambig") < 0);
@@ -72,15 +83,15 @@ var wikiSearch = function(){
     dataType: "jsonp",
     success: function( data ) {
       var pageID = data.query.pageids[0];
-      var categoryArray = data.query.pages[pageID].categories;
-      if (isArticle(categoryArray)){
+      console.log(data.query);
+      if (isArticle(data.query.pages[pageID])){
+        console.log("is article = true");
         wikiSearchExtract(wikiRequestExtract);
         $.ajax({
           url: wikiRequestURL,
           jsonp: "callback",
           dataType: "jsonp",
           success: function( data ) {
-
             var wikiURL = data.query.pages[pageID].fullurl;
             var wikiLink = "<div><a href=" + wikiURL + ">Read more about " + capitalSearch + "...</a></div>";
             $("#wikiLink").html(wikiLink);
@@ -137,7 +148,7 @@ var photoSearch = function(){
   var placeTag = "&place_id=";
 
   function findFlickrPlaceID(data){
-    var placeID = data.places.place[0].place_id;
+    //var placeID = data.places.place[0].place_id;
     function loadPhotos(data){
       var viewer = '<ul class="bxslider">';
       //data.photos.photo.length will give you total number of results
@@ -209,8 +220,8 @@ var photoSearch = function(){
     // +format <--always last
     var flickrRequest = flickrBaseURL + method_photoSearch + api_key
                     + photoQuery + $flickrSearch
-                    + freshness + sort + content_type //+format;
-                     + placeTag + placeID + format;
+                    + freshness + sort + content_type +format;
+                    // + placeTag + placeID + ingallery + format;
     $.getJSON(flickrRequest, loadPhotos).fail(function(error){
         console.log("get flickr failed", error);
       });
